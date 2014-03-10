@@ -1,0 +1,83 @@
+instructions
+------------
+	alu
+	===
+	inv
+	add
+	sub
+	not
+	and
+	or
+	xor
+	nand
+	nor
+	xnor
+	lshift
+	rshift
+	rashift
+
+	cmp
+	===
+	siz
+	snz
+	seq
+	sne
+	slt
+	sle
+	sgt
+	sge
+
+	pc
+	==
+	jmp
+	jal
+	call
+	ret
+	biz
+	bnz
+	beq
+	bne
+	blt
+	ble
+	bgt
+	bge
+	for
+	break
+	end
+
+registers
+---------
+	hidden
+	======
+	pc
+	imm
+	mem
+
+	general
+	=======
+	a0-2 (3)	[0000-0010]
+	v			[0011]
+	s0-3 (4)	[0100-0111]
+	t0-5 (6)	[1000-1101]
+	sp			[1110]
+	ra			[1111]
+
+undeveloped thoughts
+--------------------
+	address modes
+	=============
+	16-bit address space (65536)
+	immediate (16-bit)
+	register (4-bit)
+	displacement (?)
+
+	conditionals and loops
+	======================
+	do we want ifs or switches?
+	do we want whiles or dos?
+	assembler should pass "for" the address of the corresponding end
+
+	bit-diddling
+	============
+	8-bit opcode
+	4-bit general registers
