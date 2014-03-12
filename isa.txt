@@ -2,25 +2,45 @@ instructions
 ------------
 	alu
 	===
-	inv
-	add
+	inv $reg
+	inv mem
+	inv $reg, $reg
+	inv $reg, mem
+	add $reg, $reg
+	add $reg, %imm
+	add $reg, mem
+	add $reg, $reg, $reg
+	add $reg, $reg, %imm
+	add $reg, $reg, mem
 	sub
-	not
+	not $reg
+	not mem
 	and
 	or
 	xor
 	nand
 	nor
 	xnor
-	lshift
+	lshift $reg, $reg
+	lshift $reg, %imm
+	lshift $reg, mem
+	lshift $reg, $reg, $reg
+	lshift $reg, $reg, %imm
+	lshift $reg, $reg, mem
 	rshift
 	rashift
 
 	cmp
 	===
-	siz
+	siz $reg
+	siz mem
 	snz
-	seq
+	seq $reg, $reg
+	seq $reg, %imm
+	seq $reg, mem
+	seq $reg, $reg, $reg
+	seq $reg, $reg, %imm
+	seq $reg, $reg, mem
 	sne
 	slt
 	sle
@@ -29,21 +49,27 @@ instructions
 
 	pc
 	==
-	jmp
+	jmp $reg
+	jmp #garbage, %imm
+	jmp mem
 	jal
 	call
 	ret
-	biz
+	biz $reg, $reg
+	biz $reg, %imm
+	biz $reg, mem
 	bnz
-	beq
+	beq $reg, $reg, $reg
+	beq $reg, $reg, %imm
+	beq $reg, $reg, mem
 	bne
 	blt
 	ble
 	bgt
 	bge
-	for
-	break
-	end
+	for $reg, $reg, %imm
+	break #garbage, %imm
+	end #garbage
 
 registers
 ---------
@@ -79,5 +105,17 @@ undeveloped thoughts
 
 	bit-diddling
 	============
-	8-bit opcode
-	4-bit general registers
+	3-bit instruction type
+	5-bit opcode
+	the rest is type-dependent
+
+	instruction types
+	=================
+	$reg (10 instructions)
+	mem (6 instructions)
+	$reg, $reg (22 instructions)
+	$reg, %imm (23 instructions)
+	$reg, mem (21 instructions)
+	$reg, $reg, $reg (24 instructions)
+	$reg, $reg, %imm (26 instructions, including add and sub with a memory location)
+	$reg, $reg, mem (32 instructions, less add and sub because they don't fit)
