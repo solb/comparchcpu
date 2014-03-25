@@ -2,74 +2,85 @@ instructions
 ------------
 	alu
 	===
-	inv $reg
-	inv mem
-	inv $reg, $reg
-	inv $reg, mem
-	add $reg, $reg
-	add $reg, %imm
-	add $reg, mem
-	add $reg, $reg, $reg
-	add $reg, $reg, %imm
-	add $reg, $reg, mem
-	sub
-	not $reg
-	not mem
-	and
-	or
-	xor
-	nand
-	nor
-	xnor
-	lshift $reg, $reg
-	lshift $reg, %imm
-	lshift $reg, mem
-	lshift $reg, $reg, $reg
-	lshift $reg, $reg, %imm
-	lshift $reg, $reg, mem
-	rshift
-	rashift
+        inv  011001  
+	   inv $reg
+ 	   inv mem
+	   inv $reg, $reg
+	   inv $reg, mem
+	add  000000
+           add $reg, $reg
+	   add $reg, %imm
+	   add $reg, mem
+	   add $reg, $reg, $reg
+	   add $reg, $reg, %imm
+	   add $reg, $reg, mem
+	sub  000001
+	not  011010
+           not $reg
+	   not mem
+	and  000010
+	or   000011
+	xor  000100
+	nand 000101
+	nor  000110
+	xnor 000111
+	lshift 001000
+           lshift $reg, $reg
+	   lshift $reg, %imm
+	   lshift $reg, mem
+	   lshift $reg, $reg, $reg
+ 	   lshift $reg, $reg, %imm
+	   lshift $reg, $reg, mem
+	rshift 001001
+	rashift 001010
 
 	cmp
 	===
-	siz $reg
-	siz mem
-	snz
-	seq $reg, $reg
-	seq $reg, %imm
-	seq $reg, mem
-	seq $reg, $reg, $reg
-	seq $reg, $reg, %imm
-	seq $reg, $reg, mem
-	sne
-	slt
-	sle
-	sgt
-	sge
+	siz 001110
+           siz $reg
+	   siz mem
+	snz 001111
+        seq 001000
+	   seq $reg, $reg
+	   seq $reg, %imm
+	   seq $reg, mem
+	   seq $reg, $reg, $reg
+	   seq $reg, $reg, %imm
+	   seq $reg, $reg, mem
+	sne 001001
+	slt 001010
+	sle 001011
+	sgt 001100
+	sge 001101
 
 	pc
 	==
-	jmp $reg
-	jmp #garbage, %imm
-	jmp mem
-	jal
-	call
-	ret
-	biz $reg, $reg
-	biz $reg, %imm
-	biz $reg, mem
-	bnz
-	beq $reg, $reg, $reg
-	beq $reg, $reg, %imm
-	beq $reg, $reg, mem
-	bne
-	blt
-	ble
-	bgt
-	bge
-	for $reg, $reg, %imm
-	break #garbage, %imm
-	end #garbage
+        jmp 011011
+	   jmp $reg
+	   jmp #garbage, %imm
+	   jmp mem
+	jal 011100
+	call 011101
+	ret 011110
+        biz 010110
+	   biz $reg, $reg
+	   biz $reg, %imm
+	   biz $reg, mem
+	bnz 010111
+	beq 010000
+           beq $reg, $reg, $reg
+	   beq $reg, $reg, %imm
+	   beq $reg, $reg, mem
+	bne 010001
+	blt 010010
+	ble 010011
+	bgt 010100
+	bge 010101
+        for 011000
+	   for $reg, $reg, %imm
+	break 011111
+           break %imm
+	end 100000
 
 registers
 ---------
@@ -88,34 +99,43 @@ registers
 	sp			[1110]
 	ra			[1111]
 
+Address Modes
+------------
+nop 00
+imediate 01
+PC relative 10
+others 11
+   Register 000
+   Register Immediate 001
+   Scaled 010
+   Doubly Scaled 011
+   Scaled Displacement 100
+   Doubly Scaled Displacement 101
+   Auto Increment 110
+   Auto Decriment 111
+
+Instruction Format
+------------------
+00      000000 00   00  00  00 
+over    opcode over adm adm adm
+
+format for adm 11
+=================
+0    000 0000 0000 0000
+over adm reg1 reg2 reg3 
+reg 2 and 3 are based on secondary address control bits
+
+For Scaled types
+================
+00000000 0000000
+Imm1     Imm2
+determined by adm
+may be followed by 16bit immediate for scaled displacement
+
 undeveloped thoughts
 --------------------
-	address modes
-	=============
-	16-bit address space (65536)
-	immediate (16-bit)
-	register (4-bit)
-	displacement (?)
-
 	conditionals and loops
 	======================
-	do we want ifs or switches?
 	do we want whiles or dos?
+        Switches?
 	assembler should pass "for" the address of the corresponding end
-
-	bit-diddling
-	============
-	3-bit instruction type
-	5-bit opcode
-	the rest is type-dependent
-
-	instruction types
-	=================
-	$reg (10 instructions)
-	mem (6 instructions)
-	$reg, $reg (22 instructions)
-	$reg, %imm (23 instructions)
-	$reg, mem (21 instructions)
-	$reg, $reg, $reg (24 instructions)
-	$reg, $reg, %imm (26 instructions, including add and sub with a memory location)
-	$reg, $reg, mem (32 instructions, less add and sub because they don't fit)
