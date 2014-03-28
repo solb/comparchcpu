@@ -124,23 +124,70 @@ Instruction Format
 00      000000 00  00  00  00 
 over    opcode imm adm adm adm
 
-format for adm 11
-=================
-0    000 0000 0000 0000
-over adm reg1 reg2 reg3 
-reg 2 and 3 are based on secondary address control bits
+	format for adm 11
+	=================
+	0    000 0000 0000 0000
+	over adm reg1 reg2 reg3 
+	reg 2 and 3 are based on secondary address control bits
 
-For Scaled types
-================
-00000000 0000000
-Imm1     Imm2
-determined by adm
-may be followed by 16bit immediate for scaled displacement
+	For Scaled types
+	================
+	00000000 0000000
+	Imm1     Imm2
+	determined by adm
+	may be followed by 16bit immediate for scaled displacement
 
 undeveloped thoughts
 --------------------
+	WE FORGOT TO INCLUDE A MOVE INSTRUCTION!
+
 	conditionals and loops
 	======================
 	do we want whiles or dos?
         Switches?
 	assembler should pass "for" the address of the corresponding end
+
+data path
+---------
+	register representations
+	========================
+	addr block of 3 registers: stores the EAs computed by each relevant address mode
+	val block of 3 registers: stores the values (from immediate or memory) of each operand
+
+control path
+------------
+	register representations
+	========================
+	cntl block of 3 5-bit registers, with format:
+		PURPOSE		MSB	TAIL
+		register type	0	4-bit register identifier
+		value type	1	val[0] through val[2]
+		mdr		1	0011
+
+	other hardware
+	==============
+	need uMem and a uPC for storing and navigating the ucode
+	need a uStack and uSP to support procedure calls
+	we'll want an additional uStack and uSP to keep track of for loops
+
+	uprogram control flow
+	=====================
+	fetch:
+		fetch control byte
+		interpret address mode descriptors and load trailing immediate bytes
+		read each secondary address mode descriptor and populate addr[0..2]
+		compute effectice addresses into val[0..2]
+		jump to decode
+	decode:
+		populate cntl[0..2]
+		error check opcode/cntl compatibility
+		jump to execute
+	execute:
+		call the appropriate uprocedure (essentially a switch on opcode)
+			(each binary operation uses cntl[1..2] as operands and MDR as output)
+			(each unary operation uses cntl[1] as operand and MDR as output)
+		jump to store
+	store:
+		if MSB of cntl[0] is 0: write MDR to register block, address cntl[0](3 downto 0)
+		if MSB of cntl[0] is 1: write MDR to memory, address val[cntl[0](3 downto 0)]
+		jump to fetch
