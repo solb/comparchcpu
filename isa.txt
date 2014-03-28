@@ -100,9 +100,9 @@ registers
 	ra			[1111]
 
 Address Modes
-------------
+-------------
 nop 00
-imediate 01
+immediate address 01
 PC relative 10
 others 11
    Register 000
@@ -114,10 +114,15 @@ others 11
    Auto Increment 110
    Auto Decriment 111
 
+Immediate Override
+------------------
+if value is 1 in first bit, override 2nd adm with immediate
+if value is 1 in second bit, override 3rd adm with immediate
+
 Instruction Format
 ------------------
-00      000000 00   00  00  00 
-over    opcode over adm adm adm
+00      000000 00  00  00  00 
+over    opcode imm adm adm adm
 
 format for adm 11
 =================
