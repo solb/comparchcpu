@@ -8,10 +8,14 @@
 \noindent
 Sol Boucher and Evan Klei \hfill CSCI-453-01 \hfill 04/09/14 \\
 \vspace{6pt} \\
-\centerline{\textbf{\huge ISA document}}
+\centerline{\textbf{\huge FabComp: ISA document}}
 \end{framed}
 
 \section{Overview}
+Our Fabulous Computation Machine, or FabComp for short, is a 16-bit general-purpose register--based, big-endian CISC architecture.
+It proudly features an extensive collection of keystroke-saving instructions, 16 general-purpose registers, and 9 memory address modes.
+Instructions use hybrid encoding, with the opcode word's format fixed, but between 0 and 6 trailing immediate words.
+Comparisons are done using conditional registers, but we also provide conditional-and-branch instructions for convenience.
 
 \section{Instruction format}
 
