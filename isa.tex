@@ -163,5 +163,20 @@ The bus to and from memory is 16 bits as well.
 \end {tabular}
 
 \section{Address modes and formats}
-
+\subsection{Calculating Address Modes}
+\begin{tabular}{| r | l |}
+\hline
+\textbf{Address Mode} & \textbf {Effective Address} \\
+\hline
+Immediate Address & imm\\
+PC Relative & \$pc \\
+Register Indirect & \$reg0\\
+Scaled & \$reg1 $\cdot$ imm0 + \$reg0\\
+Doubly Scaled & \$reg2 $\cdot$ imm1 + Mem[\$reg1 $\cdot$ imm0 + \$reg0]\\
+Scaled Displacement & imm + \$reg0 $\cdot$ imm0\\
+Doubly Scaled Displacemnt & Mem[imm + \$reg0 $\cdot$ imm0] + \$reg1 $\cdot$ imm1\\
+Auto Increment & \$reg0 , \$reg0 = \$reg0 + 1\\
+Auto Decrement & \$reg0 , \$reg0 = \$reg0 - 1\\
+\hline
+\end{tabular}
 \end{document}
