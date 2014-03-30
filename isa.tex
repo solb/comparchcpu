@@ -27,8 +27,50 @@ We support the following instructions, all of which are encoded with a standard 
 \hline
 \textbf{opcode} & \textbf{mnemonic} & \textbf{description} \\
 \hline
-00000000 & ADD & Perform signed arithmetic addition \\
-00000001 & SUB & Perform signed arithmetic subtraction \\
+00000000 & HALT & Stop running \\
+00000001 & AND & Perform bitwise and \\
+00000010 & OR  & Perform bitwise or \\
+00000011 & XOR & Perform bitwise xor \\
+00000100 & LSFT & Perform bitwise left shift\\
+00000101 & NAND & Perform bitwise nand\\
+00000110 & NOR & Perform bitwise nor\\
+00000111 & XNOR & Perform bitwise xnor\\
+00001000 & RSFT & Perform bitwise right shift\\
+00001001 & LAND & Performs logical and \\
+00001010 & LOR & Performs logical or\\
+00001011 & LXOR & Performs logical xor\\
+00001100 & RASFT & Perform bitwise right arithmatic shift\\
+00001101 & LNAND & Performs logical nand\\
+00001110 & LNOR & Performs logical nor\\
+00001111 & LXNOR & Performs logical xnor\\
+00010000 & SLT & Compares if one object is less than another\\
+00010001 & SGT & Compares if one object is greater than another\\
+00010010 & SEQ & Compares if two objects are equal\\
+00010011 & SNE & Compares if two objects are not equal\\
+00010100 & SLE & Compares if one object is less than or equal to another\\
+00010101 & SGE & Compares if one object is greater than or equal to another\\
+00010110 & ADD & Perform signed arithmetic addition \\
+00010111 & SUB & Perform signed arithmetic subtraction \\
+00011000 & BLT & Branches if one object is less than the other\\
+00011001 & BGT & Branches if one object is greater than the other\\
+00011010 & BEQ & Branches if two objects are equal\\
+00011011 & BNE & Branches if two objects aren't equal\\
+00011100 & BLE & Branches if one object is less than or equal to the other\\
+00011101 & BGE & Branches if one object is greater than or equal to the other\\
+00011110 & &\\
+00011111 & &\\
+00100000 & SIZ & Compares if the object is zero\\
+00100001 & SNZ & Compares if the object is not zero\\
+00100010 & NOT & Performs a bitwise not\\
+00100011 & NEG & Performs a arithmetic negation\\
+00100100 & BIZ & Branch if the object is zero\\
+00100101 & BNZ & Branch if the object is not zero\\
+00100110 & MOV & Moves object from one space to another\\
+00100111 & RET & Jumps to the location most recently put on the stack\\
+00101000 & JMP & Jumps to the location given\\
+00101001 & JAL & Jumps to the location given and sets the RA\\
+00101010 & CALL & Jumps to the location and puts the address on the stack\\
+
 \hline
 \end{tabular}
 

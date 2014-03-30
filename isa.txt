@@ -40,7 +40,7 @@ instructions
            siz $reg
 	   siz mem
 	snz 001111
-        seq 001000
+    seq 001000
 	   seq $reg, $reg
 	   seq $reg, %imm
 	   seq $reg, mem
@@ -55,17 +55,17 @@ instructions
 
 	pc
 	==
-        jmp 011011
+    jmp 011011
 	   jmp $reg
 	   jmp #garbage, %imm
 	   jmp mem
 	jal 011100
 	call 011101
 	ret 011110
-        biz 010110
+       biz 010110
 	   biz $reg, $reg
 	   biz $reg, %imm
-	   biz $reg, mem
+	   biz $reg, mem-
 	bnz 010111
 	beq 010000
            beq $reg, $reg, $reg
@@ -81,6 +81,18 @@ instructions
 	break 011111
            break %imm
 	end 100000
+Verification rules
+------------------
+0th: no validation      00000000
+1st: 2-3 ops            00000001 - 00010111
+2nd: 3 ops, op0 lval    00011000 - 00011101    
+3rd: Fails validation   00011110 - 00011111
+4th: 1-2 ops
+5th: 2 ops, op0 lval
+6th: 2 ops
+7th: 0 ops
+8th: op0 lval
+lval is not immediate nor register
 
 registers
 ---------
