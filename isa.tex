@@ -4,9 +4,9 @@
 \usepackage{multirow}
 \thispagestyle{empty}
 \begin{document}
+\setlength{\parindent}{0pt}
 
 \begin{framed}
-\noindent
 Sol Boucher and Evan Klei \hfill CSCI-453-01 \hfill 04/09/14 \\
 \vspace{6pt} \\
 \centerline{\textbf{\huge FabComp: ISA document}}
@@ -24,7 +24,6 @@ Comparisons are done using conditional registers, but we also provide conditiona
 We support the following instructions, all of which are encoded with a standard opcode word:
 \subsection{List of instructions}
 \vspace{6pt}
-\noindent
 \begin{tabular}{| r | r | c | l |}
 \hline
 & \textbf{opcode} & \textbf{mnemonic} & \textbf{description} \\
