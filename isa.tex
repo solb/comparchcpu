@@ -105,9 +105,11 @@ We support the following instructions, all of which are encoded with a standard 
       \end{itemize}
 \end{enumerate}
 \section{Memory specifications}
-
+The memory space is composed 16 bit words, arranged big-endian.
+Each place is identified via a 16 bit address, which points to a 16 bit unit.
+The bus to and from memory is 16 bits as well.
 \section{List of registers}
-\begin{tabular}{| c | l |}
+\begin{tabular}{| r | l |}
 \hline
 \textbf{Register} & \textbf{Description}\\
 \hline
