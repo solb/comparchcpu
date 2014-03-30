@@ -113,13 +113,16 @@ We support the following instructions, all of which are encoded with a standard 
 \multirow{2}{*}{5} & 00100100 & BIZ & Branch if the object is zero\\
 & 00100101 & BNZ & Branch if the object is not zero\\
 \hline
-6 & 00100110 & MOV & Moves object from one space to another\\
+\multirow{2}{*}{6} & 00100110 & INCR & Increments the data in the given location\\
+& 00100111 & DECR & Decriments the data in the given location\\
 \hline
-7 & 00100111 & RET & Jumps to the location most recently put on the stack\\
-\hline
-\multirow{3}{*}{8} & 00101000 & JMP & Jumps to the location given\\
+\multirow{3}{*}{7} & 00101000 & JMP & Jumps to the location given\\
 & 00101001 & JAL & Jumps to the location given and sets the RA\\
 & 00101010 & CALL & Jumps to the location and puts the address on the stack\\
+\hline
+8 & 00101011 & RET & Jumps to the location most recently put on the stack\\
+\hline
+9 & 00101100 & MOV & Moves object from one space to another\\
 \hline
 \end{tabular}
 \subsection{Verification rules}
@@ -129,20 +132,21 @@ We support the following instructions, all of which are encoded with a standard 
 \item \begin{itemize} \item 2-3 ops \end{itemize}        
 \item \begin{itemize}
     \item 3 ops
-    \item op0 is neither immediate nor register        
+    \item op0 is not a register        
     \end{itemize}
 \item \begin {itemize} \item Fails validation \end{itemize}  
 \item \begin {itemize} \item 1-2 ops \end{itemize}
 \item \begin {itemize}
      \item 2 ops
-     \item op0 is neither immediate nor register
+     \item op0 is not a register
      \end{itemize}
-\item \begin {itemize} \item 2 ops \end{itemize}
-\item \begin {itemize} \item 0 ops \end{itemize}
+\item \begin{itemize} \item 1 op \end{itemize}
 \item \begin{itemize}
-        \item 1 ops
-        \item op0 is neither immediate nor register
+        \item 1 op
+        \item op0 is not a register
       \end{itemize}
+\item \begin {itemize} \item 0 ops \end{itemize}
+\item \begin {itemize} \item 2 ops \end{itemize}
 \end{enumerate}
 \section{Memory specifications}
 The memory space is composed 16 bit words, arranged big-endian.
