@@ -83,10 +83,10 @@ instructions
 	end 100000
 Verification rules
 ------------------
-0th: no validation      00000000
-1st: 2-3 ops            00000001 - 00010111
-2nd: 3 ops, op0 lval    00011000 - 00011101    
-3rd: Fails validation   00011110 - 00011111
+0th: no validation      
+1st: 2-3 ops            
+2nd: 3 ops, op0 lval        
+3rd: Fails validation   
 4th: 1-2 ops
 5th: 2 ops, op0 lval
 6th: 2 ops
