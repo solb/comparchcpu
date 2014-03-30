@@ -19,6 +19,8 @@ Instructions use hybrid encoding, with the opcode word's format fixed, but betwe
 Comparisons are done using conditional registers, but we also provide conditional-and-branch instructions for convenience.
 
 \section{Instruction format}
+
+\subsection{Opcode word}
 Every instruction begins with an opcode word that always follows this format:
 
 \vspace{6pt}
@@ -48,7 +50,7 @@ The immediate flags can override the address modes of operands 1 and 2: if set, 
 Otherwise, the corresponding \texttt{am} (address mode) bits are consulted:
 
 \vspace{6pt}
-\begin{tabular}{| c | l | l |}
+\begin{tabular}{| c | l | c |}
 \hline
 \multicolumn{3}{| c |}{meaning of address mode flags} \\
 \hline
@@ -60,6 +62,57 @@ value & meaning & first immediate instruction word \\
 11 & other: Immediate word will specify address mode & R-type \\
 \hline
 \end{tabular}
+
+\subsection{Immediate words}
+There are three types of immediate words:
+
+\vspace{6pt}
+\begin{tabular}{| c |}
+\hline
+I-type immediate word format \\
+\hline
+immediate \\
+\hline
+15 \hfill 0
+\end{tabular}
+\begin{tabular}{| c | c |}
+\hline
+\multicolumn{2}{| c |}{S-type immediate word format} \\
+\hline
+short immediate 0 & short immediate 1 \\
+\hline
+15 \hfill 8 & 7 \hfill 0 \\
+\end{tabular}
+
+\vspace{6pt}
+\begin{tabular}{| c | c | c | c |}
+\hline
+\multicolumn{4}{| c |}{R-type immediate word format} \\
+\hline
+secondary am & reg0 & reg1 & reg2 \\
+\hline
+15 \hfill 12 & 11 \hfill 8 & 7 \hfill 4 & 3 \hfill 0 \\
+\end{tabular}
+
+\vspace{6pt}
+\begin{tabular}{| c | l | c |}
+\hline
+\multicolumn{3}{| c |}{meaning of secondary address mode flags} \\
+\hline
+value & meaning & next immediate word(s) \\
+\hline
+000 & Register value: reg0 specifies a register & None \\
+001 & Register indirect: Find EA in register reg0 & None \\
+010 & Scaled: EA calculated as offset from reg0 & S-type \\
+011 & Doubly scaled: For 2-dimensional arrays with based in register & S-type \\
+100 & Auto increment: Find EA in register reg0, then increment & None \\
+101 & Auto decrement: Find EA in register reg0, then decrement & None \\
+110 & Scaled displacement: EA calculated as offset from immedate & S-type then I-type \\
+111 & Doubly scaled displacment: 2-dimensional immediate-based & S-type then I-type \\
+\hline
+\end{tabular}
+
+%TODO Which reg# bits are used for what in each scaled address mode?
 
 \section{List of instructions}
 We support the following instructions, all of which are encoded with a standard opcode word:
