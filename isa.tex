@@ -19,6 +19,47 @@ Instructions use hybrid encoding, with the opcode word's format fixed, but betwe
 Comparisons are done using conditional registers, but we also provide conditional-and-branch instructions for convenience.
 
 \section{Instruction format}
+Every instruction begins with an opcode word that always follows this format:
+
+\vspace{6pt}
+\begin{tabular}{| c | c | c | c | c |}
+\hline
+\multicolumn{5}{| c |}{opcode word format} \\
+\hline
+opcode & immediate & am0 & am1 & am2 \\
+\hline
+15 \hfill 8 & 7 \hfill 6 & 5 \hfill 4 & 3 \hfill 2 & 1 \hfill 0 \\
+\end{tabular}
+\begin{tabular}{| r | l |}
+\hline
+\multicolumn{2}{| c |}{meaning of immediate flags} \\
+\hline
+value & meaning \\
+\hline
+00 & no operands are immediates \\
+01 & operand 2 is an immediate value \\
+10 & operand 1 is an immediate value \\
+11 & operands 1 and 2 are immediates \\
+\hline
+\end{tabular}
+
+\vspace{6pt}
+The immediate flags can override the address modes of operands 1 and 2: if set, the corresponding operand will be an immediate value rather than a register or memory address.
+Otherwise, the corresponding \texttt{am} (address mode) bits are consulted:
+
+\vspace{6pt}
+\begin{tabular}{| c | l | l |}
+\hline
+\multicolumn{3}{| c |}{meaning of address mode flags} \\
+\hline
+value & meaning & first immediate instruction word \\
+\hline
+00 & skip: No operand & None \\
+01 & immediate address: Memory address & I-type\\
+10 & PC-relative: Offset from program counter & I-type \\
+11 & other: Immediate word will specify address mode & R-type \\
+\hline
+\end{tabular}
 
 \section{List of instructions}
 We support the following instructions, all of which are encoded with a standard opcode word:
