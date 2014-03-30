@@ -20,6 +20,17 @@ Comparisons are done using conditional registers, but we also provide conditiona
 \section{Instruction format}
 
 \section{List of instructions}
+We support the following instructions, all of which are encoded with a standard opcode word:
+
+\vspace{6pt}
+\begin{tabular}{| r | c | l |}
+\hline
+\textbf{opcode} & \textbf{mnemonic} & \textbf{description} \\
+\hline
+00000000 & ADD & Perform signed arithmetic addition \\
+00000001 & SUB & Perform signed arithmetic subtraction \\
+\hline
+\end{tabular}
 
 \section{Memory specifications}
 
