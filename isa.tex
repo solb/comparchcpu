@@ -209,15 +209,19 @@ Each numbered grouping in the instruction set table is validated as follows:
 The memory space is composed 16 bit words, arranged big-endian.
 Each place is identified via a 16 bit address, which points to a 16 bit unit.
 The bus to and from memory is 16 bits as well.
+
 \section{List of registers}
+The architecture exposes the following 16 general-purpose registers:
+
+\vspace{6pt}
 \begin{tabular}{| r | l |}
 \hline
 \textbf{Register} & \textbf{Description}\\
 \hline
-\$a0-\$a2 & Argument Registers\\
+\$a0--\$a2 & Argument Registers\\
 \$v & Return data Register\\
-\$s0-\$s3 & Saved Registers\\
-\$t0-\$t5 & Temporary Registers\\
+\$s0--\$s3 & Saved Registers\\
+\$t0--\$t5 & Temporary Registers\\
 \$sp & Stack Pointer\\
 \$ra & Return Address\\ 
 \hline
