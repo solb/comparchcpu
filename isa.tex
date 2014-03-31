@@ -204,9 +204,10 @@ Each numbered grouping in the instruction set table is validated as follows:
 \end{enumerate}
 
 \section{Memory specifications}
-The memory space is composed 16 bit words, arranged big-endian.
-Each place is identified via a 16 bit address, which points to a 16 bit unit.
-The bus to and from memory is 16 bits as well.
+The memory space is split into 16 bit-words, arranged big-endian.
+Each location is identified via a 16-bit address, which points to a whole word.
+Because addresses are assigned to words instead of bytes, it impossible to have unassigned accesses.
+The bus to and from memory is 16 bits, and the ISA only supports transferring a single word at a time.
 
 \section{List of registers}
 The architecture exposes the following 16 general-purpose registers:
