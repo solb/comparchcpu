@@ -114,7 +114,7 @@ value & meaning & next immediate word(s) \\
 
 %TODO Which reg# bits are used for what in each scaled address mode?
 
-\section{List of instructions}
+\section{Instruction set}
 We support the following instructions, all of which are encoded with a standard opcode word:
 \subsection{List of instructions}
 \vspace{6pt}
@@ -125,7 +125,7 @@ We support the following instructions, all of which are encoded with a standard 
 0 & 00000000 & HALT & Stop running \\
 \hline
 \multirow{23}{*}{1} & 00000001 & AND & Perform bitwise and \\
-& 00000010 & OR  & Perform bitwise or \\
+& 00000010 & OR & Perform bitwise or \\
 & 00000011 & XOR & Perform bitwise xor \\
 & 00000100 & LSFT & Perform bitwise left shift\\
 & 00000101 & NAND & Perform bitwise nand\\
@@ -178,16 +178,19 @@ We support the following instructions, all of which are encoded with a standard 
 9 & 00101100 & MOV & Moves object from one space to another\\
 \hline
 \end{tabular}
+
 \subsection{Verification rules}
+Each numbered grouping in the instruction set table is validated as follows:
+
 \begin{enumerate}
 \setcounter{enumi}{-1}
-\item \begin{itemize} \item no validation \end{itemize}    
-\item \begin{itemize} \item 2-3 ops \end{itemize}        
+\item \begin{itemize} \item No validation \end{itemize}
+\item \begin{itemize} \item 2-3 ops \end{itemize}
 \item \begin{itemize}
     \item 3 ops
-    \item op0 is not a register        
+    \item op0 is not a register
     \end{itemize}
-\item \begin {itemize} \item Fails validation \end{itemize}  
+\item \begin {itemize} \item Fails validation \end{itemize}
 \item \begin {itemize} \item 1-2 ops \end{itemize}
 \item \begin {itemize}
      \item 2 ops
@@ -201,6 +204,7 @@ We support the following instructions, all of which are encoded with a standard 
 \item \begin {itemize} \item 0 ops \end{itemize}
 \item \begin {itemize} \item 2 ops \end{itemize}
 \end{enumerate}
+
 \section{Memory specifications}
 The memory space is composed 16 bit words, arranged big-endian.
 Each place is identified via a 16 bit address, which points to a 16 bit unit.
