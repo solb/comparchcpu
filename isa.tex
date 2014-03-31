@@ -112,8 +112,6 @@ value & meaning & next immediate word(s) \\
 \hline
 \end{tabular}
 
-%TODO Which reg# bits are used for what in each scaled address mode?
-
 \section{Instruction set}
 We support the following instructions, all of which are encoded with a standard opcode word:
 \subsection{List of instructions}
@@ -234,14 +232,15 @@ The architecture exposes the following 16 general-purpose registers:
 \textbf{Address Mode} & \textbf {Effective Address} \\
 \hline
 Immediate Address & imm\\
-PC Relative & \$pc \\
-Register Indirect & \$reg0\\
-Scaled & \$reg1 $\cdot$ imm0 + \$reg0\\
-Doubly Scaled & \$reg2 $\cdot$ imm1 + Mem[\$reg1 $\cdot$ imm0 + \$reg0]\\
-Scaled Displacement & imm + \$reg0 $\cdot$ imm0\\
-Doubly Scaled Displacemnt & Mem[imm + \$reg0 $\cdot$ imm0] + \$reg1 $\cdot$ imm1\\
-Auto Increment & \$reg0 , \$reg0 = \$reg0 + 1\\
-Auto Decrement & \$reg0 , \$reg0 = \$reg0 - 1\\
+PC Relative & EA = \$pc \\
+Register Indirect & EA = \$reg0\\
+Scaled & EA = \$reg0 + \$reg1 $\cdot$ imm0\\
+Doubly Scaled & EA = Mem[\$reg0 + \$reg1 $\cdot$ imm0] + \$reg2 $\cdot$ imm1 \\
+Auto Increment & EA = \$reg0 , \$reg0 = \$reg0 + 1\\
+Auto Decrement & EA = \$reg0 , \$reg0 = \$reg0 -- 1\\
+Scaled Displacement & EA = imm + \$reg0 $\cdot$ imm0\\
+Doubly Scaled Displacemnt & EA = Mem[imm + \$reg0 $\cdot$ imm0] + \$reg1 $\cdot$ imm1\\
 \hline
 \end{tabular}
+
 \end{document}
