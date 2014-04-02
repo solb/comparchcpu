@@ -235,12 +235,12 @@ The architecture exposes the following 16 general-purpose registers:
 Immediate Address & imm\\
 PC Relative & EA = \$pc \\
 Register Indirect & EA = \$reg0\\
-Scaled & EA = \$reg0 + \$reg1 $\cdot$ imm0\\
-Doubly Scaled & EA = Mem[\$reg0 + \$reg1 $\cdot$ imm0] + \$reg2 $\cdot$ imm1 \\
+Scaled & EA = \$reg0 + \$reg1 $<<$ imm0\\
+Doubly Scaled & EA = Mem[\$reg0 + \$reg1 $<<$ imm0] + \$reg2 $<<$ imm1 \\
 Auto Increment & EA = \$reg0 , \$reg0 = \$reg0 + 1\\
 Auto Decrement & EA = \$reg0 , \$reg0 = \$reg0 -- 1\\
-Scaled Displacement & EA = imm + \$reg0 $\cdot$ imm0\\
-Doubly Scaled Displacemnt & EA = Mem[imm + \$reg0 $\cdot$ imm0] + \$reg1 $\cdot$ imm1\\
+Scaled Displacement & EA = imm + \$reg0 $<<$ imm0\\
+Doubly Scaled Displacemnt & EA = Mem[imm + \$reg0 $<<$ imm0] + \$reg1 $<<$ imm1\\
 \hline
 \end{tabular}
 
