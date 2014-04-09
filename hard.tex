@@ -2,6 +2,7 @@
 \usepackage{framed}
 \usepackage[margin=1in,top=0.5in]{geometry}
 \usepackage{multirow}
+\newcommand{\get}{$\leftarrow$}
 \thispagestyle{empty}
 \begin{document}
 \setlength{\parindent}{0pt}
@@ -14,5 +15,27 @@ Sol Boucher and Evan Klei \hfill CSCI-453-01 \hfill 04/28/14 \\
 
 \section{Register transfer language}
 This is the sequence of hardware actions performed by each processing phase, address mode calculation, and instruction execution.
+
+\section{Fetch phase}
+IR \get Mem[PC] \\
+PC \get PC + 1
+
+\section{Decode phase}
+if IR:am0 = 01 or 10 then \\
+\indent Addr[0] \get Mem[PC] \\
+\indent cntl[0] \get 1000 \\
+\indent PC \get PC + 1 \\
+elif IR:am0 = 11 then \\
+\indent MDR \get Mem[PC] \\
+\indent PC \get PC + 1 \\
+
+if imm(1) = 1 then \\
+\indent Val[1] \get Mem[PC] \\
+\indent cntl[1] \get 1001 \\
+\indent PC \get PC + 1 \\
+else \\
+\indent // do the same as for IR:am0
+
+% TODO: if AM was PC-rel, add PC into the block
 
 \end{document}
