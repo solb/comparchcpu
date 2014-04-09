@@ -1,0 +1,23 @@
+assembly syntax
+===============
+comments
+--------
+# remark
+
+labels
+------
+name:
+
+address modes
+-------------
+imm. value:		val
+imm. address:	%addr
+PC-relative:	%offst@
+register: 		$nam
+reg. indirect:	$num%
+scaled:			$nam($ad0[,sf0])
+doubly scaled:	$nam($ad0[,sf0])($ad1[,sf1])
+autoincrement:	$nam+
+autodecrement:	$nam-
+scaled disp.:	%addr($ad0[,sf0])
+2x scale disp.:	%addr($ad0[,sf0])($ad1[,sf1])
