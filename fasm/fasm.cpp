@@ -13,6 +13,7 @@
 #include <unordered_map>
 #include <vector>
 using boost::split;
+using boost::token_compress_on;
 using boost::trim;
 using std::cerr;
 using std::cout;
@@ -207,7 +208,7 @@ int main(int argc, char *argv[]) {
 
 bool proc_line(unsigned num, const string &line) {
 	vector<string> pieces;
-	split(pieces, line, isspace);
+	split(pieces, line, isspace, token_compress_on);
 
 	unsigned inst = 0;
 	bool saw_opc = false;
@@ -403,7 +404,7 @@ bool scaled_ams(unsigned num, list<string> &terms, unsigned reg_offst, unsigned 
 	for(list<string>::size_type index = 0; index < terms.size(); ++index) {
 		list<string> coeffs;
 		string cur_term = fruit_pop(terms);
-		split(coeffs, cur_term, [] (char symb) -> bool {return symb == ',' || isspace(symb);});
+		split(coeffs, cur_term, [] (char symb) -> bool {return symb == ',' || isspace(symb);}, token_compress_on);
 
 		if(coeffs.size() > 2)
 			return error(num, "Scaled address mode terms may have at most 2 coefficients");
