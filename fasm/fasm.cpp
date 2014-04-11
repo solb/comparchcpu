@@ -151,6 +151,9 @@ bool proc_line(unsigned num, const string &line) {
 	unsigned cur_opnd = 0;
 	unsigned cur_imm = 0;
 
+	if(pieces.size() > 4 || (pieces.size() == 4 && line.find(':') == line.npos))
+		return error(num, "More than three operands to instruction");
+
 	for(string &piece : pieces) {
 		string::size_type search_ind;
 
@@ -305,7 +308,10 @@ bool proc_line(unsigned num, const string &line) {
 		}
 	}
 
-	// TODO Shuttle inst and those imms that we actually used onto the end of cs
+	// Queue the instructions for writing into the code segment
+	cs.push_back(inst);
+	for(unsigned copied = 0; copied < cur_imm; ++copied)
+		cs.push_back(imms[copied]);
 
 	return true;
 }
