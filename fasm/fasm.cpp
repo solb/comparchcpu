@@ -153,8 +153,8 @@ int main(int argc, char *argv[]) {
 	unsigned linenum = 1;
 	string line;
 	while(getline(src, line)) {
-		unsigned comment = line.find('#');
-		if(comment)
+		string::size_type comment = line.find('#');
+		if(comment != line.npos)
 			line = line.substr(0, comment);
 
 		trim(line);
