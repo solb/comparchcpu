@@ -122,6 +122,9 @@ vector<unsigned> cs;
 
 bool proc_line(unsigned, const string &);
 bool error(unsigned, const char *);
+bool scaled_ams(unsigned, list<string> &, unsigned, unsigned &, unsigned &);
+bool isparen(char);
+template<typename E> E fruit_pop(list<E> &);
 
 int main(int argc, char *argv[]) {
 	if(argc != 2) {
@@ -186,7 +189,32 @@ bool proc_line(unsigned num, const string &line) {
 				case '%':
 					// Scaled or doubly scaled displacement
 					if(piece.find('(') != piece.npos) {
-						// TODO Implement these modes
+						list<string> terms;
+						split(terms, piece, isparen);
+						string base = fruit_pop(terms).substr(1);
+
+						// It's a literal offset
+						if(isdigit(base[0])) {
+							try {
+								// Copy the address into the binary, leaving space for our shifts
+								imms[cur_imm + 2] = stoi(base);
+							}
+							catch(exception &ex) {
+								return error(num, "Invalid literal displacement base address");
+							}
+						}
+						// It's a label
+						else
+							rel_tab[base].push_back(cs.size() + 1 + cur_imm);
+
+						// Distinguish from plain scaled addressing
+						imms[cur_imm] |= 01 << (SADM_SHIFT + 2);
+
+						// Encode the scaling information
+						scaled_ams(num, terms, 0, imms[cur_imm], imms[cur_imm + 1]);
+
+						// We used up 3 immediate words
+						cur_imm += 3;
 					}
 					else {
 						// PC-relative address
@@ -222,7 +250,21 @@ bool proc_line(unsigned num, const string &line) {
 
 					// Scaled or doubly scaled addressing
 					if(piece.find('(') != piece.npos) {
-						// TODO Implement these modes
+						list<string> terms;
+						split(terms, piece, isparen);
+						string reg = fruit_pop(terms).substr(1);
+
+						// Here's the displacement
+						if(REG.count(reg))
+							imms[cur_imm] |= REG.at(reg) << REG_SHIFT[0];
+						else
+							return error(num, "Invalid base register for scaled addressing");
+
+						// Encode the scaling information
+						scaled_ams(num, terms, 1, imms[cur_imm], imms[cur_imm + 1]);
+
+						// We used up 2 immediate words
+						cur_imm += 2;
 					}
 					else {
 						char granular = piece[piece.length() - 1];
@@ -271,4 +313,47 @@ bool proc_line(unsigned num, const string &line) {
 bool error(unsigned line_num, const char *expl) {
 	cerr << "error: line " << line_num << ": " << expl << endl;
 	return false;
+}
+
+bool scaled_ams(unsigned num, list<string> &terms, unsigned reg_offst, unsigned &s_imm, unsigned &i_imm) {
+	if(terms.size() > 2)
+		return error(num, "Scaled address modes accept at most 2 offsets");
+
+	s_imm |= (terms.size() == 2 ? 011 : 010) << SADM_SHIFT;
+
+	for(list<string>::size_type index = 0; index < terms.size(); ++index) {
+		list<string> coeffs;
+		string cur_term = fruit_pop(terms);
+		split(coeffs, cur_term, [] (char symb) -> bool {return symb == ',' || isspace(symb);});
+
+		if(coeffs.size() > 2)
+			return error(num, "Scaled address mode terms may have at most 2 coefficients");
+
+		string reg = fruit_pop(coeffs).substr(1);
+		if(REG.count(reg))
+			s_imm |= REG.at(reg) << REG_SHIFT[reg_offst + index];
+		else
+			return error(num, "Invalid register name in scaled address specifier");
+
+		if(coeffs.size()) {
+			try {
+				i_imm |= stoi(fruit_pop(coeffs)) << SIMM_SHIFT[index];
+			}
+			catch(exception &ex) {
+				return error(num, "Non-integral shift in scaled address specifier");
+			}
+		}
+	}
+
+	return true;
+}
+
+bool isparen(char symb) {
+	return symb == '(' || symb == ')';
+}
+
+template<typename E> E fruit_pop(list<E> &cont) {
+	E res = cont.front();
+	cont.pop_front();
+	return res;
 }
