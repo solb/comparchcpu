@@ -216,7 +216,10 @@ bool proc_line(unsigned num, const string &line) {
 	unsigned cur_opnd = 0;
 	unsigned cur_imm = 0;
 
-	if(pieces.size() > 4 || (pieces.size() == 4 && line.find(':') == line.npos))
+	unsigned num_opnds = pieces.size();
+	num_opnds -= line.find(':') != line.npos ? 2 : 1;
+
+	if(num_opnds > 3)
 		return error(num, "More than three operands to instruction");
 
 	for(string &piece : pieces) {
@@ -355,12 +358,13 @@ bool proc_line(unsigned num, const string &line) {
 						}
 
 						if(REG.count(reg))
-							imms[cur_imm] |= REG.at(reg) << REG_SHIFT[0];
+							imms[cur_imm] |= REG.at(reg) << REG_SHIFT[cur_opnd];
 						else
 							return error(num, "Invalid register name");
 
-						// We used up one immediate word
-						++cur_imm;
+						// We used up one immediate to hold *all* these registers
+						if(cur_opnd == num_opnds - 1)
+							++cur_imm;
 					}
 					break;
 				// An immediate, plain and simple
