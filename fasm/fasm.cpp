@@ -179,12 +179,19 @@ int main(int argc, char *argv[]) {
 			cs[ref] = tgt;
 	}
 
+	// Bail out if there was an assembly error
 	if(!noerrors)
 		return 3;
 
+	// Bail out if there's nothing to write
+	if(!cs.size()) {
+		cout << "Empty program ... skipping output write" << endl;
+		return 0;
+	}
+
 	// Decide what to name the output file
 	string filename(argv[1]);
-	string::size_type ext = filename.find_last_of(ASM_EXT);
+	string::size_type ext = filename.rfind(ASM_EXT);
 	if(ext != filename.npos)
 		filename = filename.substr(0, ext);
 	filename += OBJ_EXT;
