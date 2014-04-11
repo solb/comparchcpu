@@ -3,7 +3,9 @@
 // FabComp: assembler
 
 #include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/trim.hpp>
 #include <algorithm>
+#include <fstream>
 #include <functional>
 #include <iostream>
 #include <list>
@@ -11,13 +13,17 @@
 #include <unordered_map>
 #include <vector>
 using boost::split;
+using boost::trim;
 using std::cerr;
 using std::cout;
 using std::endl;
 using std::exception;
+using std::hex;
+using std::ifstream;
 using std::list;
 using std::make_pair;
 using std::min;
+using std::ofstream;
 using std::stoi;
 using std::string;
 using std::transform;
@@ -135,9 +141,50 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	// TODO Support both code and data segments
-	// TODO Run through all lines, skipping comments
+	// Try to open the source file
+	ifstream src(argv[1]);
+	if(!src.is_open()) {
+		cerr << "Unable to open the specified source file" << endl;
+		return 2;
+	}
+
+	bool noerrors = true;
+	unsigned linenum = 1;
+	string line;
+	while(getline(src, line)) {
+		unsigned comment = line.find('#');
+		if(comment)
+			line = line.substr(0, comment);
+
+		trim(line);
+
+		// TODO Support data segment, or at least allow leaving space for data
+		if(line.size())
+			noerrors = proc_line(linenum, line) && noerrors;
+
+		++linenum;
+	}
+	src.close();
+
 	// TODO Perform relocations
+
+	if(!noerrors)
+		return 3;
+
+	// Decide what to name the output file
+	string filename(argv[1]);
+	string::size_type ext = filename.find_last_of(ASM_EXT);
+	if(ext != filename.npos)
+		filename = filename.substr(0, ext);
+	filename += OBJ_EXT;
+
+	ofstream bin(filename);
+	bin << hex;
+	for(unsigned addr = 0; addr < cs.size(); ++addr)
+		bin << addr << ' ' << '1' << ' ' << cs[addr] << endl;
+
+	// TODO Use a main label?
+	bin << '0';
 }
 
 bool proc_line(unsigned num, const string &line) {
