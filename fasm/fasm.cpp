@@ -215,6 +215,10 @@ bool proc_line(unsigned num, const string &line) {
 	for(string &piece : pieces) {
 		string::size_type search_ind;
 
+		// Truncate at trailing comma if present
+		if(piece[piece.length() - 1] == ',')
+			piece = piece.substr(0, piece.length() - 1);
+
 		// Label declaration
 		if((search_ind = piece.find(':')) != piece.npos) {
 			if(saw_opc)
