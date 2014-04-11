@@ -24,6 +24,7 @@ using std::list;
 using std::make_pair;
 using std::min;
 using std::ofstream;
+using std::pair;
 using std::stoi;
 using std::string;
 using std::transform;
@@ -166,7 +167,17 @@ int main(int argc, char *argv[]) {
 	}
 	src.close();
 
-	// TODO Perform relocations
+	// Perform relocations
+	for(pair<const string, list<unsigned>> &reloc : rel_tab) {
+		if(!symb_tab.count(reloc.first)) {
+			cerr << "Undefined symbol: " << reloc.first << endl;
+			return 4;
+		}
+
+		unsigned tgt = symb_tab[reloc.first];
+		for(unsigned ref : reloc.second)
+			cs[ref] = tgt;
+	}
 
 	if(!noerrors)
 		return 3;
