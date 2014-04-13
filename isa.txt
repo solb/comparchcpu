@@ -20,10 +20,10 @@ control path
 	register representations
 	========================
 	cntl block of 3 5-bit registers, with format:
-		PURPOSE		MSB	TAIL
+		PURPOSE			MSB	TAIL
 		register type	0	4-bit register identifier
-		value type	1	val[0] through val[2]
-		mdr		1	0011
+		value type		1	val[0] through val[2]
+		mdr				1	0011
 
 	other hardware
 	==============
