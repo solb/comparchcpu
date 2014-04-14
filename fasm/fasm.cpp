@@ -359,13 +359,12 @@ bool proc_line(unsigned num, const string &line) {
 						}
 
 						if(REG.count(reg))
-							imms[cur_imm] |= REG.at(reg) << REG_SHIFT[cur_opnd];
+							imms[cur_imm] |= REG.at(reg) << REG_SHIFT[0];
 						else
 							return error(num, "Invalid register name");
 
-						// We used up one immediate to hold *all* these registers
-						if(cur_opnd == num_opnds - 1)
-							++cur_imm;
+						// We used up one immediate word
+						++cur_imm;
 					}
 					break;
 				// An immediate, plain and simple
