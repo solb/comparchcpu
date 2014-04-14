@@ -374,6 +374,18 @@ bool proc_line(unsigned num, const string &line) {
 
 					// Set flag to override the relevant address mode specifier
 					inst |= 1 << IMM_SHIFT[cur_opnd - 1];
+
+					// Actually create the immediate
+					try {
+						imms[cur_imm] = stoi(piece);
+					}
+					catch(exception &ex) {
+						return error(num, "Non-integral immdiate");
+					}
+
+					// We used one immediate word
+					++cur_imm;
+
 					break;
 			}
 
