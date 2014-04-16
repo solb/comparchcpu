@@ -32,10 +32,27 @@ elif IR(ami) = 11 then
 	MDR <- Mem[PC] # the R-type immediate word
 	cndl[i] <- 100i
 	PC <- PC + 1
-	if MDR(sam) = 111 then # doubly scaled displacement
+	if MDR(sam) = 000 then # register value
+	elif MDR(sam) = 001 then # register indirect
+	elif MDR(sam) = 010 then # scaled
+	elif MDR(sam) = 011 then # doubly scaled
+	elif MDR(sam) = 100 then # auto increment
+	elif MDR(sam) = 101 then # auto decrement
+	elif MDR(sam) = 110 then # scaled displacement
 		Val[i] <- MDR
 		PC <- PC + 1
 		MDR <- Mem[PC] # the S-type immediate
+		PC <- PC + 1
+		MDR <- MDR >> 8
+		Addr[i] <- Reg[Val[i](reg0)] << MDR
+		MDR <- Mem[PC] # the I-type immediate
+		PC <- PC + 1
+		Addr[i] <- MDR + Addr[i]
+	elif MDR(sam) = 111 then # doubly scaled displacement
+		Val[i] <- MDR
+		PC <- PC + 1
+		MDR <- Mem[PC] # the S-type immediate
+		PC <- PC + 1
 		TMP <- MDR
 		MDR <- MDR >> 8
 		Addr[i] <- Reg[Val[i](reg0)] << MDR
