@@ -218,7 +218,7 @@ bool proc_line(unsigned num, const string &line) {
 	unsigned cur_imm = 0;
 
 	unsigned num_opnds = pieces.size();
-	num_opnds -= line.find(':') != line.npos ? 2 : 1;
+	num_opnds -= line.find(':') != line.npos ? min(num_opnds, static_cast<unsigned>(2)) : 1;
 
 	if(num_opnds > 3)
 		return error(num, "More than three operands to instruction");
@@ -394,9 +394,11 @@ bool proc_line(unsigned num, const string &line) {
 	}
 
 	// Queue the instructions for writing into the code segment
-	cs.push_back(inst);
-	for(unsigned copied = 0; copied < cur_imm; ++copied)
-		cs.push_back(imms[copied]);
+	if(saw_opc) {
+		cs.push_back(inst);
+		for(unsigned copied = 0; copied < cur_imm; ++copied)
+			cs.push_back(imms[copied]);
+	}
 
 	return true;
 }
