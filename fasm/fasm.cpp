@@ -126,11 +126,11 @@ unordered_map<string, unsigned> symb_tab;
 unordered_map<string, list<unsigned>> rel_tab;
 
 // The binary that we're generating
-vector<unsigned> cs;
+vector<unsigned short> cs;
 
 bool proc_line(unsigned, const string &);
 bool error(unsigned, const char *);
-bool scaled_ams(unsigned, list<string> &, unsigned, unsigned &, unsigned &);
+bool scaled_ams(unsigned, list<string> &, unsigned, unsigned short &, unsigned short &);
 bool isparen(char);
 template<typename E> E fruit_pop(list<E> &);
 
@@ -210,10 +210,10 @@ bool proc_line(unsigned num, const string &line) {
 	vector<string> pieces;
 	split(pieces, line, isspace, token_compress_on);
 
-	unsigned inst = 0;
+	unsigned short inst = 0;
 	bool saw_opc = false;
 
-	unsigned imms[9] = {};
+	unsigned short imms[9] = {};
 	unsigned cur_opnd = 0;
 	unsigned cur_imm = 0;
 
@@ -408,7 +408,7 @@ bool error(unsigned line_num, const char *expl) {
 	return false;
 }
 
-bool scaled_ams(unsigned num, list<string> &terms, unsigned reg_offst, unsigned &s_imm, unsigned &i_imm) {
+bool scaled_ams(unsigned num, list<string> &terms, unsigned reg_offst, unsigned short &s_imm, unsigned short &i_imm) {
 	if(terms.size() > 2)
 		return error(num, "Scaled address modes accept at most 2 offsets");
 
