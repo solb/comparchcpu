@@ -1,5 +1,6 @@
 /fasm/fasm
 *.aux
+*.fo
 *.log
 *.o
 *.pdf
