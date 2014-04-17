@@ -160,9 +160,34 @@ int main(int argc, char *argv[]) {
 
 		trim(line);
 
-		// TODO Support data segment, or at least allow leaving space for data
-		if(line.size())
-			noerrors = proc_line(linenum, line) && noerrors;
+		if(line.size()) {
+			if(line.find('.') != line.npos) {
+				vector<string> directive;
+				split(directive, line, isspace, token_compress_on);
+
+				vector<unsigned> argu(directive.size() - 1);
+
+				for(vector<string>::size_type index = 1; index < directive.size(); ++index) {
+					try {
+						argu[index - 1] = stoi(directive[index]);
+					}
+					catch(exception &ex) {
+						noerrors = error(linenum, "Non-integral directive argument");
+						break;
+					}
+				}
+
+				if(noerrors) {
+					if(directive[0] == ".word")
+						for(size_t index = 0; index < (directive.size() > 2 ? argu[1] : 1); ++index)
+							cs.push_back(argu[0]);
+					else
+						noerrors = error(linenum, "Unknown assembler directive");
+				}
+			}
+			else
+				noerrors = proc_line(linenum, line) && noerrors;
+		}
 
 		++linenum;
 	}
