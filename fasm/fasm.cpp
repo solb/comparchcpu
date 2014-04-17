@@ -227,8 +227,8 @@ int main(int argc, char *argv[]) {
 	for(unsigned addr = 0; addr < cs.size(); ++addr)
 		bin << addr << ' ' << '1' << ' ' << cs[addr] << endl;
 
-	// TODO Use a main label?
-	bin << '0';
+	// Execute from the main label if there is one, or 0 otherwise
+	bin << (symb_tab.count("main") ? symb_tab["main"] : 0);
 }
 
 bool proc_line(unsigned num, const string &line) {
