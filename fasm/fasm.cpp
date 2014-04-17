@@ -120,10 +120,10 @@ const unsigned SADM_SHIFT = 12;
 const unsigned REG_SHIFT[] = {8, 4, 0};
 
 // Label -> address mappings
-unordered_map<string, unsigned> symb_tab;
+unordered_map<string, vector<unsigned short>::size_type> symb_tab;
 
 // Label -> references mappings
-unordered_map<string, list<unsigned>> rel_tab;
+unordered_map<string, list<vector<unsigned short>::size_type>> rel_tab;
 
 // The binary that we're generating
 vector<unsigned short> cs;
@@ -194,14 +194,14 @@ int main(int argc, char *argv[]) {
 	src.close();
 
 	// Perform relocations
-	for(pair<const string, list<unsigned>> &reloc : rel_tab) {
+	for(pair<const string, list<vector<unsigned short>::size_type>> &reloc : rel_tab) {
 		if(!symb_tab.count(reloc.first)) {
 			cerr << "Undefined symbol: " << reloc.first << endl;
 			return 4;
 		}
 
-		unsigned tgt = symb_tab[reloc.first];
-		for(unsigned ref : reloc.second)
+		vector<unsigned short>::size_type tgt = symb_tab[reloc.first];
+		for(vector<unsigned short>::size_type ref : reloc.second)
 			cs[ref] = tgt;
 	}
 
@@ -224,7 +224,7 @@ int main(int argc, char *argv[]) {
 
 	ofstream bin(filename);
 	bin << hex;
-	for(unsigned addr = 0; addr < cs.size(); ++addr)
+	for(vector<unsigned short>::size_type addr = 0; addr < cs.size(); ++addr)
 		bin << addr << ' ' << '1' << ' ' << cs[addr] << endl;
 
 	// Execute from the main label if there is one, or 0 otherwise
@@ -240,7 +240,7 @@ bool proc_line(unsigned num, const string &line) {
 
 	unsigned short imms[9] = {};
 	unsigned cur_opnd = 0;
-	unsigned cur_imm = 0;
+	size_t cur_imm = 0;
 
 	unsigned num_opnds = pieces.size();
 	num_opnds -= line.find(':') != line.npos ? min(num_opnds, static_cast<unsigned>(2)) : 1;
@@ -424,7 +424,7 @@ bool proc_line(unsigned num, const string &line) {
 	// Queue the instructions for writing into the code segment
 	if(saw_opc) {
 		cs.push_back(inst);
-		for(unsigned copied = 0; copied < cur_imm; ++copied)
+		for(size_t copied = 0; copied < cur_imm; ++copied)
 			cs.push_back(imms[copied]);
 	}
 
