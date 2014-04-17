@@ -306,7 +306,10 @@ bool proc_line(unsigned num, const string &line) {
 						}
 						// It's a label
 						else
-							rel_tab[base].push_back(cs.size() + 1 + cur_imm);
+							rel_tab[base].push_back(cs.size() + 1 + cur_imm + 2);
+
+						// Set primary address mode
+						inst |= 03 << ADM_SHIFT[cur_opnd];
 
 						// Distinguish from plain scaled addressing
 						imms[cur_imm] |= 01 << (SADM_SHIFT + 2);
@@ -433,11 +436,11 @@ bool error(unsigned line_num, const char *expl) {
 	return false;
 }
 
-bool scaled_ams(unsigned num, list<string> &terms, unsigned reg_offst, unsigned short &s_imm, unsigned short &i_imm) {
+bool scaled_ams(unsigned num, list<string> &terms, unsigned reg_offst, unsigned short &r_imm, unsigned short &s_imm) {
 	if(terms.size() > 2)
 		return error(num, "Scaled address modes accept at most 2 offsets");
 
-	s_imm |= (terms.size() == 2 ? 011 : 010) << SADM_SHIFT;
+	r_imm |= (terms.size() == 2 ? 02 : 03) << SADM_SHIFT;
 
 	for(list<string>::size_type index = 0; index < terms.size(); ++index) {
 		list<string> coeffs;
@@ -449,13 +452,13 @@ bool scaled_ams(unsigned num, list<string> &terms, unsigned reg_offst, unsigned 
 
 		string reg = fruit_pop(coeffs).substr(1);
 		if(REG.count(reg))
-			s_imm |= REG.at(reg) << REG_SHIFT[reg_offst + index];
+			r_imm |= REG.at(reg) << REG_SHIFT[reg_offst + index];
 		else
 			return error(num, "Invalid register name in scaled address specifier");
 
 		if(coeffs.size()) {
 			try {
-				i_imm |= stoi(fruit_pop(coeffs)) << SIMM_SHIFT[index];
+				s_imm |= stoi(fruit_pop(coeffs)) << SIMM_SHIFT[index];
 			}
 			catch(exception &ex) {
 				return error(num, "Non-integral shift in scaled address specifier");
