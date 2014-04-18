@@ -1,6 +1,7 @@
 undeveloped thoughts
 --------------------
-	WE FORGOT TO INCLUDE A MOVE INSTRUCTION!
+	Operation list
+    F D M(Loading) X M(Writing) W
 
 	conditionals and loops
 	======================
@@ -45,6 +46,8 @@ control path
 		populate cntl[0..2]
 		error check opcode/cntl compatibility
 		jump to execute
+    memory:
+        Load op1 and op2 if middle bits are set for cntl 1 and 2
 	execute:
 		call the appropriate uprocedure (essentially a switch on opcode)
 			(each binary operation uses cntl[1..2] as operands and MDR as output)
