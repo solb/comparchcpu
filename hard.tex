@@ -47,6 +47,18 @@ elif IR(ami) = 11 then
 		Addr[i] <- Reg[Val[i](reg1)] << MDR
 		Addr[i] <- Addr[i] + Reg[Val[i](reg0)]
 	elif MDR(sam) = 011 then # doubly scaled
+                Val[i] <- MDR
+                MDR <- Mem[PC]
+                TMP <- MDR
+                PC <- PC + 1
+                MDR <- MDR >> 8
+                Addr[i] <- Reg[Val[i](reg1)] << MDR
+                Addr[i] <- Reg[Val[i](reg0)] + Addr[i]
+                MDR <- Mem[Addr[i]]
+                Addr[i] <- MDR
+                MDR <- TMP & 0xff
+                MDR <- Reg[Val[i](reg2)] << MDR
+                Addr[i] <- MDR + Addr[i]
 	elif MDR(sam) = 100 then # auto increment
 		Val[i] <- MDR
 		Addr[i] <- Reg[Val[i](reg0)]
