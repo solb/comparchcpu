@@ -30,15 +30,12 @@ if IR(ami) = 01 or 10 then
 	PC <- PC + 1
 elif IR(ami) = 11 then
 	MDR <- Mem[PC] # the R-type immediate word
-	cntl[i] <- 1000 | i
+	cntl[i] <- 10000 | i
 	PC <- PC + 1
 	if MDR(sam) = 000 then # register value
-		MDR <- MDR >> 8
-		Val[i] <- Reg[MDR]
+		cntl[i] <- MDR(reg0)
 	elif MDR(sam) = 001 then # register indirect
-		MDR <- MDR >> 8
-		MDR <- MDR & 0xff
-		Val[i] <- Mem[Reg[MDR]]
+		Addr[i] <- Reg[MDR(reg0)]
 	elif MDR(sam) = 010 then # scaled
 		Val[i] <- MDR
 		MDR <- Mem[PC] # the S-type immediate
