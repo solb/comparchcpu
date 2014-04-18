@@ -40,11 +40,17 @@ elif IR(ami) = 11 then
 		MDR <- MDR & 0xff
 		Val[i] <- Mem[Reg[MDR]]
 	elif MDR(sam) = 010 then # scaled
+		Val[i] <- MDR
+		MDR <- Mem[PC] # the S-type immediate
+		PC <- PC + 1
+		MDR <- MDR >> 8
+		Addr[i] <- Reg[Val[i](reg1)] << MDR
+		Addr[i] <- Addr[i] + Reg[Val[i](reg0)]
 	elif MDR(sam) = 011 then # doubly scaled
 	elif MDR(sam) = 100 then # auto increment
-                Val[i] <- MDR
-                Addr[i] <- Reg[Val[i](reg0)]
-                Reg[Val[i](reg0)] <- Reg[Val[i](reg0)] + 1
+		Val[i] <- MDR
+		Addr[i] <- Reg[Val[i](reg0)]
+		Reg[Val[i](reg0)] <- Reg[Val[i](reg0)] + 1
 	elif MDR(sam) = 101 then # auto decrement
 	elif MDR(sam) = 110 then # scaled displacement
 		Val[i] <- MDR
