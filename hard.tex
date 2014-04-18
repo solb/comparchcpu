@@ -52,6 +52,9 @@ elif IR(ami) = 11 then
 		Addr[i] <- Reg[Val[i](reg0)]
 		Reg[Val[i](reg0)] <- Reg[Val[i](reg0)] + 1
 	elif MDR(sam) = 101 then # auto decrement
+		Val[i] <- MDR
+		Addr[i] <- Reg[Val[i](reg0)]
+		Reg[Val[i](reg0)] <- Reg[Val[i](reg0)] - 1
 	elif MDR(sam) = 110 then # scaled displacement
 		Val[i] <- MDR
 		MDR <- Mem[PC] # the S-type immediate
