@@ -24,9 +24,11 @@ PC <- PC + 1
 \subsection{Decode phase}
 \begin{verbatimtab}
 # logic for op0
-if IR(ami) = 01 or 10 then
+if IR(ami) = 00 then
+	cntl[i] <- 10000
+elif IR(ami) = 01 or 10 then
 	Addr[i] <- Mem[PC]
-	cntl[i] <- 100i
+	cntl[i] <- 10000 | i
 	PC <- PC + 1
 elif IR(ami) = 11 then
 	MDR <- Mem[PC] # the R-type immediate word

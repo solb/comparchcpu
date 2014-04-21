@@ -23,7 +23,7 @@ control path
 	cntl block of 3 5-bit registers, with format:
 		PURPOSE			MSB	TAIL
 		register type	0	4-bit register identifier
-		invalid			1	0000
+		not present		1	0000
 		value type		1	00 . (Val[1] or Val[2])
 		mdr				1	0011
 		addr type		1	01 . (Addr[0] through Addr[2])
