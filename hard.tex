@@ -125,7 +125,46 @@ halt:
 # bail out
 
 and:
-# call first validation procedure
+    #call validator_one
+    MDR <- op1 & op2
+    #return
+or:
+    #call validator_one
+    MDR <- op1 | op2
+    #return
+xor:
+    #call validator_one
+    MDR <- op1 ^ op2
+    #return
+lsft:
+    #call validator_one
+    MDR <- op1 << op2
+    #return
+nand:
+    #call validator_one
+    #call and
+    cntl[1] <- 10011
+    cntl[2] <- 10000
+    #call not
+    #return
+nor:
+    #call validator_one
+    #call or
+    cntl[1] <- 10011
+    cntl[2] <- 10000
+    #call not
+    #return
+xnor:
+    #call validator_one
+    #call xor
+    cntl[1] <- 10011
+    cntl[2] <- 10000
+    #call not
+    #return
+rsft:
+    #call validator_one
+    MDR <- op1 << op2
+    #return
 
 validator_one:
 if cntl[0] = 10000
@@ -136,6 +175,30 @@ if cntl[2] = 10000 then
 	cntl[2] <- cntl[1]
 	cntl[1] <- cntl[0]
 # return
+
+validator_two:
+# Check for 3 ops, op0 is not a register
+
+validator_three:
+# Kill immediately
+
+validator_four:
+# Check for 1-2 ops, set cntl[1] if it was empty
+
+validator_five:
+# Check for 2 ops, op0 is not a register
+
+validator_six:
+# Check for 1 op
+
+validator_seven:
+# Check for 1 op, op0 is not a register
+
+validator_eight:
+# Check for 0 op
+
+validator_nine:
+# Check for 2 ops
 \end{verbatimtab}
 
 \subsection{Writeback}
