@@ -224,6 +224,24 @@ sub:
     #call validator_one
     MDR <- op1 - op2
     #return
+
+logical: # handles land, lor, lxor, lnand, lnor, lxnor
+	# call validator_one
+	tmpdst <- cntl[0]
+	cntl[0] <- 10011
+	tmpsrc <- cntl[2]
+	cntl[2] <- 10000
+	# call siz
+	Val[1] <- MDR
+	cntl[1] <- tmpsrc
+	cntl[2] <- 10000
+	# call siz
+	cntl[0] <- tmpdst
+	cntl[1] <- 10001
+	cntl[2] <- 10011
+	# call function described by entry IR(opc) - 4 of an off-memory uJumpTable
+	# return
+
 validator_one:
 if cntl[0] = 10000
 	# bail out loudly
