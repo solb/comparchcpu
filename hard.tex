@@ -116,11 +116,22 @@ if cntl[2](4) == 1 then
         Val[2] <- Mem[Addr[2]]
         cntl[2](2) <- 0
 \end{verbatimtab}
+
 \subsection{Execute}
 \begin{verbatimtab}
-   #CODE FOR EACH FUNCTION
+# call function described by entry IR(opc) of an off-memory uJumpTable
+
+halt:
+# bail out
+
+and:
+# call first validation procedure
+
+validator_one:
+# check for 2-3 ops, and set cntl[2] if it was empty
 \end{verbatimtab}
-\subsection{Store}
+
+\subsection{Writeback}
 \begin{verbatimtab}
 if cntl[0](4) == 0 then
    Reg[cntl[0](3..0)] <- MDR
