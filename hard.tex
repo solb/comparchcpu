@@ -107,13 +107,14 @@ else
 \end{verbatimtab}
 \subsection{Memory Load}
 \begin{verbatimtab}
-if cntl[1][2] == 1 then
-   Val[1] <- Mem[Addr[1]]
-   cntl[1][2] <- 0
-
-if cntl[2][2] == 1 then
-   Val[2] <- Mem[Addr[2]]
-   cntl[2][2] <- 0
+if cntl[1](4) == 1 then
+    if cntl[1](2) == 1 then
+        Val[1] <- Mem[Addr[1]]
+        cntl[1](2) <- 0
+if cntl[2](4) == 1 then
+    if cntl[2](2) == 1 then
+        Val[2] <- Mem[Addr[2]]
+        cntl[2](2) <- 0
 \end{verbatimtab}
 \subsection{Execute}
 \begin{verbatimtab}
@@ -121,10 +122,10 @@ if cntl[2][2] == 1 then
 \end{verbatimtab}
 \subsection{Store}
 \begin{verbatimtab}
-if cntl[0][4] == 0 then
-   Reg[cntl[0][3..0]] <- MDR
-elif cntl[0][4] == 1 then
-   Mem[Addr[cntl[0][3..0]]] <- MDR
+if cntl[0](4) == 0 then
+   Reg[cntl[0](3..0)] <- MDR
+elif cntl[0](4) == 1 then
+   Mem[Addr[cntl[0](3..0)]] <- MDR
 \end{verbatimtab}
 
 \end{document}
