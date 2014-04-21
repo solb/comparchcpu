@@ -128,7 +128,14 @@ and:
 # call first validation procedure
 
 validator_one:
-# check for 2-3 ops, and set cntl[2] if it was empty
+if cntl[0] = 10000
+	#`bail out loudly
+if cntl[1] = 10000 then
+	# bail out loudly
+if cntl[2] = 10000 then
+	cntl[2] <- cntl[1]
+	cntl[1] <- cntl[0]
+# return
 \end{verbatimtab}
 
 \subsection{Writeback}
