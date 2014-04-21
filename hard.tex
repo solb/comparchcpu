@@ -125,50 +125,108 @@ halt:
 # bail out
 
 and:
-    #call validator_one
+    # call validator_one
     MDR <- op1 & op2
-    #return
+    # return
 or:
-    #call validator_one
+    # call validator_one
     MDR <- op1 | op2
-    #return
+    # return
 xor:
-    #call validator_one
+    # call validator_one
     MDR <- op1 ^ op2
-    #return
+    # return
 lsft:
-    #call validator_one
+    # call validator_one
     MDR <- op1 << op2
-    #return
+    # return
 nand:
-    #call validator_one
-    #call and
+    # call validator_one
+    # call and
     cntl[1] <- 10011
     cntl[2] <- 10000
-    #call not
-    #return
+    # call not
+    # return
 nor:
-    #call validator_one
-    #call or
+    # call validator_one
+    # call or
     cntl[1] <- 10011
     cntl[2] <- 10000
-    #call not
-    #return
+    # call not
+    # return
 xnor:
-    #call validator_one
-    #call xor
+    # call validator_one
+    # call xor
     cntl[1] <- 10011
     cntl[2] <- 10000
-    #call not
-    #return
+    # call not
+    # return
 rsft:
-    #call validator_one
-    MDR <- op1 << op2
-    #return
+    # call validator_one
+    MDR <- op1 >> op2
+    # return
 
+rasft:
+    # call validator_one
+    MDR <- op1 >>> op2
+    # return:
+slt:
+    # call validator_one
+    # call sub
+    if MDR(15) == 1
+        MDR <- 1
+    else
+        MDR <- 0
+    # return
+sgt:
+    # call validator_one
+    MDR <- op2 - op1
+    if MDR(15) == 1
+        MDR <- 1
+    else
+        MDR <- 0
+    # return
+seq:
+    # call validator_one
+    # call sub
+    if MDR == 0
+        MDR <- 1
+    else
+        MDR <- 0
+    # return
+sne:
+    # call validator_one
+    # call seq
+    cntl[1] <- 10011
+    cntl[2] <- 10000
+    # call not
+    # return
+sle:
+    # call validator_one
+    # call sgt
+    cntl[1] <- 10011
+    cntl[2] <- 10000
+    # call not
+    # return
+sge:
+    # call validator_one
+    # call slt
+    cntl[1] <- 10011
+    cntl[2] <- 10000
+    # call not
+    # return    
+add:
+    # call validator_one
+    MDR <- op1 + op2
+    # return
+
+sub:
+    #call validator_one
+    MDR <- op1 - op2
+    #return
 validator_one:
 if cntl[0] = 10000
-	#`bail out loudly
+	# bail out loudly
 if cntl[1] = 10000 then
 	# bail out loudly
 if cntl[2] = 10000 then
