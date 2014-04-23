@@ -263,7 +263,7 @@ jmp:
 
 jal:
     # call validator_seven
-    RA <- PC    
+    Reg[15] <- PC    
     PC <- op0
     cntl[0] <- 10011
     # return
