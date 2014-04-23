@@ -228,22 +228,23 @@ sub:
 siz:
     # call validator_four
     if op1 == 0:
-       op0 = 1
+       MDR <- 1
     else:
-       op0 = 0
+       MDR <- 0
     # return
 snz:
     # call validator_four
-    cntl[1] <- cntl[0]    
+    # call siz
+    cntl[1] <- 10011 
     # call not
     # return
 not:
     # call validator_four
-    op0 <- !op1
+    MDR <- !op1
     # return
 neg:
     # call validator_four
-    op0 <- 0 - op1
+    MDR <- 0 - op1
     # return
 # simpbranch goes here
 incr:
@@ -270,17 +271,19 @@ ret:
 jmp:
     # call validator_seven
     PC <- op0
+    cntl[0] <- 10011
     # return
 
 jal:
     # call validator_seven
     RA <- PC    
     PC <- op0
+    cntl[0] <- 10011
     # return
 
 move:
     # call validator_nine
-    op0 <- op1
+    MDR <- op1
     # return
 
 logical: # handles land, lor, lxor, lnand, lnor, lxnor
