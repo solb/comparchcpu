@@ -173,7 +173,7 @@ rasft:
 slt:
     # call validator_one
     # call sub
-    if MDR(15) == 1
+    if MDR(15) = 1
         MDR <- 1
     else
         MDR <- 0
@@ -181,7 +181,7 @@ slt:
 sgt:
     # call validator_one
     MDR <- op2 - op1
-    if MDR(15) == 1
+    if MDR(15) = 1
         MDR <- 1
     else
         MDR <- 0
@@ -189,7 +189,7 @@ sgt:
 seq:
     # call validator_one
     # call sub
-    if MDR == 0
+    if MDR = 0
         MDR <- 1
     else
         MDR <- 0
@@ -227,7 +227,7 @@ sub:
 # validator_three goes here
 siz:
     # call validator_four
-    if op1 == 0:
+    if op1 = 0:
        MDR <- 1
     else:
        MDR <- 0
@@ -376,13 +376,18 @@ validator_eight:
 
 validator_nine:
 	# Check for 2 ops
+    if cntl[0] = 10000 then
+        # bail out loudly
+    if cntl[1] = 10000 then
+        # bail out loudly
+    # return
 \end{verbatimtab}
 
 \subsection{Writeback}
 \begin{verbatimtab}
-if cntl[0](4) == 0 then
+if cntl[0](4) = 0 then
    Reg[cntl[0](3..0)] <- MDR
-elif cntl[0](4) == 1 then
+elif cntl[0](4) = 1 then
    Mem[Addr[cntl[0](3..0)]] <- MDR
 \end{verbatimtab}
 
