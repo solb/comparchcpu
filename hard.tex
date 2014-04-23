@@ -165,11 +165,12 @@ rsft:
     # call validator_one
     MDR <- op1 >> op2
     # return
-
+# logical goes here
 rasft:
     # call validator_one
     MDR <- op1 >>> op2
     # return:
+# logical goes here
 slt:
     # call validator_one
     # call sub
@@ -219,11 +220,11 @@ add:
     # call validator_one
     MDR <- op1 + op2
     # return
-
 sub:
     #call validator_one
     MDR <- op1 - op2
     #return
+# branch goes here
 
 logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	# call validator_one
@@ -242,39 +243,60 @@ logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	# call function described by entry IR(opc) - 4 of an off-memory uJumpTable
 	# return
 
-validator_one:
-if cntl[0] = 10000
-	# bail out loudly
-if cntl[1] = 10000 then
-	# bail out loudly
-if cntl[2] = 10000 then
-	cntl[2] <- cntl[1]
+branch: # handles blt, bgt, beq, bne, ble, bge
+	# call validator_two
+	tmpdst <- cntl[0]
+	cntl[0] <- 10011
+	# call function described by entry IR(opc) - 8 of an off-memory uJumpTable
+	cntl[2] <- 10000
 	cntl[1] <- cntl[0]
-# return
+	cntl[0] <- tmpdst
+	# call biz
+	# return
+
+validator_one:
+	# Check for 2-3 ops
+	if cntl[0] = 10000
+		# bail out loudly
+	if cntl[1] = 10000 then
+		# bail out loudly
+	if cntl[2] = 10000 then
+		cntl[2] <- cntl[1]
+		cntl[1] <- cntl[0]
+	# return
 
 validator_two:
-# Check for 3 ops, op0 is not a register
+	# Check for 3 ops, op0 is not a register
+	if cntl[0] = 10000 then
+		# bail out loudly
+	if cntl[1] = 10000 then
+		# bail out loudly
+	if cntl[2] = 10000 then
+		# bail out loudly
+	if cntl[0](4) = 0 then
+		# bail out loudly
+	# return
 
 validator_three:
-# Kill immediately
+	# Kill immediately
 
 validator_four:
-# Check for 1-2 ops, set cntl[1] if it was empty
+	# Check for 1-2 ops, set cntl[1] if it was empty
 
 validator_five:
-# Check for 2 ops, op0 is not a register
+	# Check for 2 ops, op0 is not a register
 
 validator_six:
-# Check for 1 op
+	# Check for 1 op
 
 validator_seven:
-# Check for 1 op, op0 is not a register
+	# Check for 1 op, op0 is not a register
 
 validator_eight:
-# Check for 0 op
+	# Check for 0 op
 
 validator_nine:
-# Check for 2 ops
+	# Check for 2 ops
 \end{verbatimtab}
 
 \subsection{Writeback}
