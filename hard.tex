@@ -247,6 +247,14 @@ neg:
     op0 <- 0 - op1
     # return
 # simpbranch goes here
+incr:
+	# call validator_six
+	op0 <- op0 + 1
+	# return
+decr:
+	# call validator_six
+	op0 <- op0 - 1
+	# return
 
 logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	# call validator_one
@@ -328,6 +336,9 @@ validator_five:
 
 validator_six:
 	# Check for 1 op
+	if cntl[0] = 10000 then
+		# bail out loudly
+	# return
 
 validator_seven:
 	# Check for 1 op, op0 is not a register
