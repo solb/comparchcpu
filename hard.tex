@@ -221,10 +221,34 @@ add:
     MDR <- op1 + op2
     # return
 sub:
-    #call validator_one
+    # call validator_one
     MDR <- op1 - op2
-    #return
+    # return
 # branch goes here
+
+siz:
+    # call validator_four
+    if op1 == 0:
+       op0 = 1
+    else:
+       op0 = 0
+    # return
+
+snz:
+    # call validator_four
+    cntl[1] <- cntl[0]    
+    # call not
+    # return
+
+not:
+    # call validator_four
+    op0 <- !op1
+    # return
+
+neg:
+    # call validator_four
+    op0 <- 0 - op1
+    # return
 
 logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	# call validator_one
