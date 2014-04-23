@@ -318,7 +318,9 @@ validator_four:
 
 validator_five:
 	# Check for 2 ops, op0 is not a register
-	if cntl[2] = 10000 then
+	if cntl[0] = 10000 then
+		# bail out loudly
+	if cntl[1] = 10000 then
 		# bail out loudly
 	if cntl[0](4) = 0 then
 		# bail out loudly
