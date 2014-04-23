@@ -224,8 +224,8 @@ sub:
     # call validator_one
     MDR <- op1 - op2
     # return
-# branch goes here
-
+# compbranch goes here
+# validator_three goes here
 siz:
     # call validator_four
     if op1 == 0:
@@ -233,22 +233,20 @@ siz:
     else:
        op0 = 0
     # return
-
 snz:
     # call validator_four
     cntl[1] <- cntl[0]    
     # call not
     # return
-
 not:
     # call validator_four
     op0 <- !op1
     # return
-
 neg:
     # call validator_four
     op0 <- 0 - op1
     # return
+# simpbranch goes here
 
 logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	# call validator_one
@@ -267,7 +265,7 @@ logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	# call function described by entry IR(opc) - 4 of an off-memory uJumpTable
 	# return
 
-branch: # handles blt, bgt, beq, bne, ble, bge
+compbranch: # handles blt, bgt, beq, bne, ble, bge
 	# call validator_two
 	tmpdst <- cntl[0]
 	cntl[0] <- 10011
@@ -275,7 +273,17 @@ branch: # handles blt, bgt, beq, bne, ble, bge
 	cntl[2] <- 10000
 	cntl[1] <- cntl[0]
 	cntl[0] <- tmpdst
-	# call biz
+	# call bnz
+	# return
+
+simpbranch: # handles biz, bnz
+	# call validator_five
+	tmpdst <- cntl[0]
+	cntl[0] <- 10011
+	# call function described by entry IR(opc) - 4 of an off-memory uJumpTable
+	if MDR = 1 then
+		cntl[0] <- tmpdst
+		PC <- op0
 	# return
 
 validator_one:
@@ -303,12 +311,18 @@ validator_two:
 
 validator_three:
 	# Kill immediately
+	# bail out loudly
 
 validator_four:
 	# Check for 1-2 ops, set cntl[1] if it was empty
 
 validator_five:
 	# Check for 2 ops, op0 is not a register
+	if cntl[2] = 10000 then
+		# bail out loudly
+	if cntl[0](4) = 0 then
+		# bail out loudly
+	# return
 
 validator_six:
 	# Check for 1 op
