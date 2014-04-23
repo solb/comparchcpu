@@ -255,6 +255,18 @@ decr:
 	# call validator_six
 	op0 <- op0 - 1
 	# return
+call:
+	# call validator_seven
+	# call jal
+	Reg[14] <- Reg[14] - 1
+	Mem[Reg[14]] <- Reg[15]
+	# return
+ret:
+	# call validator_eight
+	cntl[0] <- 01111
+	# call jmp
+	Reg[14] <- Reg[14] + 1
+	# return
 
 jmp:
     # call validator_seven
@@ -358,9 +370,15 @@ validator_six:
 
 validator_seven:
 	# Check for 1 op, op0 is not a register
+	if cntl[0] = 10000 then
+		# bail out loudly
+	if cntl[0](4) = 0 then
+		# bail out loudly
+	# return
 
 validator_eight:
 	# Check for 0 op
+	# return
 
 validator_nine:
 	# Check for 2 ops
