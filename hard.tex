@@ -255,19 +255,6 @@ decr:
 	# call validator_six
 	MDR <- op0 - 1
 	# return
-call:
-	# call validator_seven
-	# call jal
-	Reg[14] <- Reg[14] - 1
-	Mem[Reg[14]] <- Reg[15]
-	# return
-ret:
-	# call validator_eight
-	cntl[0] <- 01111
-	# call jmp
-	Reg[14] <- Reg[14] + 1
-	# return
-
 jmp:
     # call validator_seven
     PC <- op0
@@ -280,7 +267,18 @@ jal:
     PC <- op0
     cntl[0] <- 10011
     # return
-
+call:
+	# call validator_seven
+	# call jal
+	Reg[14] <- Reg[14] - 1
+	Mem[Reg[14]] <- Reg[15]
+	# return
+ret:
+	# call validator_eight
+	cntl[0] <- 01111
+	# call jmp
+	Reg[14] <- Reg[14] + 1
+	# return
 move:
     # call validator_nine
     MDR <- op1
