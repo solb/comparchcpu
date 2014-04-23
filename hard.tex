@@ -315,6 +315,7 @@ simpbranch: # handles biz, bnz
 	# call function described by entry IR(opc) - 4 of an off-memory uJumpTable
 	if MDR = 1 then
 		PC <- op0
+	cntl[0] <- 10011
 	# return
 
 validator_one:
