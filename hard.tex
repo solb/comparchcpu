@@ -123,7 +123,6 @@ if cntl[2](4) == 1 then
 
 halt:
 # bail out
-
 and:
     # call validator_one
     MDR <- op1 & op2
@@ -249,11 +248,11 @@ neg:
 # simpbranch goes here
 incr:
 	# call validator_six
-	op0 <- op0 + 1
+	MDR <- op0 + 1
 	# return
 decr:
 	# call validator_six
-	op0 <- op0 - 1
+	MDR <- op0 - 1
 	# return
 call:
 	# call validator_seven
@@ -286,8 +285,6 @@ move:
 
 logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	# call validator_one
-	tmpdst <- cntl[0]
-	cntl[0] <- 10011
 	tmpsrc <- cntl[2]
 	cntl[2] <- 10000
 	# call siz
@@ -295,7 +292,6 @@ logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	cntl[1] <- tmpsrc
 	cntl[2] <- 10000
 	# call siz
-	cntl[0] <- tmpdst
 	cntl[1] <- 10001
 	cntl[2] <- 10011
 	# call function described by entry IR(opc) - 4 of an off-memory uJumpTable
@@ -304,21 +300,17 @@ logical: # handles land, lor, lxor, lnand, lnor, lxnor
 compbranch: # handles blt, bgt, beq, bne, ble, bge
 	# call validator_two
 	tmpdst <- cntl[0]
-	cntl[0] <- 10011
 	# call function described by entry IR(opc) - 8 of an off-memory uJumpTable
 	cntl[2] <- 10000
 	cntl[1] <- cntl[0]
-	cntl[0] <- tmpdst
 	# call bnz
 	# return
 
 simpbranch: # handles biz, bnz
 	# call validator_five
 	tmpdst <- cntl[0]
-	cntl[0] <- 10011
 	# call function described by entry IR(opc) - 4 of an off-memory uJumpTable
 	if MDR = 1 then
-		cntl[0] <- tmpdst
 		PC <- op0
 	# return
 
