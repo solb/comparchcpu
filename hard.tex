@@ -256,6 +256,22 @@ decr:
 	op0 <- op0 - 1
 	# return
 
+jmp:
+    # call validator_seven
+    PC <- op0
+    # return
+
+jal:
+    # call validator_seven
+    RA <- PC    
+    PC <- op0
+    # return
+
+move:
+    # call validator_nine
+    op0 <- op1
+    # return
+
 logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	# call validator_one
 	tmpdst <- cntl[0]
