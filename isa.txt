@@ -16,6 +16,17 @@ data path
 	addr block of 3 registers: stores the EAs computed by each relevant address mode
 	val block of 3 registers: stores the values (from immediate or memory) of each operand
 
+	register types
+	==============
+	pc a counter
+	mdr a shift register
+
+	control points settable from c code
+	===================================
+	register address
+	value block address
+	address block address
+
 control path
 ------------
 	register representations
