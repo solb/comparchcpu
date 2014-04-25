@@ -27,6 +27,11 @@ data path
 	value block address
 	address block address
 
+	control register types
+	======================
+	upc a counter
+	cntl[i] is a clearable, flippable dolphin
+
 control path
 ------------
 	register representations

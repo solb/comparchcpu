@@ -95,9 +95,9 @@ if IR(ami) = 10 then # PC-relative
 
 # logic for op1
 if IR(imm)(1) = 1 then # immdiate
-	Val[1] \get Mem[PC]
-	cntl[1] \get 1001
-	PC \get PC + 1
+	Val[1] <- Mem[PC]
+	cntl[1] <- 1001
+	PC <- PC + 1
 else
 	# do the same as for op0
 
@@ -286,11 +286,11 @@ move:
 
 logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	# call validator_one
-	tmpsrc <- cntl[2]
+	tmp <- cntl[2]
 	cntl[2] <- 10000
 	# call siz
 	Val[1] <- MDR
-	cntl[1] <- tmpsrc
+	cntl[1] <- tmp
 	cntl[2] <- 10000
 	# call siz
 	cntl[1] <- 10001
@@ -300,7 +300,6 @@ logical: # handles land, lor, lxor, lnand, lnor, lxnor
 
 compbranch: # handles blt, bgt, beq, bne, ble, bge
 	# call validator_two
-	tmpdst <- cntl[0]
 	# call function described by entry IR(opc) - 8 of an off-memory uJumpTable
 	cntl[2] <- 10000
 	cntl[1] <- cntl[0]
@@ -309,7 +308,6 @@ compbranch: # handles blt, bgt, beq, bne, ble, bge
 
 simpbranch: # handles biz, bnz
 	# call validator_five
-	tmpdst <- cntl[0]
 	# call function described by entry IR(opc) - 4 of an off-memory uJumpTable
 	if MDR = 1 then
 		PC <- op0
