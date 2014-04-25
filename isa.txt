@@ -20,6 +20,7 @@ data path
 	==============
 	pc a counter
 	mdr a shift register
+	ir a shift register (for schlepping opcodes to the uJumpTab)
 
 	control points settable from c code
 	===================================
