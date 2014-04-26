@@ -1,14 +1,3 @@
-undeveloped thoughts
---------------------
-	Operation list
-    F D M(Loading) X M(Writing) W
-
-	conditionals and loops
-	======================
-	do we want fors, whiles or dos?
-	how about switches?
-	assembler would pass "for" the address of the corresponding end
-
 data path
 ---------
 	register representations
@@ -50,27 +39,3 @@ control path
 	need uMem and a uPC for storing and navigating the ucode
 	need a uStack and uSP to support procedure calls
 	we'll want an additional uStack and uSP to keep track of for loops
-
-	uprogram control flow
-	=====================
-	fetch:
-		fetch control byte
-		interpret address mode descriptors and load trailing immediate bytes
-		read each secondary address mode descriptor and populate addr[0..2]
-		compute effectice addresses into val[0..2]
-		jump to decode
-	decode:
-		populate cntl[0..2]
-		error check opcode/cntl compatibility
-		jump to execute
-    memory:
-        Load op1 and op2 if middle bits are set for cntl 1 and 2
-	execute:
-		call the appropriate uprocedure (essentially a switch on opcode)
-			(each binary operation uses cntl[1..2] as operands and MDR as output)
-			(each unary operation uses cntl[1] as operand and MDR as output)
-		jump to store
-	store:
-		if MSB of cntl[0] is 0: write MDR to register block, address cntl[0](3 downto 0)
-		if MSB of cntl[0] is 1: write MDR to memory, address val[cntl[0](3 downto 0)]
-		jump to fetch
