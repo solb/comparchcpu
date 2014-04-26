@@ -1,5 +1,6 @@
 /fasm/fasm
 *.aux
+*.cwt
 *.fo
 *.log
 *.o
