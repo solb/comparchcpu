@@ -29,14 +29,14 @@ if IR(ami) = 00 then
 	cntl[i] <- 10000
 elif IR(ami) = 01 or 10 then
 	Addr[i] <- Mem[PC]
-	cntl[i] <- 10000 | i
+	cntl[i] <- 10100 | i
 	PC <- PC + 1
 elif IR(ami) = 11 then
 	MDR <- Mem[PC] # the R-type immediate word
-	cntl[i] <- 10000 | i
+	cntl[i] <- 10100 | i
 	PC <- PC + 1
 	if MDR(sam) = 000 then # register value
-		cntl[i] <- MDR(reg0)
+		cntl[i] <- 00000 | MDR(reg0)
 	elif MDR(sam) = 001 then # register indirect
 		Addr[i] <- Reg[MDR(reg0)]
 	elif MDR(sam) = 010 then # scaled
@@ -95,9 +95,9 @@ if IR(ami) = 10 then # PC-relative
 	Addr[i] <- PC + Addr[i]
 
 # Logic for op1
-if IR(imm)(1) = 1 then # immdiate
-	Val[1] <- Mem[PC]
-	cntl[1] <- 1001
+if IR(imm)(i) = 1 then # immdiate
+	Val[i] <- Mem[PC]
+	cntl[i] <- 10000 | i
 	PC <- PC + 1
 else
 	# do the same as for op0
@@ -123,7 +123,7 @@ if cntl[2](4) == 1 then
 # call function described by entry IR(opc) of an off-memory uJumpTable
 
 halt:
-# bail out
+	# bail out
 and:
     # call validator_one
     MDR <- op1 & op2
@@ -399,6 +399,7 @@ if cntl[0](4) = 0 then
    Reg[cntl[0](3..0)] <- MDR
 elif cntl[0](4) = 1 then
    Mem[Addr[cntl[0](3..0)]] <- MDR
+# jump to the very beginning
 \end{verbatimtab}
 % END RTL
 
