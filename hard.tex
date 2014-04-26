@@ -15,6 +15,7 @@ Sol Boucher and Evan Klei \hfill CSCI-453-01 \hfill 04/28/14 \\
 \section{Register transfer language}
 This is the sequence of hardware actions performed by each processing phase, address mode calculation, and instruction execution.
 
+% BEGIN RTL
 \subsection{Fetch phase}
 \begin{verbatimtab}
 IR <- Mem[PC] # the instruction word
@@ -23,7 +24,7 @@ PC <- PC + 1
 
 \subsection{Decode phase}
 \begin{verbatimtab}
-# logic for op0
+# Logic for op0
 if IR(ami) = 00 then
 	cntl[i] <- 10000
 elif IR(ami) = 01 or 10 then
@@ -93,7 +94,7 @@ elif IR(ami) = 11 then
 if IR(ami) = 10 then # PC-relative
 	Addr[i] <- PC + Addr[i]
 
-# logic for op1
+# Logic for op1
 if IR(imm)(1) = 1 then # immdiate
 	Val[1] <- Mem[PC]
 	cntl[1] <- 1001
@@ -101,7 +102,7 @@ if IR(imm)(1) = 1 then # immdiate
 else
 	# do the same as for op0
 
-# logic for op2 is the same as that for op1
+# Logic for op2 is the same as that for op1
 
 # decode the opcode at micro level
 \end{verbatimtab}
@@ -165,10 +166,14 @@ rsft:
     MDR <- op1 >> op2
     # return
 # logical goes here
+# logical goes here
+# logical goes here
 rasft:
     # call validator_one
     MDR <- op1 >>> op2
     # return
+# logical goes here
+# logical goes here
 # logical goes here
 slt:
     # call validator_one
@@ -224,10 +229,16 @@ sub:
     MDR <- op1 - op2
     # return
 # compbranch goes here
+# compbranch goes here
+# compbranch goes here
+# compbranch goes here
+# compbranch goes here
+# compbranch goes here
+# validator_three goes here
 # validator_three goes here
 siz:
     # call validator_four
-    if op1 = 0:
+    if op1 = 0
        MDR <- 1
     else
        MDR <- 0
@@ -246,6 +257,7 @@ neg:
     # call validator_four
     MDR <- 0 - op1
     # return
+# simpbranch goes here
 # simpbranch goes here
 incr:
 	# call validator_six
@@ -388,5 +400,6 @@ if cntl[0](4) = 0 then
 elif cntl[0](4) = 1 then
    Mem[Addr[cntl[0](3..0)]] <- MDR
 \end{verbatimtab}
+% END RTL
 
 \end{document}
