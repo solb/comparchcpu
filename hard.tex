@@ -24,98 +24,101 @@ PC <- PC + 1
 
 \subsection{Decode phase}
 \begin{verbatimtab}
-# Logic for op0
-if IR(ami) = 00 then
-	cntl[i] <- 10000
-elif IR(ami) = 01 or 10 then
-	Addr[i] <- Mem[PC]
-	cntl[i] <- 10100 | i
-	PC <- PC + 1
-elif IR(ami) = 11 then
-	MDR <- Mem[PC] # the R-type immediate word
-	cntl[i] <- 10100 | i
-	PC <- PC + 1
-	if MDR(sam) = 000 then # register value
-		cntl[i] <- 00000 | MDR(reg0)
-	elif MDR(sam) = 001 then # register indirect
-		Addr[i] <- Reg[MDR(reg0)]
-	elif MDR(sam) = 010 then # scaled
-		Val[i] <- MDR
-		MDR <- Mem[PC] # the S-type immediate
+i <- 00
+while i != 11 do
+	if i != 00 AND IR(imm)(i) = 1 then
+		Val[i] <- Mem[PC]
+		cntl[i] <- 10000 | i
 		PC <- PC + 1
-		MDR <- MDR >> 8
-		Addr[i] <- Reg[Val[i](reg1)] << MDR
-		Addr[i] <- Addr[i] + Reg[Val[i](reg0)]
-	elif MDR(sam) = 011 then # doubly scaled
-                Val[i] <- MDR
-                MDR <- Mem[PC]
-                TMP <- MDR
-                PC <- PC + 1
-                MDR <- MDR >> 8
-                Addr[i] <- Reg[Val[i](reg1)] << MDR
-                Addr[i] <- Reg[Val[i](reg0)] + Addr[i]
-                MDR <- Mem[Addr[i]]
-                Addr[i] <- MDR
-                MDR <- TMP & 0xff
-                MDR <- Reg[Val[i](reg2)] << MDR
-                Addr[i] <- MDR + Addr[i]
-	elif MDR(sam) = 100 then # auto increment
-		Val[i] <- MDR
-		Addr[i] <- Reg[Val[i](reg0)]
-		Reg[Val[i](reg0)] <- Reg[Val[i](reg0)] + 1
-	elif MDR(sam) = 101 then # auto decrement
-		Val[i] <- MDR
-		Addr[i] <- Reg[Val[i](reg0)]
-		Reg[Val[i](reg0)] <- Reg[Val[i](reg0)] - 1
-	elif MDR(sam) = 110 then # scaled displacement
-		Val[i] <- MDR
-		MDR <- Mem[PC] # the S-type immediate
+	elif IR(ami) = 00 then
+		cntl[i] <- 10000
+	elif IR(ami) = 01 or 10 then
+		Addr[i] <- Mem[PC]
+		cntl[i] <- 10100 | i
 		PC <- PC + 1
-		MDR <- MDR >> 8
-		Addr[i] <- Reg[Val[i](reg0)] << MDR
-		MDR <- Mem[PC] # the I-type immediate
+	elif IR(ami) = 11 then
+		MDR <- Mem[PC] # the R-type immediate word
+		cntl[i] <- 10100 | i
 		PC <- PC + 1
-		Addr[i] <- MDR + Addr[i]
-	elif MDR(sam) = 111 then # doubly scaled displacement
-		Val[i] <- MDR
-		MDR <- Mem[PC] # the S-type immediate
-		PC <- PC + 1
-		TMP <- MDR
-		MDR <- MDR >> 8
-		Addr[i] <- Reg[Val[i](reg0)] << MDR
-		MDR <- Mem[PC] # the I-type immediate
-		PC <- PC + 1
-		Addr[i] <- MDR + Addr[i]
-		MDR <- Mem[Addr[i]]
-		Addr[i] <- MDR
-		MDR <- TMP & 0xff
-		MDR <- Reg[Val[i](reg1)] << MDR
-		Addr[i] <- Addr[i] + MDR
-if IR(ami) = 10 then # PC-relative
-	Addr[i] <- PC + Addr[i]
+		if MDR(sam) = 000 then # register value
+			cntl[i] <- 00000 | MDR(reg0)
+		elif MDR(sam) = 001 then # register indirect
+			Addr[i] <- Reg[MDR(reg0)]
+		elif MDR(sam) = 010 then # scaled
+			Val[i] <- MDR
+			MDR <- Mem[PC] # the S-type immediate
+			PC <- PC + 1
+			MDR <- MDR >> 8
+			Addr[i] <- Reg[Val[i](reg1)] << MDR
+			Addr[i] <- Addr[i] + Reg[Val[i](reg0)]
+		elif MDR(sam) = 011 then # doubly scaled
+			Val[i] <- MDR
+			MDR <- Mem[PC]
+			TMP <- MDR
+			PC <- PC + 1
+			MDR <- MDR >> 8
+			Addr[i] <- Reg[Val[i](reg1)] << MDR
+			Addr[i] <- Reg[Val[i](reg0)] + Addr[i]
+			MDR <- Mem[Addr[i]]
+			Addr[i] <- MDR
+			MDR <- TMP & 0xff
+			MDR <- Reg[Val[i](reg2)] << MDR
+			Addr[i] <- MDR + Addr[i]
+		elif MDR(sam) = 100 then # auto increment
+			Val[i] <- MDR
+			Addr[i] <- Reg[Val[i](reg0)]
+			Reg[Val[i](reg0)] <- Reg[Val[i](reg0)] + 1
+		elif MDR(sam) = 101 then # auto decrement
+			Val[i] <- MDR
+			Addr[i] <- Reg[Val[i](reg0)]
+			Reg[Val[i](reg0)] <- Reg[Val[i](reg0)] - 1
+		elif MDR(sam) = 110 then # scaled displacement
+			Val[i] <- MDR
+			MDR <- Mem[PC] # the S-type immediate
+			PC <- PC + 1
+			MDR <- MDR >> 8
+			Addr[i] <- Reg[Val[i](reg0)] << MDR
+			MDR <- Mem[PC] # the I-type immediate
+			PC <- PC + 1
+			Addr[i] <- MDR + Addr[i]
+		elif MDR(sam) = 111 then # doubly scaled displacement
+			Val[i] <- MDR
+			MDR <- Mem[PC] # the S-type immediate
+			PC <- PC + 1
+			TMP <- MDR
+			MDR <- MDR >> 8
+			Addr[i] <- Reg[Val[i](reg0)] << MDR
+			MDR <- Mem[PC] # the I-type immediate
+			PC <- PC + 1
+			Addr[i] <- MDR + Addr[i]
+			MDR <- Mem[Addr[i]]
+			Addr[i] <- MDR
+			MDR <- TMP & 0xff
+			MDR <- Reg[Val[i](reg1)] << MDR
+			Addr[i] <- Addr[i] + MDR
+		fi
+	fi
+	i <- i + 1
+done
 
-# Logic for op1
-if IR(imm)(i) = 1 then # immdiate
-	Val[i] <- Mem[PC]
-	cntl[i] <- 10000 | i
-	PC <- PC + 1
-else
-	# do the same as for op0
-
-# Logic for op2 is the same as that for op1
-
-# decode the opcode at micro level
+i <- 00
+while i != 11 do
+	if IR(ami) = 10 then # PC-relative
+		Addr[i] <- PC + Addr[i]
+	fi
+done
 \end{verbatimtab}
+
 \subsection{Memory Load}
 \begin{verbatimtab}
-if cntl[1](4) == 1 then
-    if cntl[1](2) == 1 then
-        Val[1] <- Mem[Addr[1]]
-        cntl[1](2) <- 0
-if cntl[2](4) == 1 then
-    if cntl[2](2) == 1 then
-        Val[2] <- Mem[Addr[2]]
-        cntl[2](2) <- 0
+if cntl[1](4) = 1 AND cntl[1](2) = 1 then
+	Val[1] <- Mem[Addr[1]]
+	cntl[1](2) <- 0
+fi
+if cntl[2](4) = 1 AND cntl[2](2) = 1 then
+	Val[2] <- Mem[Addr[2]]
+	cntl[2](2) <- 0
+fi
 \end{verbatimtab}
 
 \subsection{Execute}
@@ -182,6 +185,7 @@ slt:
         MDR <- 1
     else
         MDR <- 0
+	fi
     # return
 sgt:
     # call validator_one
@@ -190,6 +194,7 @@ sgt:
         MDR <- 1
     else
         MDR <- 0
+	fi
     # return
 seq:
     # call validator_one
@@ -198,6 +203,7 @@ seq:
         MDR <- 1
     else
         MDR <- 0
+	fi
     # return
 sne:
     # call validator_one
@@ -242,6 +248,7 @@ siz:
        MDR <- 1
     else
        MDR <- 0
+	fi
     # return
 snz:
     # call validator_four
@@ -323,6 +330,7 @@ simpbranch: # handles biz, bnz
 	# call function described by entry IR(opc) - 4 of an off-memory uJumpTable
 	if MDR = 1 then
 		PC <- op0
+	fi
 	cntl[0] <- 10011
 	# return
 
@@ -330,23 +338,30 @@ validator_one:
 	# Check for 2-3 ops
 	if cntl[0] = 10000
 		# bail out loudly
+	fi
 	if cntl[1] = 10000 then
 		# bail out loudly
+	fi
 	if cntl[2] = 10000 then
 		cntl[2] <- cntl[1]
 		cntl[1] <- cntl[0]
+	fi
 	# return
 
 validator_two:
 	# Check for 3 ops, op0 is not a register
 	if cntl[0] = 10000 then
 		# bail out loudly
+	fi
 	if cntl[1] = 10000 then
 		# bail out loudly
+	fi
 	if cntl[2] = 10000 then
 		# bail out loudly
+	fi
 	if cntl[0](4) = 0 then
 		# bail out loudly
+	fi
 	# return
 
 validator_three:
@@ -360,24 +375,30 @@ validator_five:
 	# Check for 2 ops, op0 is not a register
 	if cntl[0] = 10000 then
 		# bail out loudly
+	fi
 	if cntl[1] = 10000 then
 		# bail out loudly
+	fi
 	if cntl[0](4) = 0 then
 		# bail out loudly
+	fi
 	# return
 
 validator_six:
 	# Check for 1 op
 	if cntl[0] = 10000 then
 		# bail out loudly
+	fi
 	# return
 
 validator_seven:
 	# Check for 1 op, op0 is not a register
 	if cntl[0] = 10000 then
 		# bail out loudly
+	fi
 	if cntl[0](4) = 0 then
 		# bail out loudly
+	fi
 	# return
 
 validator_eight:
@@ -388,8 +409,10 @@ validator_nine:
 	# Check for 2 ops
     if cntl[0] = 10000 then
         # bail out loudly
+	fi
     if cntl[1] = 10000 then
         # bail out loudly
+	fi
     # return
 \end{verbatimtab}
 
@@ -399,6 +422,7 @@ if cntl[0](4) = 0 then
    Reg[cntl[0](3..0)] <- MDR
 elif cntl[0](4) = 1 then
    Mem[Addr[cntl[0](3..0)]] <- MDR
+fi
 # jump to the very beginning
 \end{verbatimtab}
 % END RTL
