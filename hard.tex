@@ -128,112 +128,112 @@ fi
 halt:
 	# bail out
 and:
-    # call validator_one
-    MDR <- op1 & op2
-    # return
+	# call validator_one
+	MDR <- op1 & op2
+	# return
 or:
-    # call validator_one
-    MDR <- op1 | op2
-    # return
+	# call validator_one
+	MDR <- op1 | op2
+	# return
 xor:
-    # call validator_one
-    MDR <- op1 ^ op2
-    # return
+	# call validator_one
+	MDR <- op1 ^ op2
+	# return
 lsft:
-    # call validator_one
-    MDR <- op1 << op2
-    # return
+	# call validator_one
+	MDR <- op1 << op2
+	# return
 nand:
-    # call validator_one
-    # call and
-    cntl[1] <- 10011
-    cntl[2] <- 10000
-    # call not
-    # return
+	# call validator_one
+	# call and
+	cntl[1] <- 10011
+	cntl[2] <- 10000
+	# call not
+	# return
 nor:
-    # call validator_one
-    # call or
-    cntl[1] <- 10011
-    cntl[2] <- 10000
-    # call not
-    # return
+	# call validator_one
+	# call or
+	cntl[1] <- 10011
+	cntl[2] <- 10000
+	# call not
+	# return
 xnor:
-    # call validator_one
-    # call xor
-    cntl[1] <- 10011
-    cntl[2] <- 10000
-    # call not
-    # return
+	# call validator_one
+	# call xor
+	cntl[1] <- 10011
+	cntl[2] <- 10000
+	# call not
+	# return
 rsft:
-    # call validator_one
-    MDR <- op1 >> op2
-    # return
+	# call validator_one
+	MDR <- op1 >> op2
+	# return
 # logical goes here
 # logical goes here
 # logical goes here
 rasft:
-    # call validator_one
-    MDR <- op1 >>> op2
-    # return
+	# call validator_one
+	MDR <- op1 >>> op2
+	# return
 # logical goes here
 # logical goes here
 # logical goes here
 slt:
-    # call validator_one
-    # call sub
-    if MDR(15) = 1
-        MDR <- 1
-    else
-        MDR <- 0
+	# call validator_one
+	# call sub
+	if MDR(15) = 1
+		MDR <- 1
+	else
+		MDR <- 0
 	fi
-    # return
+	# return
 sgt:
-    # call validator_one
-    MDR <- op2 - op1
-    if MDR(15) = 1
-        MDR <- 1
-    else
-        MDR <- 0
+	# call validator_one
+	MDR <- op2 - op1
+	if MDR(15) = 1
+		MDR <- 1
+	else
+		MDR <- 0
 	fi
-    # return
+	# return
 seq:
-    # call validator_one
-    # call sub
-    if MDR = 0
-        MDR <- 1
-    else
-        MDR <- 0
+	# call validator_one
+	# call sub
+	if MDR = 0
+		MDR <- 1
+	else
+		MDR <- 0
 	fi
-    # return
+	# return
 sne:
-    # call validator_one
-    # call seq
-    cntl[1] <- 10011
-    cntl[2] <- 10000
-    # call not
-    # return
+	# call validator_one
+	# call seq
+	cntl[1] <- 10011
+	cntl[2] <- 10000
+	# call not
+	# return
 sle:
-    # call validator_one
-    # call sgt
-    cntl[1] <- 10011
-    cntl[2] <- 10000
-    # call not
-    # return
+	# call validator_one
+	# call sgt
+	cntl[1] <- 10011
+	cntl[2] <- 10000
+	# call not
+	# return
 sge:
-    # call validator_one
-    # call slt
-    cntl[1] <- 10011
-    cntl[2] <- 10000
-    # call not
-    # return
+	# call validator_one
+	# call slt
+	cntl[1] <- 10011
+	cntl[2] <- 10000
+	# call not
+	# return
 add:
-    # call validator_one
-    MDR <- op1 + op2
-    # return
+	# call validator_one
+	MDR <- op1 + op2
+	# return
 sub:
-    # call validator_one
-    MDR <- op1 - op2
-    # return
+	# call validator_one
+	MDR <- op1 - op2
+	# return
 # compbranch goes here
 # compbranch goes here
 # compbranch goes here
@@ -243,27 +243,27 @@ sub:
 # validator_three goes here
 # validator_three goes here
 siz:
-    # call validator_four
-    if op1 = 0
-       MDR <- 1
-    else
-       MDR <- 0
+	# call validator_four
+	if op1 = 0
+	   MDR <- 1
+	else
+	   MDR <- 0
 	fi
-    # return
+	# return
 snz:
-    # call validator_four
-    # call siz
-    cntl[1] <- 10011 
-    # call not
-    # return
+	# call validator_four
+	# call siz
+	cntl[1] <- 10011
+	# call not
+	# return
 not:
-    # call validator_four
-    MDR <- !op1
-    # return
+	# call validator_four
+	MDR <- !op1
+	# return
 neg:
-    # call validator_four
-    MDR <- 0 - op1
-    # return
+	# call validator_four
+	MDR <- 0 - op1
+	# return
 # simpbranch goes here
 # simpbranch goes here
 incr:
@@ -275,17 +275,17 @@ decr:
 	MDR <- op0 - 1
 	# return
 jmp:
-    # call validator_seven
-    PC <- op0
-    cntl[0] <- 10011
-    # return
+	# call validator_seven
+	PC <- op0
+	cntl[0] <- 10011
+	# return
 
 jal:
-    # call validator_seven
-    Reg[15] <- PC    
-    PC <- op0
-    cntl[0] <- 10011
-    # return
+	# call validator_seven
+	Reg[15] <- PC
+	PC <- op0
+	cntl[0] <- 10011
+	# return
 call:
 	# call validator_seven
 	# call jal
@@ -299,9 +299,9 @@ ret:
 	Reg[14] <- Reg[14] + 1
 	# return
 move:
-    # call validator_nine
-    MDR <- op1
-    # return
+	# call validator_nine
+	MDR <- op1
+	# return
 
 logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	# call validator_one
@@ -407,21 +407,21 @@ validator_eight:
 
 validator_nine:
 	# Check for 2 ops
-    if cntl[0] = 10000 then
-        # bail out loudly
+	if cntl[0] = 10000 then
+		# bail out loudly
 	fi
-    if cntl[1] = 10000 then
-        # bail out loudly
+	if cntl[1] = 10000 then
+		# bail out loudly
 	fi
-    # return
+	# return
 \end{verbatimtab}
 
 \subsection{Writeback}
 \begin{verbatimtab}
 if cntl[0](4) = 0 then
-   Reg[cntl[0](3..0)] <- MDR
+	Reg[cntl[0](3..0)] <- MDR
 elif cntl[0](4) = 1 then
-   Mem[Addr[cntl[0](3..0)]] <- MDR
+	Mem[Addr[cntl[0](3..0)]] <- MDR
 fi
 # jump to the very beginning
 \end{verbatimtab}
