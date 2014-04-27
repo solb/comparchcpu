@@ -1,6 +1,6 @@
 /fasm/fasm
+ctrlwords.tex
 *.aux
-*.cwt
 *.fl
 *.fo
 *.log

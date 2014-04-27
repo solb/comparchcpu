@@ -7,7 +7,7 @@
 # output filenames
 microcode="ucode.tu"
 jumptable="jmptab.tl"
-ctrlwords="ctrlwords.cwt"
+ctrlwords="ctrlwords.tex"
 
 # Handles special labels provided by RTL itself (namely whiles, elses, and fis)
 processlangbranch() {
@@ -68,6 +68,6 @@ truncate -s 0 "$ctrlwords"
 
 uopcode=0
 echo "$words" | while read line ; do
-	printf '%02x\t%s\n' "$uopcode" "$line" >>"$ctrlwords"
+	printf '0x%02x & %s\n' "$uopcode" "$line" >>"$ctrlwords"
 	uopcode=$(($uopcode + 1))
 done
