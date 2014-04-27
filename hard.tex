@@ -46,10 +46,29 @@ Addr & 3-register bank & storage of effective addresses \\
 \end{tabular}
 
 \subsection{Control path}
-The word and address sizes within the control path are component-specific.
+The word size and address widths within the control path are component-specific:
+
+\vspace{6pt}
+\begin{tabular}{| c | c | c | l |}
+\hline
+\multicolumn{4}{| c |}{control path storage objects} \\
+\hline
+name & type & word size & purpose \\
+\hline
+uPC & counter register & 16-bit & microprogram counter \\
+uIR & register & 16-bit & microinstruction register \\
+cntl & 3-register bank & 5-bit & operand control flags \\
+tmp & register & 5-bit & temporary control flags \\
+i & counter register & 2-bit & track current working operand \\
+regshift & shift register & 16-bit & transfer register IDs from data path \\
+uSP & counter register & 2-bit & micro--stack pointer \\
+uStack & 3-register bank & 16-bit & subprocedure return addresses \\
+uMem & memory & 16-bit (data and addr) & contains hardcoded microprogram \\
+uJumpTab & memory & 16-bit data, 5-bit addr & hardcoded jump table \\
+\hline
+\end{tabular}
 
 \includegraphics[width=\textwidth]{controlpath}
-% TODO Add a storage types/purposes table
 
 The 3 control registers are used to represent the source and destination operand locations:
 
