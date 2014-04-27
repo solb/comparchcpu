@@ -32,7 +32,8 @@ assignopcodes() {
 	truncate -s 0 "$2"
 	uopcode=0
 	echo "$1" | while read line ; do
-		printf '0x%02x & %s\n' "$uopcode" "$line" >>"$2"
+		escaped=`echo "$line" | sed -e 's/&/\\\&/' -e 's/\^/\\\^/'`
+		printf '0x%02x & %s \\\\\n' "$uopcode" "$escaped" >>"$2"
 		uopcode=$(($uopcode + 1))
 	done
 }
