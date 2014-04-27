@@ -1,6 +1,8 @@
 \documentclass[12pt]{article}
+\usepackage[T1]{fontenc}
 \usepackage{framed}
 \usepackage[margin=1in,top=0.5in]{geometry}
+\usepackage{longtable}
 \usepackage{moreverb}
 \usepackage{multirow}
 \begin{document}
@@ -13,7 +15,7 @@ Sol Boucher and Evan Klei \hfill CSCI-453-01 \hfill 04/28/14 \\
 \end{framed}
 
 \section{Register transfer language}
-This is the sequence of hardware actions performed by each processing phase, address mode calculation, and instruction execution.
+Here is the sequence of hardware actions performed by each phase of instruction processing:
 
 % BEGIN RTL
 \subsection{Fetch phase}
@@ -426,5 +428,88 @@ fi
 # jump to the very beginning
 \end{verbatimtab}
 % END RTL
+
+\section{Microinstruction format}
+Each microinstruction is encoded as a single word, with one of two possible formats:
+
+\vspace{6pt}
+\begin{tabular}{| c | c |}
+\hline
+\multicolumn{2}{| c |}{C-type word format} \\
+\hline
+0000 & control points \\
+\hline
+
+15 \hfill 12 & 11 \hfill 0 \\
+\end{tabular}
+\begin{tabular}{| c | c | c |}
+\hline
+\multicolumn{3}{| c |}{J-type word format} \\
+\hline
+type & condition & jump index \\
+\hline
+15 \hfill 12 & 11 \hfill 7 & 6 \hfill 0 \\
+\end{tabular}
+
+\subsection{C-type microinstructions}
+This microinstruction type is used to set control points and move data around in the data and control paths.
+The encoding is entirely vertical and therefore supports no parallelism beyond that encoded into the discrete control point identifiers themselves.
+
+\begin{longtable}{| c | l |}
+\hline
+\multicolumn{2}{| c |}{control point settings} \\
+\hline
+encoding & equivalent RTL \\
+\hline
+\input{ucode/ctrlwords}
+\hline
+\end{longtable}
+
+\subsection{J-type microinstructions}
+This microinstruction format is used for goto operations altering the micro--program counter and microstack.
+The type field determines what type of control flow change is occurring, as well as which of the immediates will actually be used.
+
+\vspace{6pt}
+\begin{tabular}{| c | l | c |}
+\hline
+\multicolumn{3}{| c |}{meaning of the type field} \\
+\hline
+encoding & function & condition and jump fields \\
+\hline
+0x0 & (C-type microinstruction) & N/A \\
+0x1 & jump to jump table label & only jump used \\
+0x2 & jump to beginning of the microprogram & both ignored \\
+0x3 & call function at jump table label & only jump used \\
+0x4 & call function at jump table address IR(opc) & both ignored \\
+0x5 & return from a call & both ignored \\
+0x6 & (invalid) & N/A \\
+0x7 & (invalid) & N/A \\
+0x8 & (invalid) & N/A \\
+0x9 & (invalid) & N/A \\
+0xa & branch to jump table label & both used \\
+0xb & branch to beginning of the microprogram & both ignored \\
+0xc & conditionally call function by jump table & both used \\
+0xd & conditionally call function at IR(opc) & only condition used \\
+0xe & conditionally return from a call & only condition used \\
+\hline
+\end{tabular}
+
+\vspace{6pt}
+If the goto is conditional, the condition bits determine the sufficient clause as follows:
+
+\begin{longtable}{| c | l |}
+\hline
+\multicolumn{2}{| c |}{possible conditional sufficient clauses} \\
+\hline
+encoding & expansion \\
+\hline
+\input{ucode/ctrlwords}
+\hline
+\end{longtable}
+
+Jump destinations are encoded as addresses in the jump table, which is stored in a dedicated memory module within the control unit.
+Each location therein is analogous to a label, and contains a microprogram memory address.
+The precise number and ordering of labels within this table are unspecified, except that the lowest addresses are to be used for the user-facing instruction opcodes in the exact order enumerated under section 3.1 of the ISA document.
+This requirement is imposed to allow efficient decoding of user-generated instruction words.
 
 \end{document}
