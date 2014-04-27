@@ -57,7 +57,7 @@ name & type & word size & purpose \\
 \hline
 $\mu$PC & counter register & 12-bit & microprogram counter \\
 $\mu$IR & register & 16-bit & microinstruction register \\
-cntl & 3-register bank & 5-bit & operand control flags \\
+cntl & 3--register bank* & 5-bit & operand control flags \\
 tmp & register & 5-bit & temporary control flags \\
 i & counter register & 2-bit & track current working operand \\
 regshift & shift register & 16-bit & transfer register IDs from data path \\
@@ -80,7 +80,10 @@ $\mu$JBUS & 16 & Moves around the information for jumping \\
 pBUS & 4 & Moves the register number into the cntl registers \\
 pDBUS & 5 & Moves the cntl values between cntl registers and tmp \\
 \hline
-\end{tabular}\\
+\end{tabular}
+
+\vspace{6pt}
+* These flippable registers supports clearing and hardware-based toggling of individual bits.
 
 \includegraphics[width=\textwidth]{controlpath}
 
