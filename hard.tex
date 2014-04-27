@@ -2,9 +2,11 @@
 \usepackage[T1]{fontenc}
 \usepackage{framed}
 \usepackage[margin=1in,top=0.5in]{geometry}
+\usepackage{graphicx}
 \usepackage{longtable}
 \usepackage{moreverb}
 \usepackage{multirow}
+\thispagestyle{empty}
 \begin{document}
 \setlength{\parindent}{0pt}
 
@@ -13,6 +15,34 @@ Sol Boucher and Evan Klei \hfill CSCI-453-01 \hfill 04/28/14 \\
 \vspace{6pt} \\
 \centerline{\textbf{\huge FabComp: Hardware specification}}
 \end{framed}
+
+\section{Hardware}
+The computer is composed of a largely isolated data unit and control unit, which are only connected by a couple of direct buses.
+
+\subsection{Data path}
+All components of the data path have both 16-bit word size and address length.
+They are connected as such:
+
+\includegraphics[width=\textwidth]{datapath}
+
+The system's storage components adhere to these specifications:
+
+\begin{tabular}{| c | c | l |}
+\hline
+\multicolumn{3}{| c |}{data path storage objects} \\
+\hline
+name & type & purpose \\
+\hline
+PC & counter register & program counter \\
+IR & shift register & instruction register \\
+MDR & shift register & main data register \\
+TMP & register & temporary register \\
+Mem & memory & main memory (program and data) \\
+Reg & 16-register bank & general-purpose registers (\textit{see} ISA document, section 5) \\
+Val & 3-register bank & storage of immediate values \\
+Addr & 3-register bank & storage of effective addresses \\
+\hline
+\end{tabular}
 
 \section{Register transfer language}
 Here is the sequence of hardware actions performed by each phase of instruction processing:

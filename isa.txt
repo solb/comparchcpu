@@ -1,16 +1,5 @@
 data path
 ---------
-	register representations
-	========================
-	addr block of 3 registers: stores the EAs computed by each relevant address mode
-	val block of 3 registers: stores the values (from immediate or memory) of each operand
-
-	register types
-	==============
-	pc a counter
-	mdr a shift register
-	ir a shift register (for schlepping opcodes to the uJumpTab)
-
 	control points settable from c code
 	===================================
 	register address
@@ -38,4 +27,3 @@ control path
 	==============
 	need uMem and a uPC for storing and navigating the ucode
 	need a uStack and uSP to support procedure calls
-	we'll want an additional uStack and uSP to keep track of for loops
