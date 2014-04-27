@@ -65,8 +65,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="635.7022"
-     inkscape:cy="630.13428"
+     inkscape:cx="232.17774"
+     inkscape:cy="699.8596"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -115,7 +115,7 @@
              height="66"
              width="283"
              id="rect3057" /></flowRegion><flowPara
-           id="flowPara3059">micro-abus</flowPara></flowRoot>    </g>
+           id="flowPara3059">μABUS</flowPara></flowRoot>    </g>
     <g
        id="g3465"
        transform="matrix(0.72215409,0,0,0.72215409,-35.1432,-164.20254)">
@@ -141,7 +141,7 @@
                x="240"
                y="460.36218"
                style="fill:#ffffff" /></flowRegion><flowPara
-             id="flowPara3059-1">micro-jbus</flowPara></flowRoot>      </g>
+             id="flowPara3059-1">μJBUS</flowPara></flowRoot>      </g>
     </g>
     <text
        xml:space="preserve"
@@ -211,7 +211,7 @@
          id="rect3061"
          style="fill:#000000" />
       <flowRoot
-         transform="translate(-10,2)"
+         transform="translate(-18.308476,2)"
          style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
          id="flowRoot3200"
          xml:space="preserve"><flowRegion
@@ -219,11 +219,10 @@
              style="text-align:center;text-anchor:middle;fill:#ffffff"
              y="255.36218"
              x="311"
-             height="101"
-             width="120"
+             height="106.53899"
+             width="131.07797"
              id="rect3204" /></flowRegion><flowPara
-           id="flowPara3206">micro</flowPara><flowPara
-           id="flowPara3208">stack</flowPara></flowRoot>    </g>
+           id="flowPara3208">μStack</flowPara></flowRoot>    </g>
     <g
        transform="matrix(0.72215409,0,0,0.72215409,-186.07341,-165.64685)"
        id="g3210-7">
@@ -236,20 +235,22 @@
            height="106"
            x="296"
            y="248.36218" />
-        <flowRoot
-           xml:space="preserve"
-           id="flowRoot3200-1"
-           style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
-           transform="translate(-11,0)"><flowRegion
-             id="flowRegion3202-5"><rect
-               id="rect3204-2"
-               width="120"
-               height="101"
-               x="311"
-               y="255.36218"
-               style="text-align:center;text-anchor:middle;fill:#ffffff" /></flowRegion><flowPara
-             id="flowPara3206-7">micro</flowPara><flowPara
-             id="flowPara3208-6">sp</flowPara></flowRoot>      </g>
+        <g
+           id="g5089">
+          <flowRoot
+             transform="translate(-11,0)"
+             style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+             id="flowRoot3200-1"
+             xml:space="preserve"><flowRegion
+               id="flowRegion3202-5"><rect
+                 style="text-align:center;text-anchor:middle;fill:#ffffff"
+                 y="255.36218"
+                 x="311"
+                 height="101"
+                 width="120"
+                 id="rect3204-2" /></flowRegion><flowPara
+               id="flowPara3208-6">μSP</flowPara></flowRoot>        </g>
+      </g>
     </g>
     <g
        id="g3315"
@@ -305,8 +306,7 @@
                height="101"
                width="120"
                id="rect3204-2-3-6" /></flowRegion><flowPara
-             id="flowPara3208-6-2-1">micro</flowPara><flowPara
-             id="flowPara3355">pc</flowPara></flowRoot>      </g>
+             id="flowPara3355">μPC</flowPara></flowRoot>      </g>
     </g>
     <g
        transform="matrix(0.72215409,0,0,0.72215409,-112.41369,72.664001)"
@@ -334,8 +334,8 @@
                  x="311"
                  y="255.36218"
                  style="text-align:center;text-anchor:middle;fill:#ffffff" /></flowRegion><flowPara
-               id="flowPara3208-6-2-1-4">micro</flowPara><flowPara
-               id="flowPara3355-3">mem</flowPara></flowRoot>        </g>
+               id="flowPara3355-3">μMem</flowPara><flowPara
+               id="flowPara5104">Block</flowPara></flowRoot>        </g>
       </g>
     </g>
     <g
@@ -367,8 +367,7 @@
                    height="101"
                    width="120"
                    id="rect3204-2-3-6-5-1" /></flowRegion><flowPara
-                 id="flowPara3208-6-2-1-4-3">micro</flowPara><flowPara
-                 id="flowPara3355-3-8">ir</flowPara></flowRoot>          </g>
+                 id="flowPara3355-3-8">μIR</flowPara></flowRoot>          </g>
         </g>
       </g>
     </g>
@@ -431,15 +430,11 @@
          x="312.93509"
          y="252.01974">addr</tspan></text>
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.72215408px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
-       d="m 299.21414,331.45672 0,67.88248 -150.9302,0"
+       style="fill:none;stroke:#000000;stroke-width:0.62780505px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 299.26132,331.40954 0,73.72809 -105.02456,0"
        id="path5731"
        inkscape:connector-type="orthogonal"
-       inkscape:connector-curvature="0"
-       inkscape:connection-start="#g3315-6-8"
-       inkscape:connection-start-point="d4"
-       inkscape:connection-end="#g3454"
-       inkscape:connection-end-point="d4" />
+       inkscape:connector-curvature="0" />
     <rect
        style="fill:#000000;stroke-width:1.60000002;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect6101"
@@ -532,7 +527,7 @@
     <rect
        style="fill:#000000;stroke-width:1.60000002;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect6928"
-       width="8.6658487"
+       width="2.6658487"
        height="24.55324"
        x="184.39165"
        y="63.537548" />
@@ -545,7 +540,7 @@
        y="166.8056" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.72215408px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow1Lstart)"
-       d="m 188.72457,88.090788 0,86.658512 -39.71848,0"
+       d="m 185.72457,88.090788 0,86.658512 -36.71848,0"
        id="path6934"
        inkscape:connector-type="orthogonal"
        inkscape:connector-curvature="0"
@@ -563,14 +558,6 @@
        inkscape:connection-start-point="d4"
        inkscape:connection-end="#g3116"
        inkscape:connection-end-point="d4" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.72215408px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow1Lstart)"
-       d="m 232.05381,493.94139 162.48468,0 0,-72.93756"
-       id="path7686"
-       inkscape:connector-type="orthogonal"
-       inkscape:connector-curvature="0"
-       inkscape:connection-start="#g3465"
-       inkscape:connection-start-point="d4" />
     <text
        xml:space="preserve"
        style="font-size:8.66584873px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
@@ -618,7 +605,7 @@
       </g>
     </g>
     <g
-       transform="matrix(0.72215409,0,0,0.72215409,258.37414,-10.166692)"
+       transform="matrix(0.72215409,0,0,0.72215409,258.37414,-9.166692)"
        style="display:inline"
        id="g3465-9">
       <g
@@ -643,7 +630,7 @@
                x="240"
                y="460.36218"
                style="fill:#ffffff" /></flowRegion><flowPara
-             id="flowPara3059-1-2">pico-bus</flowPara></flowRoot>      </g>
+             id="flowPara3059-1-2">pBUS</flowPara></flowRoot>      </g>
     </g>
     <g
        style="display:inline"
@@ -701,7 +688,7 @@
                x="240"
                y="460.36218"
                style="fill:#ffffff" /></flowRegion><flowPara
-             id="flowPara3059-1-2-6">pico-dbus</flowPara></flowRoot>      </g>
+             id="flowPara3059-1-2-6">pDBUS</flowPara></flowRoot>      </g>
     </g>
     <g
        style="display:inline"
@@ -733,16 +720,6 @@
                id="flowPara3355-3-1-7-2">tmp</flowPara></flowRoot>        </g>
       </g>
     </g>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.72215408px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
-       d="m 525.97357,599.80589 -0.40242,48.17135"
-       id="path8147"
-       inkscape:connector-type="polyline"
-       inkscape:connector-curvature="0"
-       inkscape:connection-start="#g3315-6-8-8"
-       inkscape:connection-start-point="d4"
-       inkscape:connection-end="#g3465-9"
-       inkscape:connection-end-point="d4" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.72215408px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
        d=""
@@ -868,5 +845,41 @@
          id="tspan4142"
          x="636"
          y="551.36218">to DBUS</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend);display:inline"
+       d="m 394.81143,415.94875 0,78.41343 -10.81143,0"
+       id="path4143"
+       inkscape:connector-type="orthogonal"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#text5727-0-1"
+       inkscape:connection-start-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d=""
+       id="path4331"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g3465"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end="#g3315-6-6"
+       inkscape:connection-end-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 229,521.36218 0,32"
+       id="path4337"
+       inkscape:connector-type="orthogonal"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 523,597.36218 0,21"
+       id="path4713"
+       inkscape:connector-type="orthogonal"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 524,676.36218 2,0 0,43"
+       id="path4901"
+       inkscape:connector-type="orthogonal"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>
