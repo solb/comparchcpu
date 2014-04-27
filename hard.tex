@@ -47,7 +47,6 @@ Addr & 3-register bank & storage of effective addresses \\
 
 \subsection{Control path}
 The word size and address widths within the control path are component-specific:
-
 \vspace{6pt}
 \begin{tabular}{| c | c | c | l |}
 \hline
@@ -68,9 +67,22 @@ $\mu$JumpTab & memory & 16-bit data, 5-bit addr & hardcoded jump table \\
 \hline
 \end{tabular}
 
+\begin{tabular}{| c | c | l |}
+\hline
+\multicolumn{3}{| c |}{control path buses}\\
+\hline
+name & length & purpose \\
+\hline
+$\mu$ABUS & 12 & Moves the address of microcode\\
+$\mu$JBUS & 16 & Moves around the information for jumping \\
+pBUS & 4 & Moves the register number into the cntl registers \\
+pDBUS & 5 & Moves the cntl values between cntl registers and tmp \\
+\hline
+\end{tabular}\\
+
 \includegraphics[width=\textwidth]{controlpath}
 
-The 3 control registers are used to represent the source and destination operand locations:
+The 3 control registers are used to represent the source and destination operand locations:\\
 
 \vspace{6pt}
 \begin{tabular}{| c | c | l |}
