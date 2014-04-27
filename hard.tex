@@ -27,6 +27,7 @@ They are connected as such:
 
 The system's storage components adhere to these specifications:
 
+\vspace{6pt}
 \begin{tabular}{| c | c | l |}
 \hline
 \multicolumn{3}{| c |}{data path storage objects} \\
@@ -41,6 +42,30 @@ Mem & memory & main memory (program and data) \\
 Reg & 16-register bank & general-purpose registers (\textit{see} ISA document, section 5) \\
 Val & 3-register bank & storage of immediate values \\
 Addr & 3-register bank & storage of effective addresses \\
+\hline
+\end{tabular}
+
+\subsection{Control path}
+% TODO Add a diagram
+% TODO Add a storage types/purposes table
+
+The 3 control registers are used to represent the source and destination operand locations:
+
+\vspace{6pt}
+\begin{tabular}{| c | c | l |}
+\hline
+\multicolumn{3}{| c |}{control registers encoding/flags} \\
+\hline
+msb & trailing bits & significance \\
+\hline
+0 & 4-bit register identifier & this operand/destination is located in the specified GPR \\
+1 & 0000 & this operand is not used by the current operation \\
+1 & 0001 & this operand is located in register Val[1] \\
+1 & 0010 & this operand is located in register Val[2] \\
+1 & 0011 & this operand is located in the MDR \\
+1 & 0100 & this operand/destination is located at memory address Addr[0] \\
+1 & 0101 & this operand is located at memory address Addr[1] \\
+1 & 0110 & this operand is located at memory address Addr[2] \\
 \hline
 \end{tabular}
 
