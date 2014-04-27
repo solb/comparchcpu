@@ -14,7 +14,7 @@
    id="svg3043"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="controlpath.svg">
+   sodipodi:docname="controlpath.pdf">
   <defs
      id="defs3045">
     <marker
@@ -65,10 +65,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="232.17774"
-     inkscape:cy="699.8596"
+     inkscape:cx="310.04324"
+     inkscape:cy="516.35023"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g3315-6-8-8"
      showgrid="false"
      inkscape:connector-spacing="10"
      inkscape:window-width="1366"
@@ -84,7 +84,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -211,7 +211,7 @@
          id="rect3061"
          style="fill:#000000" />
       <flowRoot
-         transform="translate(-18.308476,2)"
+         transform="translate(-33.540682,2)"
          style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
          id="flowRoot3200"
          xml:space="preserve"><flowRegion
@@ -219,8 +219,8 @@
              style="text-align:center;text-anchor:middle;fill:#ffffff"
              y="255.36218"
              x="311"
-             height="106.53899"
-             width="131.07797"
+             height="109.30848"
+             width="164.31187"
              id="rect3204" /></flowRegion><flowPara
            id="flowPara3208">μStack</flowPara></flowRoot>    </g>
     <g
@@ -326,11 +326,11 @@
              xml:space="preserve"
              id="flowRoot3200-1-4-5-7"
              style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
-             transform="translate(199,4.000003)"><flowRegion
+             transform="translate(178.22881,6.769495)"><flowRegion
                id="flowRegion3202-5-2-7-9"><rect
                  id="rect3204-2-3-6-5"
-                 width="120"
-                 height="101"
+                 width="165.69662"
+                 height="131.46442"
                  x="311"
                  y="255.36218"
                  style="text-align:center;text-anchor:middle;fill:#ffffff" /></flowRegion><flowPara
@@ -592,16 +592,16 @@
              xml:space="preserve"
              id="flowRoot3200-1-4-5-7-6"
              style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
-             transform="translate(199,4.000003)"><flowRegion
+             transform="translate(135.30168,1.230511)"><flowRegion
                id="flowRegion3202-5-2-7-9-0"><rect
                  id="rect3204-2-3-6-5-6"
-                 width="120"
-                 height="101"
+                 width="243.2424"
+                 height="167.4678"
                  x="311"
                  y="255.36218"
                  style="text-align:center;text-anchor:middle;fill:#ffffff" /></flowRegion><flowPara
-               id="flowPara3355-3-1">reg</flowPara><flowPara
-               id="flowPara8139">log</flowPara></flowRoot>        </g>
+               id="flowPara8139">reg</flowPara><flowPara
+               id="flowPara5110">shifter</flowPara></flowRoot>        </g>
       </g>
     </g>
     <g
