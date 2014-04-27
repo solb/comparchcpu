@@ -55,16 +55,16 @@ The word size and address widths within the control path are component-specific:
 \hline
 name & type & word size & purpose \\
 \hline
-uPC & counter register & 12-bit & microprogram counter \\
-uIR & register & 16-bit & microinstruction register \\
+$\mu$PC & counter register & 12-bit & microprogram counter \\
+$\mu$IR & register & 16-bit & microinstruction register \\
 cntl & 3-register bank & 5-bit & operand control flags \\
 tmp & register & 5-bit & temporary control flags \\
 i & counter register & 2-bit & track current working operand \\
 regshift & shift register & 16-bit & transfer register IDs from data path \\
-uSP & counter register & 2-bit & micro--stack pointer \\
-uStack & 3-register bank & 12-bit & subprocedure return addresses \\
-uMem & memory & 16-bit data, 12-bit addr & contains hardcoded microprogram \\
-uJumpTab & memory & 16-bit data, 5-bit addr & hardcoded jump table \\
+$\mu$SP & counter register & 2-bit & micro--stack pointer \\
+$\mu$Stack & 3-register bank & 12-bit & subprocedure return addresses \\
+$\mu$Mem & memory & 16-bit data, 12-bit addr & contains hardcoded microprogram \\
+$\mu$JumpTab & memory & 16-bit data, 5-bit addr & hardcoded jump table \\
 \hline
 \end{tabular}
 
