@@ -1,5 +1,6 @@
 /fasm/fasm
 ctrlwords.tex
+ifclauses.tex
 *.aux
 *.fl
 *.fo
