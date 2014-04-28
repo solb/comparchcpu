@@ -3,11 +3,9 @@ INTERMEDIATES := ./rtlparser.sh ../hard.tex
 jmptab.fl: jmptab.tl
 	./jtabgenerator.py jmptab.tl
 
-ucode.tu:
+ucode.tu: ../hard.tex
 	${INTERMEDIATES}
-jmptab.tl:
-	${INTERMEDIATES}
-%.tex:
+jmptab.tl: ../hard.tex
 	${INTERMEDIATES}
 
 clean:

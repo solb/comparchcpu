@@ -12,8 +12,8 @@ controlpath.pdf: controlpath.svg
 %.pdf: %.tex
 	pdflatex $<
 	pdflatex $<
-ucode/%:
-	${MAKE} -C ucode $(notdir $@)
+ucode/%: hard.tex
+	${MAKE} -C ucode ucode.tu
 
 clean:
 	rm -f *.aux *.log datapath.pdf
