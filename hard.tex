@@ -7,6 +7,9 @@
 \usepackage{moreverb}
 \usepackage{multirow}
 \thispagestyle{empty}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcounter{whichfootnotesymbol}
+\setcounter{whichfootnotesymbol}{2}
 \begin{document}
 \setlength{\parindent}{0pt}
 
@@ -25,6 +28,7 @@ They are connected as such:
 
 \includegraphics[width=\textwidth]{datapath}
 
+\pagebreak
 The system's storage components adhere to these specifications:
 
 \vspace{6pt}
@@ -35,7 +39,7 @@ The system's storage components adhere to these specifications:
 name & type & purpose \\
 \hline
 PC & counter register & program counter \\
-IR & shift register* & instruction register \\
+IR & shift register\footnotemark[\value{whichfootnotesymbol}] & instruction register \\
 MDR & shift register & main data register \\
 TMP & register & temporary register \\
 Mem & memory & main memory (program and data) \\
@@ -57,7 +61,7 @@ name & type & word size & purpose \\
 \hline
 $\mu$PC & counter register & 12-bit & microprogram counter \\
 $\mu$IR & register & 16-bit & microinstruction register \\
-cntl & 3--register bank* & 5-bit & operand control flags \\
+cntl & 3--register bank\footnotemark[\value{whichfootnotesymbol}] & 5-bit & operand control flags \\
 tmp & register & 5-bit & temporary control flags \\
 i & counter register & 2-bit & track current working operand \\
 regshift & shift register & 16-bit & transfer register IDs from data path \\
@@ -83,11 +87,7 @@ pDBUS & 5 & Moves the cntl values between cntl registers and tmp \\
 \end{tabular}
 
 \vspace{6pt}
-* These flippable shift registers support hardware-based toggling of individual bits.
-
-\includegraphics[width=\textwidth]{controlpath}
-
-The 3 control registers are used to represent the source and destination operand locations:\\
+The 3 control registers are used to represent the source and destination operand locations:
 
 \vspace{6pt}
 \begin{tabular}{| c | c | l |}
@@ -107,6 +107,11 @@ msb & trailing bits & significance \\
 \hline
 \end{tabular}
 
+\footnotetext[\value{whichfootnotesymbol}]{These flippable shift registers support hardware-based toggling of individual bits.}
+
+\includegraphics[width=\textwidth]{controlpath}
+
+\vspace{112pt}
 \section{Register transfer language}
 Here is the sequence of hardware actions performed by each phase of instruction processing:
 
@@ -592,7 +597,7 @@ encoding & function & condition and jump fields \\
 \hline
 \end{tabular}
 
-\vspace{6pt}
+\pagebreak
 If the goto is conditional, the condition bits determine the sufficient clause as follows:
 
 \begin{longtable}{| c | l |}
