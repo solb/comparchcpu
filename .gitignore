@@ -2,10 +2,12 @@
 /fasm/fasm
 ctrlwords.tex
 ifclauses.tex
+*.a
 *.aux
 *.fl
 *.fo
 *.log
+*.mk
 *.o
 *.pdf
 *.tl
