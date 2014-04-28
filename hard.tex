@@ -35,7 +35,7 @@ The system's storage components adhere to these specifications:
 name & type & purpose \\
 \hline
 PC & counter register & program counter \\
-IR & shift register & instruction register \\
+IR & shift register* & instruction register \\
 MDR & shift register & main data register \\
 TMP & register & temporary register \\
 Mem & memory & main memory (program and data) \\
@@ -83,7 +83,7 @@ pDBUS & 5 & Moves the cntl values between cntl registers and tmp \\
 \end{tabular}
 
 \vspace{6pt}
-* These flippable registers support clearing and hardware-based toggling of individual bits.
+* These flippable shift registers support hardware-based toggling of individual bits.
 
 \includegraphics[width=\textwidth]{controlpath}
 
@@ -136,7 +136,9 @@ while i != 11 do
 		cntl[i] <- 10100 | i
 		PC <- PC + 1
 		if MDR(sam) = 000 then # register value
-			cntl[i] <- 00000 | MDR(reg0)
+			regshift <- MDR
+			regshift <- regshift >> 8 # reg0
+			cntl[i] <- 00000 | regshift
 		elif MDR(sam) = 001 then # register indirect
 			Addr[i] <- Reg[MDR(reg0)]
 		elif MDR(sam) = 010 then # scaled
@@ -218,7 +220,7 @@ fi
 
 \subsection{Execute}
 \begin{verbatimtab}
-# call function described by entry IR(opc) of an off-memory uJumpTable
+# call function at uJumpTab label IR(opc)
 
 halt:
 	# bail out
@@ -374,7 +376,6 @@ jmp:
 	PC <- op0
 	cntl[0] <- 10011
 	# return
-
 jal:
 	# call validator_seven
 	Reg[15] <- PC
@@ -409,20 +410,24 @@ logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	# call siz
 	cntl[1] <- 10001
 	cntl[2] <- 10011
-	# call function described by entry IR(opc) - 4 of an off-memory uJumpTable
+	IR(opc)(2) <- 0 # IR(opc) - 4
+	# call function at uJumpTab label IR(opc)
 	# return
 
 compbranch: # handles blt, bgt, beq, bne, ble, bge
 	# call validator_two
-	# call function described by entry IR(opc) - 8 of an off-memory uJumpTable
-	cntl[2] <- 10000
-	cntl[1] <- cntl[0]
-	# call bnz
+	IR(opc)(3) <- 0 # IR(opc) - 8
+	# call function at uJumpTab label IR(opc)
+	if MDR = 1 then
+		PC <- op0
+	fi
+	cntl[0] <- 10011
 	# return
 
 simpbranch: # handles biz, bnz
 	# call validator_five
-	# call function described by entry IR(opc) - 4 of an off-memory uJumpTable
+	IR(opc)(2) <- 0 # IR(opc) - 4
+	# call function at uJumpTab label IR(opc)
 	if MDR = 1 then
 		PC <- op0
 	fi
