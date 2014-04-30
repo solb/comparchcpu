@@ -30,6 +30,9 @@ class StorageObject;
 extern Bus abus;
 extern Bus dbus;
 
+// Constants
+extern const StorageObject &BUS_LOW_BYTE_MASK;
+
 // Registers
 extern Counter pc;
 extern ShiftRegister ir; // TODO Should be a flippable shifter
