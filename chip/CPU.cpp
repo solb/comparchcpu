@@ -6,6 +6,7 @@
 
 #include "control_path.h"
 #include "data_path.h"
+#include "microcontroller.h"
 #include <ArchLibError.h>
 #include <iostream>
 
@@ -34,7 +35,7 @@ int main(int argc, const char *argv[]) {
 		load_microprogram(argv[1], argv[2]);
 		load_userprogram(argv[3]);
 
-		// TODO Execute the microprogram
+		interpret_microprogram();
 
 		melt_data_path();
 		melt_control_path();
