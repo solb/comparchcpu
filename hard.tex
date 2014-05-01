@@ -585,8 +585,8 @@ encoding & function & condition and jump fields \\
 0x3 & call function at jump table label & only jump used \\
 0x4 & call function at jump table address IR(opc) & both ignored \\
 0x5 & return from a call & both ignored \\
-0x6 & (invalid) & N/A \\
-0x7 & (invalid) & N/A \\
+0x6 & halt system normally & both ignored \\
+0x7 & halt system due to failed operand validation & both ignored \\
 0x8 & (invalid) & N/A \\
 0x9 & (invalid) & N/A \\
 0xa & branch to jump table label & both used \\
