@@ -68,14 +68,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="226.875"
+     inkscape:cx="49.875"
      inkscape:cy="293.69442"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:connector-spacing="10"
-     inkscape:window-width="1920"
-     inkscape:window-height="978"
+     inkscape:window-width="1440"
+     inkscape:window-height="798"
      inkscape:window-x="0"
      inkscape:window-y="31"
      inkscape:window-maximized="1"
@@ -208,7 +208,8 @@
            id="flowPara3059">μABUS</flowPara></flowRoot>    </g>
     <g
        id="g3465"
-       transform="matrix(0.72215409,0,0,0.72215409,-35.1432,-182.20254)">
+       transform="matrix(0.72215409,0,0,0.72215409,-35.1432,-182.20254)"
+       inkscape:connector-avoid="true">
       <g
          id="g3116-8"
          transform="translate(-12,418.5)">
@@ -317,7 +318,8 @@
        y="236.18625" />
     <g
        transform="matrix(0.72215409,0,0,0.72215409,-261.89959,52.49754)"
-       id="g3315-6">
+       id="g3315-6"
+       inkscape:connector-avoid="true">
       <g
          id="g3357">
         <rect
@@ -343,7 +345,8 @@
     </g>
     <g
        transform="matrix(0.72215409,0,0,0.72215409,-112.41369,54.664001)"
-       id="g3315-6-8">
+       id="g3315-6-8"
+       inkscape:connector-avoid="true">
       <g
          id="g3357-9">
         <g
@@ -373,7 +376,8 @@
     </g>
     <g
        id="g3454"
-       transform="matrix(0.72215409,0,0,0.72215409,-35.1432,-182.20254)">
+       transform="matrix(0.72215409,0,0,0.72215409,-35.1432,-182.20254)"
+       inkscape:connector-avoid="true">
       <g
          id="g3315-6-8-1"
          transform="translate(-316,475)">
@@ -413,7 +417,7 @@
        y="186.3576" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.72215408px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
-       d="m 138.89594,234.74192 0,-33.21908"
+       d="m 149.72824,234.74192 0,-15.16523 -10.8323,0 0,-18.05385"
        id="path4979"
        inkscape:connector-type="orthogonal"
        inkscape:connector-curvature="0"
@@ -443,7 +447,7 @@
        y="187.80193" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.72215408px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
-       d="m 303.90813,200.8007 0,36.10768"
+       d="m 303.90813,200.8007 0,19.85922 -4.69399,0 0,16.24846"
        id="path5357"
        inkscape:connector-type="orthogonal"
        inkscape:connector-curvature="0"
@@ -546,11 +550,6 @@
          id="tspan5729-6"
          x="250.60132"
          y="531.70947">addr</tspan></text>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.74951941px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 202.43181,574.86285 0,-21.74122 -179.066846,0 2.325544,0 0,-380.47128 -0.775182,0"
-       id="path6554"
-       inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.72215408px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
        d="m 24.795589,172.63667 66.438172,0"
@@ -900,6 +899,12 @@
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
        d="m 416,97 0,327 27,0"
        id="path4513"
+       inkscape:connector-curvature="0"
+       transform="translate(-7.7201501,-20.293632)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 198,597 -148,0 0,-302 60,0"
+       id="path3167"
        inkscape:connector-curvature="0"
        transform="translate(-7.7201501,-20.293632)" />
   </g>
