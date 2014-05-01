@@ -5,8 +5,10 @@
 // Control path hardware component initializations
 
 #include "control_path.h"
+#include "data_path.h"
 #include "FlipRegister.h"
 #include <Bus.h>
+#include <Clock.h>
 #include <Counter.h>
 #include <Memory.h>
 #include <ShiftRegister.h>
@@ -15,7 +17,8 @@
 // Constants
 const unsigned CTRL_INST_WIDTH = 16;
 const unsigned CTRL_ADDR_WIDTH = 12;
-const unsigned CTRL_JADDR_WIDTH = 5;
+const unsigned CTRL_JADR_WIDTH = 7;
+const unsigned CTRL_RADR_WIDTH = 4; // Must be large enough to address NUM_GPRS
 const unsigned CTRL_CNTL_WIDTH = 5;
 const unsigned CTRL_OPDI_WIDTH = 2; // Must be big enough to address NUM_OPNDS
 const size_t CTRL_STACK_HEIGHT = 3;
@@ -23,16 +26,16 @@ const unsigned CTRL_SPTR_WIDTH = 2; // Must be be able to address STACK_HEIGHT
 
 // Construct buses
 Bus uabus("uABUS", CTRL_ADDR_WIDTH);
-Bus ujbus("uJBUS", CTRL_JADDR_WIDTH);
+Bus ujbus("uJBUS", CTRL_JADR_WIDTH);
 Bus pbus("pBUS", CTRL_RADR_WIDTH);
 Bus pdbus("pDBUS", CTRL_CNTL_WIDTH);
 
 // Construct registers
 Counter upc("uPC", CTRL_ADDR_WIDTH);
 StorageObject uir("uIR", CTRL_INST_WIDTH);
-StorageObject tmp("uTMP", CTRL_CNTL_WIDTH);
+StorageObject utmp("uTMP", CTRL_CNTL_WIDTH);
 Counter i("i", CTRL_OPDI_WIDTH);
-ShiftRegister regshift("regshift", CTRL_INST_WIDTH);
+ShiftRegister regshift("regshift", WORD_SIZE);
 Counter usp("uSP", CTRL_SPTR_WIDTH);
 
 // Construct banks
@@ -46,13 +49,14 @@ Memory ujumptab("uJumpTab", CTRL_JADR_WIDTH, CTRL_ADDR_WIDTH);
 void wire_control_path() {
 	upc.connectsTo(uabus.IN());
 	upc.connectsTo(uabus.OUT());
+	upc.connectsTo(umem.READ());
 	upc.connectsTo(ujumptab.READ());
 
 	uir.connectsTo(ujbus.IN());
 	uir.connectsTo(umem.READ());
 
-	tmp.connectsTo(pdbus.IN());
-	tmp.connectsTo(pdbus.OUT());
+	utmp.connectsTo(pdbus.IN());
+	utmp.connectsTo(pdbus.OUT());
 
 	i.connectsTo(pdbus.IN());
 
@@ -75,6 +79,13 @@ void wire_control_path() {
 	umem.MAR().connectsTo(uabus.OUT());
 
 	ujumptab.MAR().connectsTo(ujbus.OUT());
+}
+
+void load_microprogram(const char *ucode, const char *ulabels) {
+	umem.load(ucode);
+	ujumptab.load(ulabels);
+	upc.latchFrom(umem.READ());
+	Clock::tick();
 }
 
 void melt_control_path() {

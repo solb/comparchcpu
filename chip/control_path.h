@@ -7,7 +7,15 @@
 #ifndef CONTROL_PATH_H_
 #define CONTROL_PATH_H_
 
-#include "data_path.h"
+#include <cstddef>
+
+// Forward declarations
+class Bus;
+class Counter;
+class FlipRegister;
+class Memory;
+class ShiftRegister;
+class StorageObject;
 
 // Width of microinstruction words
 extern const unsigned CTRL_INST_WIDTH;
@@ -42,7 +50,7 @@ extern Bus pdbus; // CNTL_WIDTH wide
 // Registers
 extern Counter upc; // ADDR_WIDTH wide
 extern StorageObject uir; // INST_WIDTH wide
-extern StorageObject tmp; // CNTL_WIDTH wide
+extern StorageObject utmp; // CNTL_WIDTH wide
 extern Counter i; // OPDI_WIDTH wide
 extern ShiftRegister regshift; // INST_WIDTH wide
 extern Counter usp; // SPTR_WIDTH wide
@@ -55,6 +63,9 @@ extern Memory ujumptab; // INST_WIDTH data, CTRL_JADR_WIDTH address
 
 // Connect the control path components
 void wire_control_path();
+
+// Load the microcode and its jump table and initialize the uPC
+void load_microprogram(const char *ucode, const char *ulabels);
 
 // Release internal dynamic memory
 void melt_control_path();

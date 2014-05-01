@@ -10,13 +10,13 @@
 #include <cstddef>
 
 // Word size
-extern const unsigned WORD_SIZE = 16;
+const unsigned WORD_SIZE = 16;
 
 // Number of general purpose registers
-extern const size_t NUM_GPRS = 16;
+const size_t NUM_GPRS = 16;
 
 // Number of operands (and hence supporting components)
-extern const size_t NUM_OPNDS = 3;
+const size_t NUM_OPNDS = 3;
 
 // Forward declarations
 class Bus;
@@ -51,6 +51,9 @@ extern BusALU alu;
 
 // Connect the data path components
 void wire_data_path();
+
+// Load the program and initialize the PC
+void load_userprogram(const char *objfile);
 
 // Release internal dynamic memory
 void melt_data_path();

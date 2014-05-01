@@ -8,6 +8,7 @@
 #include "FlipRegister.h"
 #include <Bus.h>
 #include <BusALU.h>
+#include <Clock.h>
 #include <Counter.h>
 #include <Memory.h>
 #include <ShiftRegister.h>
@@ -88,6 +89,12 @@ void wire_data_path() {
 	}
 
 	mem.MAR().connectsTo(abus.OUT());
+}
+
+void load_userprogram(const char *objfile) {
+	mem.load(objfile);
+	pc.latchFrom(mem.READ());
+	Clock::tick();
 }
 
 void melt_data_path() {
