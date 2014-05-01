@@ -49,6 +49,7 @@ void wire_data_path() {
 	pc.connectsTo(mem.READ());
 	pc.connectsTo(alu.OP2());
 
+	ir.connectsTo(dbus.IN());
 	ir.connectsTo(mem.READ());
 
 	mdr.connectsTo(dbus.IN());

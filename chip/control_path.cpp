@@ -60,7 +60,9 @@ void wire_control_path() {
 
 	i.connectsTo(pdbus.IN());
 
+	regshift.connectsTo(ujbus.IN());
 	regshift.connectsTo(pbus.IN());
+	regshift.connectsTo(abus.OUT());
 	regshift.connectsTo(dbus.OUT());
 
 	for(size_t index = 0; index < CTRL_STACK_HEIGHT; ++index) {

@@ -32,6 +32,10 @@ unsigned uinst_j_jump() {
 	return uir(6, 0);
 }
 
+unsigned curr_ura() {
+	return usp(CTRL_ADDR_WIDTH - 1, 0);
+}
+
 unsigned curr_opnd() {
 	return i(CTRL_OPDI_WIDTH - 1, 0);
 }

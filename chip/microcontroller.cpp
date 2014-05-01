@@ -25,6 +25,10 @@ using std::endl;
 // Precondition: We must currently be looking at a J-type microinstruction!
 static bool decide_conditional();
 
+// Given the register containing a jump table index, call that microprocedure
+// Precondition: jt_index must be connected to uJBUS (i.e. it's uIR or regshift)
+static void uprocedure_call(StorageObject &jt_index);
+
 void interpret_microprogram() {
 	bool proceed = true;
 	while(proceed) {
@@ -47,35 +51,62 @@ void interpret_microprogram() {
 				if(!decide_conditional())
 					break;
 			case 0x1: // Jump -> uJumpTab
-				// TODO Implement table-based jump
+				// Replace the uPC with the value mapped to the jump table index
+				ujbus.IN().pullFrom(uir);
+				ujumptab.MAR().latchFrom(ujbus.OUT());
+				Clock::tick();
+				upc.latchFrom(ujumptab.READ());
+				ujumptab.read();
+				Clock::tick();
 				break;
 
 			case 0xb: // Branch -> ufetch
 				if(!decide_conditional())
 					break;
 			case 0x2: // Jump -> ufetch
-				// TODO Implement jump-to-start
+				// Reset the uPC to point at the start of the program
+				upc.clear();
+				Clock::tick();
 				break;
 
 			case 0xc: // Call? <- uJumpTab
 				if(!decide_conditional())
 					break;
 			case 0x3: // Call <- uJumpTab
-				// Implement table-based call
+				// Save the current uPC to the uStack, then clobber it from jump
+				uprocedure_call(uir);
 				break;
 
 			case 0xd: // Call? <- IR(opc)
 				if(!decide_conditional())
 					break;
 			case 0x4: // Call <- IR(opc)
-				// Implement opcode-based call
+				// Retrieve the opcode bits from the current instruction word
+				dbus.IN().pullFrom(ir);
+				regshift.latchFrom(dbus.OUT());
+				Clock::tick();
+				for(int count = 0; count < 8; ++count) {
+					regshift.rightShift();
+					Clock::tick();
+				}
+
+				// Save the current uPC to the uStack, then clobber it from jump
+				uprocedure_call(regshift);
 				break;
 
 			case 0xe: // Return?
 				if(!decide_conditional())
 					break;
 			case 0x5: // Return
-				// Implement return
+				// Restore the uPC from just under the micro--stack pointer
+				usp.decr();
+				Clock::tick();
+				if(curr_ura() >= CTRL_STACK_HEIGHT)
+					emergency_halt("interpret_microprogram()",
+							"underflowed the microstack");
+				uabus.IN().pullFrom(*ustack[curr_ura()]);
+				upc.latchFrom(uabus.OUT());
+				Clock::tick();
 				break;
 
 			case 0x7: // Halt abnormally
@@ -90,6 +121,22 @@ void interpret_microprogram() {
 				proceed = false;
 		}
 	}
+}
+
+void uprocedure_call(StorageObject &jt_index) {
+	// Save the current uPC to the uStack, then clobber it from jump table entry
+	uabus.IN().pullFrom(upc);
+	if(curr_ura() >= CTRL_STACK_HEIGHT)
+		emergency_halt("uprocedure_call()",
+				"overflowed the microstack");
+	ustack[curr_ura()]->latchFrom(uabus.OUT());
+	ujbus.IN().pullFrom(jt_index);
+	ujumptab.MAR().latchFrom(ujbus.OUT());
+	Clock::tick();
+	usp.incr();
+	upc.latchFrom(ujumptab.READ());
+	ujumptab.read();
+	Clock::tick();
 }
 
 bool decide_conditional() {

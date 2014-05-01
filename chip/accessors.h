@@ -19,6 +19,9 @@ unsigned uinst_j_cond();
 // Current (J-type) microinstruction's jump index
 unsigned uinst_j_jump();
 
+// Index of microstack register currently holding micro--return address
+unsigned curr_ura();
+
 // Current operand being processed
 unsigned curr_opnd();
 
