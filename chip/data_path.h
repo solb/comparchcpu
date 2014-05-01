@@ -10,13 +10,13 @@
 #include <cstddef>
 
 // Word size
-extern const unsigned WORD_SIZE;
+extern const unsigned WORD_SIZE = 16;
 
 // Number of general purpose registers
-extern const size_t NUM_GPRS;
+extern const size_t NUM_GPRS = 16;
 
 // Number of operands (and hence supporting components)
-extern const size_t NUM_OPNDS;
+extern const size_t NUM_OPNDS = 3;
 
 // Forward declarations
 class Bus;

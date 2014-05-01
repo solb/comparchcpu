@@ -1,12 +1,13 @@
 BIN := CPU
-OBJS := data_path.o FlipRegister.o
+OBJS := control_path.o data_path.o FlipRegister.o
 CPPFLAGS = -I${ARCH_HEADERS_PATH}
-CXXFLAGS := -Wall -Wextra
+CXXFLAGS := -std=c++98 -Wall -Wextra
 LDFLAGS := -L.
 LDLIBS := -larch2-5a
 
 ${BIN}: ${OBJS}
 
+control_path.o: control_path.h data_path.h
 data_path.o: data_path.h
 FlipRegister.o: FlipRegister.h
 

@@ -12,17 +12,12 @@
 #include <ShiftRegister.h>
 #include <StorageObject.h>
 
-// Constants
-const unsigned WORD_SIZE = 16;
-const size_t NUM_GPRS = 16;
-const size_t NUM_OPNDS = 3;
-
 // Construct buses
 Bus abus("ABUS", WORD_SIZE);
 Bus dbus("DBUS", WORD_SIZE);
 
 // Construct constants
-StorageObject bus_low_byte_mask_internal("0xFF", WORD_SIZE, 0xff);
+static StorageObject bus_low_byte_mask_internal("0xFF", WORD_SIZE, 0xff);
 const StorageObject &BUS_LOW_BYTE_MASK = bus_low_byte_mask_internal;
 
 // Construct registers
