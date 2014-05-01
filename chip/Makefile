@@ -7,8 +7,8 @@ LDLIBS := -larch2-5a
 
 ${BIN}: ${OBJS}
 
-control_path.o: control_path.h data_path.h
-data_path.o: data_path.h
+control_path.o: control_path.h data_path.h FlipRegister.h
+data_path.o: data_path.h FlipRegister.h
 FlipRegister.o: FlipRegister.h
 
 clean:

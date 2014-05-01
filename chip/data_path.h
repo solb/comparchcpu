@@ -22,6 +22,7 @@ extern const size_t NUM_OPNDS = 3;
 class Bus;
 class BusALU;
 class Counter;
+class FlipRegister;
 class Memory;
 class ShiftRegister;
 class StorageObject;
@@ -35,7 +36,7 @@ extern const StorageObject &BUS_LOW_BYTE_MASK;
 
 // Registers
 extern Counter pc;
-extern ShiftRegister ir; // TODO Should be a flippable shifter
+extern FlipRegister ir;
 extern ShiftRegister mdr;
 extern StorageObject tmp;
 

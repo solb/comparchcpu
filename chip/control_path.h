@@ -48,7 +48,7 @@ extern ShiftRegister regshift; // INST_WIDTH wide
 extern Counter usp; // SPTR_WIDTH wide
 
 // Banks of storage
-extern ShiftRegister *const *const cntl; // TODO Should be a flippable shifter
+extern FlipRegister *const *const cntl; // CNTL_WIDTH wide
 extern StorageObject *const *const ustack; // ADDR_WIDTH wide
 extern Memory umem; // INST_WIDTH data, ADDR_WIDTH address
 extern Memory ujumptab; // INST_WIDTH data, CTRL_JADR_WIDTH address

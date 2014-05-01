@@ -5,6 +5,7 @@
 // Control path hardware component initializations
 
 #include "control_path.h"
+#include "FlipRegister.h"
 #include <Bus.h>
 #include <Counter.h>
 #include <Memory.h>
@@ -35,8 +36,8 @@ ShiftRegister regshift("regshift", CTRL_INST_WIDTH);
 Counter usp("uSP", CTRL_SPTR_WIDTH);
 
 // Construct banks
-static ShiftRegister *cntl_internal[NUM_OPNDS];
-ShiftRegister *const *const cntl = cntl_internal;
+static FlipRegister *cntl_internal[NUM_OPNDS];
+FlipRegister *const *const cntl = cntl_internal;
 static StorageObject *ustack_internal[CTRL_STACK_HEIGHT];
 StorageObject *const *const ustack = ustack_internal;
 Memory umem("uMEM", CTRL_ADDR_WIDTH, CTRL_INST_WIDTH);
@@ -60,7 +61,7 @@ void wire_control_path() {
 
 	for(size_t index = 0; index < CTRL_STACK_HEIGHT; ++index) {
 		if(index < NUM_OPNDS) {
-			cntl_internal[index] = new ShiftRegister("cntl", CTRL_CNTL_WIDTH);
+			cntl_internal[index] = new FlipRegister("cntl", CTRL_CNTL_WIDTH);
 			cntl[index]->connectsTo(pbus.OUT());
 			cntl[index]->connectsTo(pdbus.IN());
 			cntl[index]->connectsTo(pdbus.OUT());

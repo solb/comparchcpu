@@ -5,6 +5,7 @@
 // Data path hardware component initializations
 
 #include "data_path.h"
+#include "FlipRegister.h"
 #include <Bus.h>
 #include <BusALU.h>
 #include <Counter.h>
@@ -22,7 +23,7 @@ const StorageObject &BUS_LOW_BYTE_MASK = bus_low_byte_mask_internal;
 
 // Construct registers
 Counter pc("PC", WORD_SIZE);
-ShiftRegister ir("IR", WORD_SIZE);
+FlipRegister ir("IR", WORD_SIZE);
 ShiftRegister mdr("MDR", WORD_SIZE);
 StorageObject tmp("TMP", WORD_SIZE);
 
