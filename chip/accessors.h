@@ -43,6 +43,24 @@ unsigned inst_sam();
 // Precondition: srcReg contains an R-type immediate word. 
 unsigned imm_r_reg(const StorageObject &srcReg, size_t operand);
 
+// Gets the register containing the nth operand
+StorageObject &operand_n(size_t operandId);
+
+// Determines whether the nth operand is a GPR index
+bool cntl_isntgpr(size_t operandId);
+
+// Determines whether the nth operand is an address rather than a value
+// Precondition: nth operand is not a GPR
+bool cntl_isaddr(size_t operandId);
+
+// Gets the register id stored in the nth operand 
+// Precondition: nth operand is a GPR
+size_t cntl_regid(size_t operandId);
+
+// Gets the val or addr index from the nth operand
+// Precondition: nth operand is not a GPR
+size_t cntl_valoraddr(size_t operandId);
+
 // Verdict of the last logical ALU instruction
 // Precondition: MDR must still contain the value computed by this operation!
 bool logic_res();

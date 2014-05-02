@@ -95,6 +95,52 @@ unsigned imm_r_reg(const StorageObject &srcReg, size_t operand) {
     }
 }
 
+StorageObject &operand_n(size_t operandId) {
+    if(operandId > 3) { // TODO Are we allowed to do this
+        emergency_halt("operand_n()", "invalid operand given");
+    }
+    if(!cntl_isntgpr(operandId)) {
+        return *reg[cntl_regid(operandId)];
+    } else if(!cntl_isaddr(operandId)) {
+        if(cntl_valoraddr(operandId) == 3) {
+            return mdr;
+        } else {
+            return *val[cntl_valoraddr(operandId)];
+        }
+    } else {
+        if(cntl_valoraddr(operandId) == 3) {
+            emergency_halt("operand_n()", 
+                    "cannot use MDR as an address");
+        }
+        return *addr[cntl_valoraddr(operandId)];
+    }
+}
+
+bool cntl_isntgpr(size_t operandId) {
+    return (*cntl[operandId])(CTRL_CNTL_WIDTH - 1);
+}
+
+bool cntl_isaddr(size_t operandId) {
+    if(!cntl_isntgpr(operandId)) {
+        emergency_halt("cntl_isaddr()", "operand is a register type");
+    }
+    return (*cntl[operandId])(2);
+}
+
+size_t cntl_regid(size_t operandId) {
+    if(cntl_isntgpr(operandId)) {
+        emergency_halt("cntl_regid()", "operand is not a register type");
+    }
+    return (*cntl[operandId])(3, 0);
+}
+
+size_t cntl_valoraddr(size_t operandId) {
+    if(!cntl_isntgpr(operandId)) {
+        emergency_halt("cntl_valoraddr()", "operand is a register type");
+    }
+    return (*cntl[operandId])(1, 0);
+}
+
 bool logic_res() {
 	return mdr(WORD_SIZE - 1, 0) == 1;
 }
