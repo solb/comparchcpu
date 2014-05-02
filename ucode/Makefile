@@ -23,6 +23,6 @@ ucode.tu: ../hard.tex
 	${INTERMEDIATES}
 
 clean:
-	- rm micromemories ctrlwords.map ifclauses.map jmptab.tl ucode.tu
+	- rm micromemories ctrlwords.map ifclauses.map jmptab.tl ucode.tmp ucode.tu
 wipe: clean
 	rm -f ctrlwords.tex ifclauses.tex jmptab.fl ucode.fu

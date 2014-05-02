@@ -5,6 +5,7 @@
 # FabComp: intermediate micro--jump table and control word micro-opcode generator
 
 # output filenames
+microtemp="ucode.tmp"
 microcode="ucode.tu"
 jumptable="jmptab.tl"
 ctrlwdmap="ctrlwords.map"
@@ -16,14 +17,39 @@ ifclauses="ifclauses.tex"
 # Arguments:
 # 	base := while else fi
 # 	num  :  int
-# 	inst :  bool (whether the line contains code to be executed as well as a label)
+# 	inst :  destination label identifier (if this is a line of code as well as a label)
 processlangbranch() {
 	echo "processing: $1$2"
-	if "$3" ; then
+	if [ -n "$3" ] ; then
 		address=$(($address + 1))
-		echo "$line" | sed -e "s/$1/&$2/" >>"$microcode"
+		echo "$line#\$arr$3" >>"$microtemp"
 	fi
 	printf '%x\t%s\n' $address "$1$2" >>"$jumptable"
+}
+
+microcodewriteback() {
+	truncate -s 0 "$microcode"
+	cat "$microtemp" | while read line ; do
+		poundindex=`expr index "$line" '#'`
+		levelcode=`echo "$line" | sed -nr 's/^.*[^[:digit:]]([0-9]+)_.*$/\1/p'`
+		[ -z "$levelcode" ] && levelcode=0
+		if [ $poundindex -gt 1 -a $levelcode -eq $level ] ; then
+			length=`expr length "$line"`
+			frontend=`expr substr "$line" 1 $poundindex`
+			backend=`expr substr "$line" $(($poundindex + 1)) $(($length - $poundindex))`
+			while [ `expr substr "$backend" 1 1` = '$' ] ; do
+				if ( echo "$backend" | grep '_0$' >/dev/null 2>&1 ) ; then
+					labelindex=`eval echo "$backend"`
+					backend=`echo "$backend" | sed "s/_0$/_${labelindex}/"`
+				fi
+				backend=`eval echo "$backend"`
+			done
+			echo "$frontend$backend" >>"$microcode"
+		else
+			echo "$line" >>"$microcode"
+		fi
+	done
+	mv "$microcode" "$microtemp"
 }
 
 # Generates a mapping of opcodes to semantics
@@ -65,7 +91,7 @@ fi
 # elifs count as two instructions (since they include a jump and a branch)
 
 listing=`sed -n '/BEGIN RTL/,/END RTL/p' "$1" | sed -re '/^$/d' -e 's/^[ \t]+//' -e '/\{.*\}/d' -e '/^%/d' -e 's/([^[:space:]]) #.*$/\1/' -e '/^# [A-Z].*$/d' -e '/elif/ielse'`
-truncate -s 0 "$microcode"
+truncate -s 0 "$microtemp"
 labels=`echo "$listing" | sed -ne '/:/p' -e '/goes here/p'`
 echo "$labels" >"$jumptable"
 
@@ -73,25 +99,52 @@ address=0
 whiles=0
 elses=0
 fis=0
+level=0
 echo "$listing" | while read line ; do
+	eval index=\$arr${level}_0
 	if ( echo "$line" | grep "while" >/dev/null 2>&1 ) ; then
-		processlangbranch while $whiles false
+		level=$(($level + 1))
+		eval arr${level}_1=while$whiles
+		index=1
+		processlangbranch while $whiles ""
 		whiles=$(($whiles + 1))
 	elif ( echo "$line" | grep "else" >/dev/null 2>&1 ) ; then
-		processlangbranch else $elses true
+		eval arr${level}_$index=\\\$arr${level}_0
+		index=$(($index + 1))
+		processlangbranch else $elses ${level}_0
 		elses=$(($elses + 1))
 	elif ( echo "$line" | grep "\<fi\>" >/dev/null 2>&1 ) ; then
-		processlangbranch fi $fis false
+		processlangbranch fi $fis ""
+		eval arr${level}_$index=fi$fis
+		microcodewriteback
+		level=$(($level - 1))
+		eval index=\$arr${level}_0
 		fis=$(($fis + 1))
 	elif ( echo "$line" | grep ":" >/dev/null 2>&1 ) ; then
 		name=`echo "$line" | sed 's/:*$//'`
 		echo "processing: $name"
 		sed -i "s/.*\(\<$name\>\).*/`printf %x $address`\t\1/" "$jumptable"
 	elif ! ( echo "$line" | grep "goes here" >/dev/null 2>&1 ) ; then
-		echo "$line" >>"$microcode"
+		if ( echo "$line" | grep "done" >/dev/null 2>&1 ) ; then
+			echo "$line#\$arr${level}_1" >>"$microtemp"
+			microcodewriteback
+			level=$(($level - 1))
+			eval index=\$arr${level}_0
+		elif ( echo "$line" | grep "\<if\>" >/dev/null 2>&1 ) ; then
+			level=$(($level + 1))
+			index=1
+			echo "$line#\$arr${level}_1" >>"$microtemp"
+		elif ( echo "$line" | grep "elif" >/dev/null 2>&1 ) ; then
+			echo "$line#\$arr${level}_0" >>"$microtemp"
+		else
+			echo "$line" >>"$microtemp"
+		fi
 		address=$(($address + 1))
 	fi
+	eval arr${level}_0=$index
 done
+microcodewriteback
+mv "$microtemp" "$microcode"
 
 words=`echo "$listing" | sed -e '/:/d' -e '/goes here/d' -e '/^#/d' -e '/if/d' -e '/else/d' -e '/fi/d' -e '/while/d' -e '/done/d' | sort | uniq`
 assignopcodes "$words" "$ctrlwdmap" "$ctrlwords"
