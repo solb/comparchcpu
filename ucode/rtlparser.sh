@@ -37,13 +37,11 @@ microcodewriteback() {
 			length=`expr length "$line"`
 			frontend=`expr substr "$line" 1 $poundindex`
 			backend=`expr substr "$line" $(($poundindex + 1)) $(($length - $poundindex))`
-			while [ `expr substr "$backend" 1 1` = '$' ] ; do
-				if ( echo "$backend" | grep '_0$' >/dev/null 2>&1 ) ; then
-					labelindex=`eval echo "$backend"`
-					backend=`echo "$backend" | sed "s/_0$/_${labelindex}/"`
-				fi
-				backend=`eval echo "$backend"`
-			done
+			if ( echo "$backend" | grep '_0$' >/dev/null 2>&1 ) ; then
+				labelindex=`eval echo "$backend"`
+				backend=`echo "$backend" | sed "s/_0$/_${labelindex}/"`
+			fi
+			backend=`eval echo "$backend"`
 			echo "$frontend$backend" >>"$microcode"
 		else
 			echo "$line" >>"$microcode"
@@ -109,7 +107,7 @@ echo "$listing" | while read line ; do
 		processlangbranch while $whiles ""
 		whiles=$(($whiles + 1))
 	elif ( echo "$line" | grep "else" >/dev/null 2>&1 ) ; then
-		eval arr${level}_$index=\\\$arr${level}_0
+		eval arr${level}_$index=else$elses
 		index=$(($index + 1))
 		processlangbranch else $elses ${level}_0
 		elses=$(($elses + 1))
@@ -135,7 +133,7 @@ echo "$listing" | while read line ; do
 			index=1
 			echo "$line#\$arr${level}_1" >>"$microtemp"
 		elif ( echo "$line" | grep "elif" >/dev/null 2>&1 ) ; then
-			echo "$line#\$arr${level}_0" >>"$microtemp"
+			echo "$line#\$arr${level}_$index" >>"$microtemp"
 		else
 			echo "$line" >>"$microtemp"
 		fi
