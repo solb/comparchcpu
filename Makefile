@@ -13,9 +13,9 @@ controlpath.pdf: controlpath.svg
 	pdflatex $<
 	pdflatex $<
 ucode/%: hard.tex
-	${MAKE} -C ucode ucode.tu
+	${MAKE} -C ucode $<.tex
 
 clean:
-	rm -f *.aux *.log datapath.pdf
+	rm -f documents datapath.pdf controlpath.pdf *.aux *.log
 wipe: clean
-	rm -f documents *.pdf
+	rm -f *.pdf
