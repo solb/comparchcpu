@@ -165,7 +165,7 @@ while i != 11 do
 			Addr[i] <- MDR
 			MDR <- TMP & 0xff
 			MDR <- Reg[Val[i](reg2)] << MDR
-			Addr[i] <- MDR + Addr[i]
+			Addr[i] <- Addr[i]  + MDR
 		elif MDR(sam) = 100 then # auto increment
 			Val[i] <- MDR
 			Addr[i] <- Reg[Val[i](reg0)]
