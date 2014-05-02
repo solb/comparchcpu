@@ -13,7 +13,7 @@ controlpath.pdf: controlpath.svg
 	pdflatex $<
 	pdflatex $<
 ucode/%: hard.tex
-	${MAKE} -C ucode $<.tex
+	${MAKE} -C ucode $(notdir $@)
 
 clean:
 	rm -f documents datapath.pdf controlpath.pdf *.aux *.log
