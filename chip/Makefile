@@ -6,12 +6,13 @@ LDFLAGS := -L.
 LDLIBS := -larch2-5a
 
 ${BIN}: ${OBJS}
+FlipTest: FlipRegister.o
 
 accessors.o: accessors.h control_path.h data_path.h FlipRegister.h
 control_path.o: control_path.h data_path.h FlipRegister.h
-CPP.o: control_path.h data_path.h microcontroller.h
 data_path.o: data_path.h FlipRegister.h
 FlipRegister.o: FlipRegister.h
+
 microcontroller.o: accessors.h control_path.h data_path.h FlipRegister.h microcontroller.h
 
 clean:

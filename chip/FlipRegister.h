@@ -7,7 +7,8 @@
 #ifndef _FLIPREGISTER_H_
 #define _FLIPREGISTER_H_
 #include <ShiftRegister.h>
-
+#include <CPUObject.h>
+#include <StorageObject.h>
 class FlipRegister: public virtual ShiftRegister{
     public:
         FlipRegister (const char *id, int numBits, long initVal = 0);
