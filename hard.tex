@@ -206,7 +206,7 @@ done
 i <- 00
 while i != 11 do
 	if IR(ami) = 10 then # PC-relative
-		Addr[i] <- PC + Addr[i]
+		Addr[i] <- Addr[i] + PC
 	fi
 done
 \end{verbatimtab}

@@ -141,7 +141,7 @@ static void execute_rtl(unsigned control_points) {
 
 		case 0x01:
             alu.OP1().pullFrom(*addr[curr_opnd()]);
-            alu.OP2().pullFrom(*reg[imm_r_reg(*addr[curr_opnd()], 0)]);
+            alu.OP2().pullFrom(pc);
             alu.perform(BusALU::op_add);
             addr[curr_opnd()] -> latchFrom(alu.OUT());
             Clock::tick();
@@ -149,19 +149,33 @@ static void execute_rtl(unsigned control_points) {
 
 		case 0x02:
             alu.OP1().pullFrom(*addr[curr_opnd()]);
-            alu.perform(BusALU::op_rop1);
+            alu.OP2().pullFrom(*reg[imm_r_reg(*addr[curr_opnd()], 0)]);
+            alu.perform(BusALU::op_add);
             addr[curr_opnd()] -> latchFrom(alu.OUT());
             Clock::tick();
 			break;
 
 		case 0x03:
-
+            alu.OP1().pullFrom(*addr[curr_opnd()]);
+            alu.perform(BusALU::op_rop1);
+            addr[curr_opnd()] -> latchFrom(alu.OUT());
+            Clock::tick();
 			break;
 
 		case 0x04:
+            abus.IN().pullFrom(pc);
+            mem.MAR().latchFrom(abus.OUT());
+            Clock::tick();
+            mem.read();
+            addr[curr_opnd()] -> latchFrom(mem.READ());
+            Clock::tick();
 			break;
 
 		case 0x05:
+            alu.OP1().pullFrom(*reg[imm_r_reg(mdr, 0)]);
+            alu.perform(BusALU::op_rop1);
+            addr[curr_opnd()] -> latchFrom(alu.OUT());
+            Clock::tick();
 			break;
 
 		case 0x06:
