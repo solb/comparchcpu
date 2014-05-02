@@ -132,15 +132,30 @@ static void execute_rtl(unsigned control_points) {
 	// TODO Populate these cases
 	switch(control_points) {
 		case 0x00:
+            alu.OP1().pullFrom(*addr[curr_opnd()]);
+            alu.OP2().pullFrom(mdr);
+            alu.perform(BusALU::op_add);
+            addr[curr_opnd()] -> latchFrom(alu.OUT());
+            Clock::tick();
 			break;
 
 		case 0x01:
+            alu.OP1().pullFrom(*addr[curr_opnd()]);
+            alu.OP2().pullFrom(*reg[imm_r_reg(*addr[curr_opnd()], 0)]);
+            alu.perform(BusALU::op_add);
+            addr[curr_opnd()] -> latchFrom(alu.OUT());
+            Clock::tick();
 			break;
 
 		case 0x02:
+            alu.OP1().pullFrom(*addr[curr_opnd()]);
+            alu.perform(BusALU::op_rop1);
+            addr[curr_opnd()] -> latchFrom(alu.OUT());
+            Clock::tick();
 			break;
 
 		case 0x03:
+
 			break;
 
 		case 0x04:

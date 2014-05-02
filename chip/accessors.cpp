@@ -78,6 +78,23 @@ unsigned inst_sam() {
 	return mdr(WORD_SIZE - 1, 12);
 }
 
+unsigned imm_r_reg(const StorageObject &srcReg, size_t operand) {
+    // ISA reference, section 2.2, third table
+    switch(operand) {
+        case 0:
+            return srcReg(11, 8);
+
+        case 1:
+            return srcReg(7, 4);
+
+        case 2:
+            return srcReg(3, 0);
+
+        default:
+            return emergency_halt("imm_r_reg()","invalid operand given");
+    }
+}
+
 bool logic_res() {
 	return mdr(WORD_SIZE - 1, 0) == 1;
 }

@@ -7,6 +7,10 @@
 #ifndef ACCESSORS_H_
 #define ACCESSORS_H_
 
+#include <cstdlib>
+
+class StorageObject;
+
 // Current microinstruction's type field
 unsigned uinst_type();
 
@@ -34,6 +38,10 @@ unsigned inst_ami();
 // Current instruction/operand combination's secondary address mode
 // Precondition: MDR must currently contain an R-type immediate word!
 unsigned inst_sam();
+
+// Get the register to operate on
+// Precondition: srcReg contains an R-type immediate word. 
+unsigned imm_r_reg(const StorageObject &srcReg, size_t operand);
 
 // Verdict of the last logical ALU instruction
 // Precondition: MDR must still contain the value computed by this operation!
