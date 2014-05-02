@@ -8,6 +8,7 @@ ifclauses.tex
 *.fl
 *.fo
 *.log
+*.map
 *.mk
 *.o
 *.pdf

@@ -7,7 +7,9 @@
 # output filenames
 microcode="ucode.tu"
 jumptable="jmptab.tl"
+ctrlwdmap="ctrlwords.map"
 ctrlwords="ctrlwords.tex"
+ifclasmap="ifclauses.map"
 ifclauses="ifclauses.tex"
 
 # Handles special labels provided by RTL itself (namely whiles, elses, and fis)
@@ -27,13 +29,16 @@ processlangbranch() {
 # Generates a mapping of opcodes to semantics
 # Arguments:
 # 	semantics : str (list of unique semantics)
-# 	outfile   : filename
+#	mapfile   : filename
+# 	texfile   : filename
 assignopcodes() {
 	truncate -s 0 "$2"
+	truncate -s 0 "$3"
 	uopcode=0
 	echo "$1" | while read line ; do
+		printf '%s\t%d\n' "$line" "$uopcode" >>"$2"
 		escaped=`echo "$line" | sed -e 's/&/\\\&/' -e 's/\^/\\\^\\\/' -e 's/~/\\\~{ }/' -e 's/<-/$\\\leftarrow$/' -e 's/ - / -- /' -e 's/<</< </' -e 's/>>>/> > >/' -e 's/>>/> >/'`
-		printf '0x%02x & %s \\\\\n' "$uopcode" "$escaped" >>"$2"
+		printf '0x%02x & %s \\\\\n' "$uopcode" "$escaped" >>"$3"
 		uopcode=$(($uopcode + 1))
 	done
 }
@@ -89,7 +94,7 @@ echo "$listing" | while read line ; do
 done
 
 words=`echo "$listing" | sed -e '/:/d' -e '/goes here/d' -e '/^#/d' -e '/if/d' -e '/else/d' -e '/fi/d' -e '/while/d' -e '/done/d' | sort | uniq`
-assignopcodes "$words" "$ctrlwords"
+assignopcodes "$words" "$ctrlwdmap" "$ctrlwords"
 
 clauses=`echo "$listing" | sed -ne 's/.*if \(.*\) then.*/\1/p' -e 's/.*while \(.*\) do.*/\1/p' | sort | uniq`
-assignopcodes "$clauses" "$ifclauses"
+assignopcodes "$clauses" "$ifclasmap" "$ifclauses"
