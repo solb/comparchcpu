@@ -165,7 +165,7 @@ while i != 11 do
 			Addr[i] <- MDR
 			MDR <- TMP & 0xff
 			MDR <- Reg[Val[i](reg2)] << MDR
-			Addr[i] <- Addr[i]  + MDR
+			Addr[i] <- Addr[i] + MDR
 		elif MDR(sam) = 100 then # auto increment
 			Val[i] <- MDR
 			Addr[i] <- Reg[Val[i](reg0)]
@@ -182,7 +182,7 @@ while i != 11 do
 			Addr[i] <- Reg[Val[i](reg0)] << MDR
 			MDR <- Mem[PC] # the I-type immediate
 			PC <- PC + 1
-			Addr[i] <- MDR + Addr[i]
+			Addr[i] <- Addr[i] + MDR
 		elif MDR(sam) = 111 then # doubly scaled displacement
 			Val[i] <- MDR
 			MDR <- Mem[PC] # the S-type immediate
@@ -192,7 +192,7 @@ while i != 11 do
 			Addr[i] <- Reg[Val[i](reg0)] << MDR
 			MDR <- Mem[PC] # the I-type immediate
 			PC <- PC + 1
-			Addr[i] <- MDR + Addr[i]
+			Addr[i] <- Addr[i] + MDR
 			MDR <- Mem[Addr[i]]
 			Addr[i] <- MDR
 			MDR <- TMP & 0xff
