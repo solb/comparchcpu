@@ -29,22 +29,41 @@ def main():
 		result += '{0:x} 1 '.format(jtaddr)
 
 		line = line.strip()
-		spacecadet = line.find(' ')
-		poundcadet = line.find('#')
-		if spacecadet == -1:
-			spacecadet = poundcadet
-		label = line[poundcadet + 1:] # The destination label, if one exists
-		line = line[:len(line) if poundcadet == -1 else poundcadet]
-		head = line[:spacecadet] # The first word
-		tail = line[spacecadet + 1:] # Everything except the first word and the label
+		if line[0] == '#':
+			line = line[2:]
+			lastspacer = line.rfind(' ')
+			label = line[len(line) if lastspacer == -1 else lastspacer + 1:]
+			line = line.replace(' ' + label, '')
+		else:
+			spacecadet = line.find(' ')
+			poundcadet = line.find('#')
+			if spacecadet == -1:
+				spacecadet = poundcadet
+			label = line[poundcadet + 1:] # The destination label, if one exists
+			line = line[:len(line) if poundcadet == -1 else poundcadet]
+			head = line[:spacecadet] # The first word
+			tail = line[spacecadet + 1:] # Everything except the first word and the label
+
 		if line in controls: # Control point
 			result += '{0:x}\n'.format(controls[line])
+		elif line == 'bail':
+			result += '{0:x}\n'.format(0x6 << TYPE_OFFSET)
+		elif line == 'bail out':
+			result += '{0:x}\n'.format(0x7 << TYPE_OFFSET)
+		elif line == 'jump to the very':
+			result += '{0:x}\n'.format(0x2 << TYPE_OFFSET)
+		elif line == 'call function at uJumpTab label':
+			result += '{0:x}\n'.format(0x4 << TYPE_OFFSET)
+		elif line == 'call':
+			result += '{0:x}\n'.format((0x3 << TYPE_OFFSET) | labels[label])
+		elif line == 'return':
+			result += '{0:x}\n'.format(0x5 << TYPE_OFFSET)
 		elif head == 'if' or head == 'elif' or head == 'until':
-			result += '{0:x}\n'.format((0xa << TYPE_OFFSET) | (conditions[tail.replace(" then", "").replace(" repeat", "")] << COND_OFFSET) | labels[label])
+			result += '{0:x}\n'.format((0xa << TYPE_OFFSET) | (conditions[tail.replace(' then', '').replace(' repeat', '')] << COND_OFFSET) | labels[label])
 		elif head == 'else':
 			result += '{0:x}\n'.format((0x1 << TYPE_OFFSET) | labels[label])
 		else:
-			result += line + '\n'
+			print('WARNING: HIT AN UNMATCHED CASE!')
 
 		jtaddr += 1
 	result += '0'
