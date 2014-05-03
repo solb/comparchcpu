@@ -3,8 +3,8 @@ INTERMEDIATES := ./rtlparser.sh ../hard.tex
 micromemories: ucode.fu jmptab.fl
 	touch micromemories
 
-ucode.fu: ucode.tu ctrlwords.map ifclauses.map
-	./ucodegenerator.py ucode.tu ctrlwords.map ifclauses.map
+ucode.fu: ucode.tu ctrlwords.map ifclauses.map jmptab.tl
+	./ucodegenerator.py ucode.tu ctrlwords.map ifclauses.map jmptab.tl
 jmptab.fl: jmptab.tl
 	./jtabgenerator.py jmptab.tl
 
