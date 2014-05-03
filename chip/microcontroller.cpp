@@ -52,7 +52,7 @@ void interpret_microprogram() {
 				break;
 
 			case 0xa: // Branch -> uJumpTab
-				if(!decide_conditional())
+				if(decide_conditional())
 					break;
 			case 0x1: // Jump -> uJumpTab
 				// Replace the uPC with the value mapped to the jump table index
@@ -65,7 +65,7 @@ void interpret_microprogram() {
 				break;
 
 			case 0xb: // Branch -> ufetch
-				if(!decide_conditional())
+				if(decide_conditional())
 					break;
 			case 0x2: // Jump -> ufetch
 				// Reset the uPC to point at the start of the program
@@ -74,7 +74,7 @@ void interpret_microprogram() {
 				break;
 
 			case 0xc: // Call? <- uJumpTab
-				if(!decide_conditional())
+				if(decide_conditional())
 					break;
 			case 0x3: // Call <- uJumpTab
 				// Save the current uPC to the uStack, then clobber it from jump
@@ -82,7 +82,7 @@ void interpret_microprogram() {
 				break;
 
 			case 0xd: // Call? <- IR(opc)
-				if(!decide_conditional())
+				if(decide_conditional())
 					break;
 			case 0x4: // Call <- IR(opc)
 				// Retrieve the opcode bits from the current instruction word
@@ -99,7 +99,7 @@ void interpret_microprogram() {
 				break;
 
 			case 0xe: // Return?
-				if(!decide_conditional())
+				if(decide_conditional())
 					break;
 			case 0x5: // Return
 				// Restore the uPC from just under the micro--stack pointer
