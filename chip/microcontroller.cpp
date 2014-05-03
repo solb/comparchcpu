@@ -438,22 +438,22 @@ bool decide_conditional() {
 			return (*cntl[0])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
 
 		case 0x10:
-			return (*cntl[0])(4) == 0;
+			return !cntl_isntgpr(0);
 
 		case 0x11:
-			return (*cntl[0])(4) == 1;
+			return cntl_isntgpr(0);
 
 		case 0x12:
 			return (*cntl[1])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
 
 		case 0x13:
-			return (*cntl[1])(4) == 1 && (*cntl[1])(2) == 1;
+			return cntl_isntgpr(1) && cntl_isaddr(1);
 
 		case 0x14:
 			return (*cntl[2])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
 
 		case 0x15:
-			return (*cntl[2])(4) == 1 && (*cntl[2])(2) == 1;
+			return cntl_isntgpr(2) && cntl_isaddr(2);
 
 		case 0x16:
 			return curr_opnd() != 0 && inst_immi();
