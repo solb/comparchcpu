@@ -33,7 +33,7 @@ unsigned uinst_j_jump() {
 }
 
 unsigned curr_ura() {
-	return usp(CTRL_ADDR_WIDTH - 1, 0);
+	return usp(CTRL_SPTR_WIDTH - 1, 0);
 }
 
 unsigned curr_opnd() {
