@@ -225,7 +225,20 @@ fi
 \subsection{Execute}
 \begin{verbatimtab}
 # call function at uJumpTab label IR(opc)
+\end{verbatimtab}
 
+\subsection{Writeback}
+\begin{verbatimtab}
+if cntl[0](4) = 0 then
+	Reg[cntl[0](3..0)] <- MDR
+elif cntl[0](4) = 1 then
+	Mem[Addr[cntl[0](3..0)]] <- MDR
+fi
+# jump to the very beginning
+\end{verbatimtab}
+
+\subsection{Supporting Functions}
+\begin{verbatimtab}
 halt:
 	# bail out
 and:
@@ -518,16 +531,6 @@ validator_nine:
 		# bail out loudly
 	fi
 	# return
-\end{verbatimtab}
-
-\subsection{Writeback}
-\begin{verbatimtab}
-if cntl[0](4) = 0 then
-	Reg[cntl[0](3..0)] <- MDR
-elif cntl[0](4) = 1 then
-	Mem[Addr[cntl[0](3..0)]] <- MDR
-fi
-# jump to the very beginning
 \end{verbatimtab}
 % END RTL
 
