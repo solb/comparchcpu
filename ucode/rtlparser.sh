@@ -13,9 +13,9 @@ ctrlwords="ctrlwords.tex"
 ifclasmap="ifclauses.map"
 ifclauses="ifclauses.tex"
 
-# Handles special labels provided by RTL itself (namely whiles, elses, and fis)
+# Handles special labels provided by RTL itself (namely loops, elses, and fis)
 # Arguments:
-# 	base := while else fi
+# 	base := loop else fi
 # 	num  :  int
 # 	inst :  destination label identifier (if this is a line of code as well as a label)
 processlangbranch() {
@@ -84,8 +84,8 @@ if [ $# -ne 1 ] ; then
 fi
 
 # labels and "belongs here"s belong in the jump table
-# elifs, elses, fis, and whiles belong in the jump table
-# ifs, elses, and dones count as an instruction
+# elifs, elses, fis, and loops belong in the jump table
+# ifs, elses, and untils count as an instruction
 # elifs count as two instructions (since they include a jump and a branch)
 
 listing=`sed -n '/BEGIN RTL/,/END RTL/p' "$1" | sed -re '/^$/d' -e 's/^[ \t]+//' -e '/\{.*\}/d' -e '/^%/d' -e 's/([^[:space:]]) #.*$/\1/' -e '/^# [A-Z].*$/d' -e '/elif/ielse'`
@@ -94,18 +94,18 @@ labels=`echo "$listing" | sed -ne '/:/p' -e '/goes here/p'`
 echo "$labels" >"$jumptable"
 
 address=0
-whiles=0
+loops=0
 elses=0
 fis=0
 level=0
 echo "$listing" | while read line ; do
 	eval index=\$arr${level}_0
-	if ( echo "$line" | grep "while" >/dev/null 2>&1 ) ; then
+	if ( echo "$line" | grep "loop" >/dev/null 2>&1 ) ; then
 		level=$(($level + 1))
-		eval arr${level}_1=while$whiles
+		eval arr${level}_1=loop$loops
 		index=1
-		processlangbranch while $whiles ""
-		whiles=$(($whiles + 1))
+		processlangbranch loop $loops ""
+		loops=$(($loops + 1))
 	elif ( echo "$line" | grep "else" >/dev/null 2>&1 ) ; then
 		eval arr${level}_$index=else$elses
 		index=$(($index + 1))
@@ -123,7 +123,7 @@ echo "$listing" | while read line ; do
 		echo "processing: $name"
 		sed -i "s/.*\(\<$name\>\).*/`printf %x $address`\t\1/" "$jumptable"
 	elif ! ( echo "$line" | grep "goes here" >/dev/null 2>&1 ) ; then
-		if ( echo "$line" | grep "done" >/dev/null 2>&1 ) ; then
+		if ( echo "$line" | grep "until" >/dev/null 2>&1 ) ; then
 			echo "$line#\$arr${level}_1" >>"$microtemp"
 			microcodewriteback
 			level=$(($level - 1))
@@ -144,8 +144,8 @@ done
 microcodewriteback
 mv "$microtemp" "$microcode"
 
-words=`echo "$listing" | sed -e '/:/d' -e '/goes here/d' -e '/^#/d' -e '/if/d' -e '/else/d' -e '/fi/d' -e '/while/d' -e '/done/d' | sort | uniq`
+words=`echo "$listing" | sed -e '/:/d' -e '/goes here/d' -e '/^#/d' -e '/if/d' -e '/else/d' -e '/fi/d' -e '/loop/d' -e '/until/d' | sort | uniq`
 assignopcodes "$words" "$ctrlwdmap" "$ctrlwords"
 
-clauses=`echo "$listing" | sed -ne 's/.*if \(.*\) then.*/\1/p' -e 's/.*while \(.*\) do.*/\1/p' | sort | uniq`
+clauses=`echo "$listing" | sed -ne 's/.*if \(.*\) then.*/\1/p' -e 's/.*until \(.*\) repeat.*/\1/p' | sort | uniq`
 assignopcodes "$clauses" "$ifclasmap" "$ifclauses"

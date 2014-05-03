@@ -125,7 +125,7 @@ PC <- PC + 1
 \subsection{Decode phase}
 \begin{verbatimtab}
 i <- 00
-while i != 11 do
+loop
 	if i != 00 AND IR(imm)(i) = 1 then
 		Val[i] <- Mem[PC]
 		cntl[i] <- 10000 | i
@@ -201,14 +201,14 @@ while i != 11 do
 		fi
 	fi
 	i <- i + 1
-done
+until i = 11 repeat
 
 i <- 00
-while i != 11 do
+loop
 	if IR(ami) = 10 then # PC-relative
 		Addr[i] <- Addr[i] + PC
 	fi
-done
+until i = 11 repeat
 \end{verbatimtab}
 
 \subsection{Memory Load}
