@@ -145,6 +145,10 @@ bool logic_res() {
 	return mdr(WORD_SIZE - 1, 0) == 1;
 }
 
+bool neg_res() {
+	return mdr(WORD_SIZE - 1);
+}
+
 unsigned emergency_halt(const char *function, const char *excuse) {
 	cerr << "FATAL: " << function << excuse << endl;
 	exit(3);

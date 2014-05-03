@@ -402,58 +402,67 @@ bool decide_conditional() {
 			return inst_ami() == 3;
 
 		case 0x04:
-			return logic_res();
+			return !logic_res();
 
 		case 0x05:
-			return inst_sam() == 00;
+			return logic_res();
 
 		case 0x06:
-			return inst_sam() == 01;
+			return neg_res();
 
 		case 0x07:
-			return inst_sam() == 02;
+			return inst_sam() == 00;
 
 		case 0x08:
-			return inst_sam() == 03;
+			return inst_sam() == 01;
 
 		case 0x09:
-			return inst_sam() == 04;
+			return inst_sam() == 02;
 
 		case 0x0a:
-			return inst_sam() == 05;
+			return inst_sam() == 03;
 
 		case 0x0b:
-			return inst_sam() == 06;
+			return inst_sam() == 04;
 
 		case 0x0c:
-			return inst_sam() == 07;
+			return inst_sam() == 05;
 
 		case 0x0d:
-			return (*cntl[0])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
+			return inst_sam() == 06;
 
 		case 0x0e:
-			return (*cntl[0])(4) == 0;
+			return inst_sam() == 07;
 
 		case 0x0f:
-			return (*cntl[0])(4) == 1;
+			return (*cntl[0])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
 
 		case 0x10:
-			return (*cntl[1])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
+			return (*cntl[0])(4) == 0;
 
 		case 0x11:
-			return (*cntl[1])(4) == 1 && (*cntl[1])(2) == 1;
+			return (*cntl[0])(4) == 1;
 
 		case 0x12:
-			return (*cntl[2])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
+			return (*cntl[1])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
 
 		case 0x13:
-			return (*cntl[2])(4) == 1 && (*cntl[2])(4) == 1;
+			return (*cntl[1])(4) == 1 && (*cntl[1])(2) == 1;
 
 		case 0x14:
-			return curr_opnd() != 0 && inst_immi();
+			return (*cntl[2])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
 
 		case 0x15:
+			return (*cntl[2])(4) == 1 && (*cntl[2])(2) == 1;
+
+		case 0x16:
+			return curr_opnd() != 0 && inst_immi();
+
+		case 0x17:
 			return curr_opnd() != 3;
+
+		case 0x18:
+			return operand_n(1)(WORD_SIZE - 1, 0) == 0;
 
 		default:
 			return emergency_halt("decide_conditional()",

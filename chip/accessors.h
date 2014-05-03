@@ -65,6 +65,10 @@ size_t cntl_valoraddr(size_t operandId);
 // Precondition: MDR must still contain the value computed by this operation!
 bool logic_res();
 
+// Whether the last arithmetic ALU instruction yielded a negative value
+// Precondition: MDR must still containt the value computed by that operation!
+bool neg_res();
+
 // Immediately bail out of the entire system with a serious internal error
 unsigned emergency_halt(const char *function, const char *excuse);
 
