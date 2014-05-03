@@ -27,6 +27,7 @@ processlangbranch() {
 	printf '%x\t%s\n' $address "$1$2" >>"$jumptable"
 }
 
+# Substitutes the labels associated with the current level of ifs or whiles into the intermediate microtemp file
 microcodewriteback() {
 	truncate -s 0 "$microcode"
 	cat "$microtemp" | while read line ; do
@@ -144,7 +145,7 @@ done
 microcodewriteback
 mv "$microtemp" "$microcode"
 
-words=`echo "$listing" | sed -e '/:/d' -e '/goes here/d' -e '/^#/d' -e '/if/d' -e '/else/d' -e '/fi/d' -e '/loop/d' -e '/until/d' | sort | uniq`
+words=`echo "$listing" | sed -e '/:/d' -e '/goes here/d' -e '/^#/d' -e '/\<if\>/d' -e '/else/d' -e '/fi/d' -e '/loop/d' -e '/until/d' | sort | uniq`
 assignopcodes "$words" "$ctrlwdmap" "$ctrlwords"
 
 clauses=`echo "$listing" | sed -ne 's/.*if \(.*\) then.*/\1/p' -e 's/.*until \(.*\) repeat.*/\1/p' | sort | uniq`

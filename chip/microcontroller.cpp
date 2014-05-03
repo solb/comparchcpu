@@ -364,6 +364,48 @@ static void execute_rtl(unsigned control_points) {
 		case 0x43:
 			break;
 
+		case 0x44:
+			break;
+
+		case 0x45:
+			break;
+
+		case 0x46:
+			break;
+
+		case 0x47:
+			break;
+
+		case 0x48:
+			break;
+
+		case 0x49:
+			break;
+
+		case 0x4a:
+			break;
+
+		case 0x4b:
+			break;
+
+		case 0x4c:
+			break;
+
+		case 0x4d:
+			break;
+
+		case 0x4e:
+			break;
+
+		case 0x4f:
+			break;
+
+		case 0x50:
+			break;
+
+		case 0x51:
+			break;
+
 		default:
 			emergency_halt("execute_rtl()",
 					"Invalid microinstruction control point identifier");
