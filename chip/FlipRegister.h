@@ -18,6 +18,7 @@ class FlipRegister: public virtual ShiftRegister{
         void rightShift();	// shorthand
 	    void rightArithShift();	// shorthand
 	    void leftShift();	// shorthand
+        void clear();
 
         void perform( ShiftRegister::Operation );
     protected:

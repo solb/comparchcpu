@@ -23,7 +23,7 @@ FlipRegister::FlipRegister (const char *id, int numBits, long initVal):
 FlipRegister::~FlipRegister(){
 }
 
-void FlipRegister::flipBit( int bit){
+void FlipRegister::flipBit( int bit ){
     bitsToFlip = bit;
     flipBits = true;
 }
@@ -31,9 +31,12 @@ void FlipRegister::perform (ShiftRegister::Operation op){
     flipBits = false;
     ShiftRegister::perform ( op );
 }
-
+void FlipRegister::clear(){
+    flipBits = true;
+    bitsToFlip = -1;
+}
 void FlipRegister::phase1(){
-    if(flipBits){
+    if(flipBits && bitsToFlip >= 0){
         int mask = 1;
         int i = bitsToFlip;
         while ( i > 0 ){
@@ -45,6 +48,8 @@ void FlipRegister::phase1(){
         }
         value(value()^mask);
       
+    }else if(flipBits && bitsToFlip < 0){
+        value(0);
     }else{
         ShiftRegister::phase1();
     }

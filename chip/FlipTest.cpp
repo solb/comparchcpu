@@ -19,5 +19,8 @@ int main(){
     cout << bitset<5>(test.value())<<endl;
     test.perform(ShiftRegister::left); 
     Clock::tick();
+    cout << bitset<5>(test.value())<<endl;
+    test.clear();
+    Clock::tick();
     cout << bitset<5>(test.value())<<endl;   
 }
