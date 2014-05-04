@@ -14,6 +14,7 @@
 #include <Clock.h>
 #include <Counter.h>
 #include <iostream>
+#include <stdio.h>
 #include <Memory.h>
 #include <ShiftRegister.h>
 #include <StorageObject.h>
@@ -149,8 +150,7 @@ static void execute_rtl(unsigned control_points) {
 
 		case 0x02:
             alu.OP1().pullFrom(*addr[curr_opnd()]);
-            alu.OP2().pullFrom(*reg[imm_r_reg(
-                    *addr[curr_opnd()], 0)]);
+            alu.OP2().pullFrom(*reg[imm_r_reg(*addr[curr_opnd()], 0)]);
             alu.perform(BusALU::op_add);
             addr[curr_opnd()] -> latchFrom(alu.OUT());
             Clock::tick();
@@ -170,6 +170,7 @@ static void execute_rtl(unsigned control_points) {
             mem.read();
             addr[curr_opnd()] -> latchFrom(mem.READ());
             Clock::tick();
+            printf("\tImmediate: %04lx\n", addr[curr_opnd()] -> value());
 			break;
 
 		case 0x05:
@@ -206,8 +207,7 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x09:
-            alu.OP1().pullFrom(*reg[imm_r_reg(
-                    *val[curr_opnd()], 0)]);
+            alu.OP1().pullFrom(*reg[imm_r_reg(*val[curr_opnd()], 0)]);
             alu.OP2().pullFrom(mdr);
             alu.perform(BusALU::op_lshift);
             addr[curr_opnd()] -> latchFrom( alu.OUT() );
@@ -221,6 +221,9 @@ static void execute_rtl(unsigned control_points) {
             mem.read();
             ir.latchFrom(mem.READ());
             Clock::tick();
+            printf("Instruction: %02lx %1lx %1lx %01lx %01lx %01lx PC = %04lx\n"
+                    ,ir(15,8), ir(7), ir(6), ir(5,4), ir(3,2),
+                    ir(1,0), pc.value());
 			break;
 
 		case 0x0b:
@@ -278,11 +281,11 @@ static void execute_rtl(unsigned control_points) {
             mem.read();
             mdr.latchFrom(mem.READ());
             Clock::tick();
+            printf("\tImmediate: %04lx\n", mdr.value());
 			break;
 
 		case 0x13:
-            alu.OP1().pullFrom(*reg[imm_r_reg(
-                    *val[curr_opnd()], 1)]);
+            alu.OP1().pullFrom(*reg[imm_r_reg(*val[curr_opnd()], 1)]);
             alu.OP2().pullFrom(mdr);
             alu.perform(BusALU::op_lshift);
             mdr.latchFrom(alu.OUT());
@@ -413,6 +416,7 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x23:
+            printf("\tResult: %04lx\n", mdr.value());
 			abus.IN().pullFrom(*addr[cntl_regid(0)]);
 			mem.MAR().latchFrom(abus.OUT());
 			Clock::tick();
@@ -494,6 +498,7 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x2c:
+            printf("\tResult: %04lx\n", mdr.value());
 			dbus.IN().pullFrom(mdr);
 			reg[cntl_regid(0)]->latchFrom(dbus.OUT());
 			Clock::tick();
@@ -542,6 +547,7 @@ static void execute_rtl(unsigned control_points) {
 			val[curr_opnd()]->latchFrom(mem.READ());
 			mem.read();
 			Clock::tick();
+            printf("\tImmediate: %04lx\n", val[curr_opnd()] -> value());
 			break;
 
 		case 0x33:
