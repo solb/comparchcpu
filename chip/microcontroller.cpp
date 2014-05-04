@@ -400,7 +400,7 @@ static void execute_rtl(unsigned control_points) {
 
 		case 0x21:
             mdr.latchFrom(alu.OUT());
-            alu.OP1().pullfrom(operand_n(2));
+            alu.OP1().pullFrom(operand_n(2));
             alu.OP2().pullFrom(operand_n(1));
             alu.perform(BusALU::op_sub);
 			break;
@@ -408,7 +408,7 @@ static void execute_rtl(unsigned control_points) {
 		case 0x22:
             mdr.latchFrom(alu.OUT());
             alu.OP1().pullFrom(operand_n(1));
-            alu.perform(busALU::op_not);
+            alu.perform(BusALU::op_not);
             Clock::tick();
 			break;
 
