@@ -413,15 +413,32 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x23:
+			abus.IN().pullFrom(*addr[cntl_regid(0)]);
+			mem.MAR().latchFrom(abus.OUT());
+			Clock::tick();
+			mem.WRITE().pullFrom(mdr);
+			mem.write();
+			Clock::tick();
 			break;
 
 		case 0x24:
+			abus.IN().pullFrom(*reg[14]);
+			mem.MAR().latchFrom(abus.OUT());
+			Clock::tick();
+			mem.WRITE().pullFrom(*reg[15]);
+			mem.write();
+			Clock::tick();
 			break;
 
 		case 0x25:
+			pc.incr();
+			Clock::tick();
 			break;
 
 		case 0x26:
+			dbus.IN().pullFrom(operand_n(0));
+			pc.latchFrom(dbus.OUT());
+			Clock::tick();
 			break;
 
 		case 0x27:
