@@ -658,25 +658,20 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x40:
-			cntl[curr_opnd()]->clear();
-			Clock::tick();
-			cntl[curr_opnd()]->flipBit(CNTL_ISNTGPR_BIT);
-			Clock::tick();
 			pdbus.IN().pullFrom(i);
 			cntl[curr_opnd()]->latchFrom(pdbus.OUT());
+			Clock::tick();
+			cntl[curr_opnd()]->flipBit(CNTL_ISNTGPR_BIT);
 			Clock::tick();
 			break;
 
 		case 0x41:
-			cntl[curr_opnd()]->clear();
+			pdbus.IN().pullFrom(i);
+			cntl[curr_opnd()]->latchFrom(pdbus.OUT());
 			Clock::tick();
 			cntl[curr_opnd()]->flipBit(CNTL_ISNTGPR_BIT);
 			Clock::tick();
 			cntl[curr_opnd()]->flipBit(CNTL_ISADDR_BIT);
-			Clock::tick();
-			// TODO We need to make sure that this only modifies the lowest bits
-			pdbus.IN().pullFrom(i);
-			cntl[curr_opnd()]->latchFrom(pdbus.OUT());
 			Clock::tick();
 			break;
 
