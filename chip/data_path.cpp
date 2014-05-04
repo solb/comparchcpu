@@ -20,7 +20,7 @@ Bus dbus("DBUS", WORD_SIZE);
 
 // Construct constants
 static StorageObject bus_low_byte_mask_internal("0xFF", WORD_SIZE, 0xff);
-const StorageObject &BUS_LOW_BYTE_MASK = bus_low_byte_mask_internal;
+StorageObject &BUS_LOW_BYTE_MASK = bus_low_byte_mask_internal;
 
 // Construct registers
 Counter pc("PC", WORD_SIZE);

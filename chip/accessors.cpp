@@ -15,6 +15,9 @@
 const unsigned CNTL_ISNTGPR_BIT = CTRL_CNTL_WIDTH - 1;
 const unsigned CNTL_ISADDR_BIT = 2;
 
+const unsigned OPC_BRANCH_COMP_BIT = 11;
+const unsigned OPC_BRANCH_SIMP_BIT = 10;
+
 unsigned uinst_type() {
 	// Hardware specification, section 3
 	return uir(CTRL_INST_WIDTH - 1, 12);

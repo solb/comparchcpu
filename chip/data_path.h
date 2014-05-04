@@ -32,7 +32,8 @@ extern Bus abus;
 extern Bus dbus;
 
 // Constants
-extern const StorageObject &BUS_LOW_BYTE_MASK;
+// TODO Fix const correctness bug in arch lib
+extern StorageObject &BUS_LOW_BYTE_MASK;
 
 // Registers
 extern Counter pc;

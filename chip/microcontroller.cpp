@@ -149,14 +149,15 @@ static void execute_rtl(unsigned control_points) {
 
 		case 0x02:
             alu.OP1().pullFrom(*addr[curr_opnd()]);
-            alu.OP2().pullFrom(*reg[imm_r_reg(*addr[curr_opnd()], 0)]);
+            alu.OP2().pullFrom(*reg[imm_r_reg(
+                    *addr[curr_opnd()], 0)]);
             alu.perform(BusALU::op_add);
             addr[curr_opnd()] -> latchFrom(alu.OUT());
             Clock::tick();
 			break;
 
 		case 0x03:
-            alu.OP1().pullFrom(*addr[curr_opnd()]);
+            alu.OP1().pullFrom(mdr);
             alu.perform(BusALU::op_rop1);
             addr[curr_opnd()] -> latchFrom(alu.OUT());
             Clock::tick();
@@ -179,90 +180,236 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x06:
+            alu.OP1().pullFrom(*reg[imm_r_reg(
+                    *val[curr_opnd()], 0)]);
+            alu.perform(BusALU::op_rop1);
+            addr[curr_opnd()] -> latchFrom( alu.OUT() );
+            Clock::tick();
 			break;
 
 		case 0x07:
+            alu.OP2().pullFrom(*reg[imm_r_reg(
+                    *val[curr_opnd()], 0)]);
+            alu.OP1().pullFrom(*addr[curr_opnd()]);
+            alu.perform(BusALU::op_add);
+            addr[curr_opnd()] -> latchFrom( alu.OUT() );
+            Clock::tick();
 			break;
 
 		case 0x08:
+            alu.OP1().pullFrom(*reg[imm_r_reg(
+                    *val[curr_opnd()], 0)]);
+            alu.OP2().pullFrom(mdr);
+            alu.perform(BusALU::op_lshift);
+            addr[curr_opnd()] -> latchFrom( alu.OUT() );
+            Clock::tick();
 			break;
 
 		case 0x09:
+            alu.OP1().pullFrom(*reg[imm_r_reg(
+                    *val[curr_opnd()], 0)]);
+            alu.OP2().pullFrom(mdr);
+            alu.perform(BusALU::op_lshift);
+            addr[curr_opnd()] -> latchFrom( alu.OUT() );
+            Clock::tick();
 			break;
 
 		case 0x0a:
+            abus.IN().pullFrom(pc);
+            mem.MAR().latchFrom(abus.OUT());
+            Clock::tick();
+            mem.read();
+            ir.latchFrom(mem.READ());
+            Clock::tick();
 			break;
 
 		case 0x0b:
+            ir.flipBit(OPC_BRANCH_COMP_BIT);
+            Clock::tick();
 			break;
 
 		case 0x0c:
+            ir.flipBit(OPC_BRANCH_SIMP_BIT);
+            Clock::tick();
 			break;
 
 		case 0x0d:
+            mdr.latchFrom(alu.OUT());
+            alu.perform(BusALU::op_zero);
+            Clock::tick();
 			break;
 
 		case 0x0e:
+            mdr.latchFrom(alu.OUT());
+            alu.perform(BusALU::op_zero);
+            Clock::tick();
+            alu.OP1().pullFrom(mdr);
+            alu.OP2().pullFrom(operand_n(1));
+            mdr.latchFrom(alu.OUT());
+            Clock::tick();
 			break;
 
 		case 0x0f:
+            mdr.latchFrom(alu.OUT());
+            alu.perform(BusALU::op_one);
+            Clock::tick();
 			break;
 
 		case 0x10:
+            for(int count = 0; count < 8; ++count) {
+			    mdr.rightShift();
+				Clock::tick();
+			}
 			break;
 
 		case 0x11:
+            abus.IN().pullFrom(*addr[curr_opnd()]);
+            mem.MAR().latchFrom(abus.OUT());
+            Clock::tick();
+            mem.read();
+            mdr.latchFrom(mem.READ());
+            Clock::tick();
 			break;
 
 		case 0x12:
+            abus.IN().pullFrom(pc);
+            mem.MAR().latchFrom(abus.OUT());
+            Clock::tick();
+            mem.read();
+            mdr.latchFrom(mem.READ());
+            Clock::tick();
 			break;
 
 		case 0x13:
-			break;
+            alu.OP1().pullFrom(*reg[imm_r_reg(
+                    *val[curr_opnd()], 1)]);
+            alu.OP2().pullFrom(mdr);
+            alu.perform(BusALU::op_lshift);
+            mdr.latchFrom(alu.OUT());
+            Clock::tick();			
+            break;
 
 		case 0x14:
+            alu.OP1().pullFrom(*reg[imm_r_reg(
+                    *val[curr_opnd()], 2)]);
+            alu.OP2().pullFrom(mdr);
+            alu.perform(BusALU::op_lshift);
+            mdr.latchFrom(alu.OUT());
+            Clock::tick();
 			break;
 
 		case 0x15:
+            alu.OP1().pullFrom(tmp);
+            alu.OP2().pullFrom(BUS_LOW_BYTE_MASK);
+            alu.perform(BusALU::op_and);
+            mdr.latchFrom(alu.OUT());
+            Clock::tick();
 			break;
 
 		case 0x16:
+            alu.perform(BusALU::op_one);
+            mdr.latchFrom(alu.OUT());
+            Clock::tick();
+            alu.OP1().pullFrom(operand_n(0));
+            alu.OP2().pullFrom(mdr);
+            alu.perform(BusALU::op_add);
+            mdr.latchFrom(alu.OUT());
+            Clock::tick();
 			break;
 
 		case 0x17:
+            alu.perform(BusALU::op_one);
+            mdr.latchFrom(alu.OUT());
+            Clock::tick();
+            alu.OP1().pullFrom(operand_n(0));
+            alu.OP2().pullFrom(mdr);
+            alu.perform(BusALU::op_sub);
+            mdr.latchFrom(alu.OUT());
+            Clock::tick();
 			break;
 
 		case 0x18:
+            mdr.latchFrom(alu.OUT());
+            alu.OP1().pullFrom(operand_n(1));
+            alu.perform(BusALU::op_rop1);
+            Clock::tick();
 			break;
 
 		case 0x19:
+            mdr.latchFrom(alu.OUT());
+            alu.OP1().pullFrom(operand_n(1));
+            alu.OP2().pullFrom(operand_n(2));
+            alu.perform(BusALU::op_and);
+            Clock::tick();
 			break;
 
 		case 0x1a:
+            mdr.latchFrom(alu.OUT());
+            alu.OP1().pullFrom(operand_n(1));
+            alu.OP2().pullFrom(operand_n(2));
+            alu.perform(BusALU::op_add);
+            Clock::tick();
 			break;
 
 		case 0x1b:
+            mdr.latchFrom(alu.OUT());
+            alu.OP1().pullFrom(operand_n(1));
+            alu.OP2().pullFrom(operand_n(2));
+            alu.perform(BusALU::op_sub);
+            Clock::tick();
 			break;
 
 		case 0x1c:
+            mdr.latchFrom(alu.OUT());
+            alu.OP1().pullFrom(operand_n(1));
+            alu.OP2().pullFrom(operand_n(2));
+            alu.perform(BusALU::op_lshift);
+            Clock::tick();
 			break;
 
 		case 0x1d:
+            mdr.latchFrom(alu.OUT());
+            alu.OP1().pullFrom(operand_n(1));
+            alu.OP2().pullFrom(operand_n(2));
+            alu.perform(BusALU::op_rshift);
+            Clock::tick();
 			break;
 
 		case 0x1e:
+            mdr.latchFrom(alu.OUT());
+            alu.OP1().pullFrom(operand_n(1));
+            alu.OP2().pullFrom(operand_n(2));
+            alu.perform(BusALU::op_rashift);
+            Clock::tick();
 			break;
 
 		case 0x1f:
+            mdr.latchFrom(alu.OUT());
+            alu.OP1().pullFrom(operand_n(1));
+            alu.OP2().pullFrom(operand_n(2));
+            alu.perform(BusALU::op_xor);
+            Clock::tick();
 			break;
 
 		case 0x20:
+            mdr.latchFrom(alu.OUT());
+            alu.OP1().pullFrom(operand_n(1));
+            alu.OP2().pullFrom(operand_n(2));
+            alu.perform(BusALU::op_or);
 			break;
 
 		case 0x21:
+            mdr.latchFrom(alu.OUT());
+            alu.OP1().pullfrom(operand_n(2));
+            alu.OP2().pullFrom(operand_n(1));
+            alu.perform(BusALU::op_sub);
 			break;
 
 		case 0x22:
+            mdr.latchFrom(alu.OUT());
+            alu.OP1().pullFrom(operand_n(1));
+            alu.perform(busALU::op_not);
+            Clock::tick();
 			break;
 
 		case 0x23:
