@@ -278,39 +278,106 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x27:
+			alu.perform(BusALU::op_one);
+			mdr.latchFrom(alu.OUT());
+			Clock::tick();
+			alu.OP1().pullFrom(*reg[14]);
+			alu.OP2().pullFrom(mdr);
+			reg[14]->latchFrom(alu.OUT());
+			alu.perform(BusALU::op_add);
+			Clock::tick();
 			break;
 
 		case 0x28:
+			alu.perform(BusALU::op_one);
+			mdr.latchFrom(alu.OUT());
+			Clock::tick();
+			alu.OP1().pullFrom(*reg[14]);
+			alu.OP2().pullFrom(mdr);
+			reg[14]->latchFrom(alu.OUT());
+			alu.perform(BusALU::op_sub);
+			Clock::tick();
 			break;
 
 		case 0x29:
+			alu.OP2().pullFrom(pc);
+			reg[15]->latchFrom(alu.OUT());
+			alu.perform(BusALU::op_rop2);
+			Clock::tick();
 			break;
 
 		case 0x2a:
+			alu.perform(BusALU::op_one);
+			mdr.latchFrom(alu.OUT());
+			Clock::tick();
+			alu.OP1().pullFrom(*reg[imm_r_reg(*val[curr_opnd()], 0)]);
+			alu.OP2().pullFrom(mdr);
+			reg[imm_r_reg(*val[curr_opnd()], 0)]->latchFrom(alu.OUT());
+			alu.perform(BusALU::op_add);
+			Clock::tick();
 			break;
 
 		case 0x2b:
+			// TODO Is it okay that we're clobbering MDR here?
+			alu.perform(BusALU::op_one);
+			mdr.latchFrom(alu.OUT());
+			Clock::tick();
+			alu.OP1().pullFrom(*reg[imm_r_reg(*val[curr_opnd()], 0)]);
+			alu.OP2().pullFrom(mdr);
+			reg[imm_r_reg(*val[curr_opnd()], 0)]->latchFrom(alu.OUT());
+			alu.perform(BusALU::op_sub);
+			Clock::tick();
 			break;
 
 		case 0x2c:
+			dbus.IN().pullFrom(mdr);
+			reg[cntl_regid(0)]->latchFrom(dbus.OUT());
+			Clock::tick();
 			break;
 
 		case 0x2d:
+			dbus.IN().pullFrom(mdr);
+			tmp.latchFrom(dbus.OUT());
+			Clock::tick();
 			break;
 
 		case 0x2e:
+			dbus.IN().pullFrom(mdr);
+			val[1]->latchFrom(dbus.OUT());
+			Clock::tick();
 			break;
 
 		case 0x2f:
+			abus.IN().pullFrom(*addr[1]);
+			mem.MAR().latchFrom(abus.OUT());
+			Clock::tick();
+			val[1]->latchFrom(mem.READ());
+			mem.read();
+			Clock::tick();
 			break;
 
 		case 0x30:
+			abus.IN().pullFrom(*addr[2]);
+			mem.MAR().latchFrom(abus.OUT());
+			Clock::tick();
+			val[2]->latchFrom(mem.READ());
+			mem.read();
+			Clock::tick();
 			break;
 
 		case 0x31:
+			dbus.IN().pullFrom(mdr);
+			val[curr_opnd()]->latchFrom(dbus.OUT());
+			Clock::tick();
 			break;
 
 		case 0x32:
+			abus.IN().pullFrom(pc);
+			mem.MAR().latchFrom(abus.OUT());
+			Clock::tick();
+			val[curr_opnd()]->latchFrom(mem.READ());
+			mem.read();
+			Clock::tick();
 			break;
 
 		case 0x33:
