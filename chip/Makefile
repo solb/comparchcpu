@@ -5,6 +5,8 @@ CXXFLAGS := -std=c++98 -Wall -Wextra
 LDFLAGS := -L.
 LDLIBS := -larch2-5a
 
+#CPPFLAGS += -DDEBUG_SWITCHES
+
 ${BIN}: ${OBJS}
 FlipTest: FlipRegister.o
 

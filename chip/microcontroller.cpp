@@ -130,7 +130,9 @@ void interpret_microprogram() {
 
 static void execute_rtl(unsigned control_points) {
 	// See hardware specification, section 3.1 table
-	// TODO Populate these cases
+	#ifdef DEBUG_SWITCHES
+	cerr << "DEBUG: ctrl " << control_points << endl;
+	#endif
 	switch(control_points) {
 		case 0x00:
             alu.OP1().pullFrom(*addr[curr_opnd()]);
@@ -731,6 +733,9 @@ void uprocedure_call(StorageObject &jt_index) {
 
 bool decide_conditional() {
 	// See hardware specification, section 3.2, second table
+	#ifdef DEBUG_SWITCHES
+	cerr << "DEBUG: cond " << uinst_j_cond() << endl;
+	#endif
 	switch(uinst_j_cond()) {
 		case 0x00:
 			return inst_ami() == 0;
