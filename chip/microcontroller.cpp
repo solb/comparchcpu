@@ -807,7 +807,7 @@ bool decide_conditional() {
 			return curr_opnd() != 0 && inst_immi();
 
 		case 0x17:
-			return curr_opnd() != 3;
+			return curr_opnd() == 3;
 
 		case 0x18:
 			return operand_n(1)(WORD_SIZE - 1, 0) == 0;

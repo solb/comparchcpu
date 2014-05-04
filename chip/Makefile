@@ -5,6 +5,7 @@ CXXFLAGS := -std=c++98 -Wall -Wextra
 LDFLAGS := -L.
 LDLIBS := -larch2-5a
 
+#CXXFLAGS += -g
 #CPPFLAGS += -DDEBUG_SWITCHES
 
 ${BIN}: ${OBJS}
