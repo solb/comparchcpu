@@ -145,7 +145,7 @@ done
 microcodewriteback
 mv "$microtemp" "$microcode"
 
-words=`echo "$listing" | sed -e '/:/d' -e '/goes here/d' -e '/^#/d' -e '/\<if\>/d' -e '/else/d' -e '/fi/d' -e '/loop/d' -e '/until/d' | sort | uniq`
+words=`echo "$listing" | sed -e '/:/d' -e '/goes here/d' -e '/^#/d' -e '/\<if\>/d' -e '/\<elif\>/d' -e '/\<else\>/d' -e '/\<fi\>/d' -e '/\<loop\>/d' -e '/\<until\>/d' | sort | uniq`
 assignopcodes "$words" "$ctrlwdmap" "$ctrlwords"
 
 clauses=`echo "$listing" | sed -ne 's/.*if \(.*\) then.*/\1/p' -e 's/.*until \(.*\) repeat.*/\1/p' | sort | uniq`
