@@ -46,11 +46,12 @@ void FlipRegister::phase1(){
         if( i < 0 ){
             mask = 0;
         }
-        value(value()^mask);
-      
+        value(value()^mask);      
     }else if(flipBits && bitsToFlip < 0){
         value(0);
     }else{
         ShiftRegister::phase1();
     }
+    flipBits = false;
+    bitsToFlip = -1;
 }
