@@ -8,6 +8,7 @@
 #include "data_path.h"
 #include "microcontroller.h"
 #include <ArchLibError.h>
+#include <CPUObject.h>
 #include <iostream>
 
 using std::cerr;
@@ -28,6 +29,10 @@ int main(int argc, const char *argv[]) {
 
 	cout << hex;
 	cerr << hex;
+
+    #ifdef DEBUG_ARCH
+    CPUObject::debug |= CPUObject::trace;
+    #endif
 
 	try {
 		wire_data_path();
