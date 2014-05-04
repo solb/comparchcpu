@@ -27,6 +27,7 @@ int main(int argc, const char *argv[]) {
 	}
 
 	cout << hex;
+	cerr << hex;
 
 	try {
 		wire_data_path();
