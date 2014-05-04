@@ -775,10 +775,10 @@ bool decide_conditional() {
 			return (*cntl[0])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
 
 		case 0x10:
-			return !cntl_isntgpr(0);
+			return cntl_isaddr(0);
 
 		case 0x11:
-			return cntl_isntgpr(0);
+			return !cntl_isntgpr(0);
 
 		case 0x12:
 			return (*cntl[1])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
