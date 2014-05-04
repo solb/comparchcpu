@@ -11,6 +11,12 @@
 
 class StorageObject;
 
+// Determines whether an operand is a GPR index
+extern const unsigned CNTL_ISNTGPR_BIT;
+
+// Determines whether an operand is an address rather than a value
+extern const unsigned CNTL_ISADDR_BIT;
+
 // Current microinstruction's type field
 unsigned uinst_type();
 

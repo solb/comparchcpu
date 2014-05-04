@@ -12,6 +12,9 @@
 #include <Counter.h>
 #include <StorageObject.h>
 
+const unsigned CNTL_ISNTGPR_BIT = CTRL_CNTL_WIDTH - 1;
+const unsigned CNTL_ISADDR_BIT = 2;
+
 unsigned uinst_type() {
 	// Hardware specification, section 3
 	return uir(CTRL_INST_WIDTH - 1, 12);
@@ -117,14 +120,14 @@ StorageObject &operand_n(size_t operandId) {
 }
 
 bool cntl_isntgpr(size_t operandId) {
-    return (*cntl[operandId])(CTRL_CNTL_WIDTH - 1);
+    return (*cntl[operandId])(CNTL_ISNTGPR_BIT);
 }
 
 bool cntl_isaddr(size_t operandId) {
     if(!cntl_isntgpr(operandId)) {
         emergency_halt("cntl_isaddr()", "operand is a register type");
     }
-    return (*cntl[operandId])(2);
+    return (*cntl[operandId])(CNTL_ISADDR_BIT);
 }
 
 size_t cntl_regid(size_t operandId) {

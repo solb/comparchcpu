@@ -314,96 +314,160 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x33:
+			cntl[0]->clear();
+			Clock::tick();
+			cntl[0]->flipBit(3);
+			Clock::tick();
+			cntl[0]->flipBit(2);
+			Clock::tick();
+			cntl[0]->flipBit(1);
+			Clock::tick();
+			cntl[0]->flipBit(0);
+			Clock::tick();
 			break;
 
 		case 0x34:
+			cntl[0]->clear();
+			Clock::tick();
+			cntl[0]->flipBit(CNTL_ISNTGPR_BIT);
+			Clock::tick();
+			cntl[0]->flipBit(1);
+			Clock::tick();
+			cntl[0]->flipBit(0);
+			Clock::tick();
 			break;
 
 		case 0x35:
+			cntl[1]->clear();
+			Clock::tick();
+			cntl[1]->flipBit(CNTL_ISNTGPR_BIT);
+			Clock::tick();
+			cntl[1]->flipBit(0);
+			Clock::tick();
 			break;
 
 		case 0x36:
+			cntl[1]->clear();
+			Clock::tick();
+			cntl[1]->flipBit(CNTL_ISNTGPR_BIT);
+			Clock::tick();
+			cntl[1]->flipBit(1);
+			Clock::tick();
+			cntl[1]->flipBit(0);
+			Clock::tick();
 			break;
 
 		case 0x37:
+			pdbus.IN().pullFrom(*cntl[0]);
+			cntl[1]->latchFrom(pdbus.OUT());
+			Clock::tick();
 			break;
 
 		case 0x38:
+			pdbus.IN().pullFrom(utmp);
+			cntl[1]->latchFrom(pdbus.OUT());
+			Clock::tick();
 			break;
 
 		case 0x39:
+			cntl[1]->flipBit(CNTL_ISADDR_BIT);
+			Clock::tick();
 			break;
 
 		case 0x3a:
+			cntl[2]->clear();
+			Clock::tick();
+			cntl[2]->flipBit(CNTL_ISNTGPR_BIT);
+			Clock::tick();
 			break;
 
 		case 0x3b:
+			cntl[2]->clear();
+			Clock::tick();
+			cntl[2]->flipBit(CNTL_ISNTGPR_BIT);
+			Clock::tick();
+			cntl[2]->flipBit(1);
+			Clock::tick();
+			cntl[2]->flipBit(0);
+			Clock::tick();
 			break;
 
 		case 0x3c:
+			pdbus.IN().pullFrom(*cntl[1]);
+			cntl[2]->latchFrom(pdbus.OUT());
+			Clock::tick();
 			break;
 
 		case 0x3d:
+			cntl[2]->flipBit(CNTL_ISADDR_BIT);
+			Clock::tick();
 			break;
 
 		case 0x3e:
+			cntl[curr_opnd()]->clear();
+			Clock::tick();
+			pbus.IN().pullFrom(regshift);
+			cntl[curr_opnd()]->latchFrom(pbus.OUT());
+			Clock::tick();
 			break;
 
 		case 0x3f:
+			cntl[curr_opnd()]->clear();
+			Clock::tick();
+			cntl[curr_opnd()]->flipBit(CNTL_ISNTGPR_BIT);
+			Clock::tick();
 			break;
 
 		case 0x40:
+			cntl[curr_opnd()]->clear();
+			Clock::tick();
+			cntl[curr_opnd()]->flipBit(CNTL_ISNTGPR_BIT);
+			Clock::tick();
+			pdbus.IN().pullFrom(i);
+			cntl[curr_opnd()]->latchFrom(pdbus.OUT());
+			Clock::tick();
 			break;
 
 		case 0x41:
+			cntl[curr_opnd()]->clear();
+			Clock::tick();
+			cntl[curr_opnd()]->flipBit(CNTL_ISNTGPR_BIT);
+			Clock::tick();
+			cntl[curr_opnd()]->flipBit(CNTL_ISADDR_BIT);
+			Clock::tick();
+			// TODO We need to make sure that this only modifies the lowest bits
+			pdbus.IN().pullFrom(i);
+			cntl[curr_opnd()]->latchFrom(pdbus.OUT());
+			Clock::tick();
 			break;
 
 		case 0x42:
+			i.clear();
+			Clock::tick();
 			break;
 
 		case 0x43:
+			i.incr();
+			Clock::tick();
 			break;
 
 		case 0x44:
+			dbus.IN().pullFrom(mdr);
+			regshift.latchFrom(dbus.OUT());
+			Clock::tick();
 			break;
 
 		case 0x45:
+			for(int count = 0; count < 8; ++count) {
+				regshift.rightShift();
+				Clock::tick();
+			}
 			break;
 
 		case 0x46:
-			break;
-
-		case 0x47:
-			break;
-
-		case 0x48:
-			break;
-
-		case 0x49:
-			break;
-
-		case 0x4a:
-			break;
-
-		case 0x4b:
-			break;
-
-		case 0x4c:
-			break;
-
-		case 0x4d:
-			break;
-
-		case 0x4e:
-			break;
-
-		case 0x4f:
-			break;
-
-		case 0x50:
-			break;
-
-		case 0x51:
+			pdbus.IN().pullFrom(*cntl[2]);
+			utmp.latchFrom(pdbus.OUT());
+			Clock::tick();
 			break;
 
 		default:
