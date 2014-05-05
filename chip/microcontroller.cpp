@@ -229,12 +229,12 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x0b:
-            ir.flipBit(OPC_BRANCH_COMP_BIT);
+            ir.flipBit(OPC_BRANCH_SIMP_BIT);
             Clock::tick();
 			break;
 
 		case 0x0c:
-            ir.flipBit(OPC_BRANCH_SIMP_BIT);
+            ir.flipBit(OPC_BRANCH_COMP_BIT);
             Clock::tick();
 			break;
 
