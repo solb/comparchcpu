@@ -325,21 +325,21 @@ sne:
 	# call seq
 	cntl[1] <- 10011
 	cntl[2] <- 10000
-	# call not
+	# call lnot
 	# return
 sle:
 	# call validator_one
 	# call sgt
 	cntl[1] <- 10011
 	cntl[2] <- 10000
-	# call not
+	# call lnot
 	# return
 sge:
 	# call validator_one
 	# call slt
 	cntl[1] <- 10011
 	cntl[2] <- 10000
-	# call not
+	# call lnot
 	# return
 add:
 	# call validator_one
@@ -376,7 +376,7 @@ snz:
 	# call validator_four
 	# call siz
 	cntl[1] <- 10011
-	# call not
+	# call lnot
 	# return
 not:
 	# call validator_four
