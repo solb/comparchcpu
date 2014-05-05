@@ -442,8 +442,8 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x26:
-			dbus.IN().pullFrom(operand_n(0));
-			pc.latchFrom(dbus.OUT());
+			abus.IN().pullFrom(operand_n(0));
+			pc.latchFrom(abus.OUT());
 			Clock::tick();
 			break;
 
