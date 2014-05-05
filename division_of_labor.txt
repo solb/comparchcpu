@@ -1,0 +1,30 @@
+Sol Boucher and Evan Klei
+CSCI-453-01 Computer Architecture
+FabComp: division of labor
+
+completed work
+--------------
+task						responsible
+====						===========
+initial brainstorming		group
+ISA document				group
+assembler					Sol
+hardware document			group
+RTL parser					Sol
+jump table generator		Sol
+microcode generator			Sol
+FlipRegister component		Evan
+most emulator code			Sol
+C-type uinstruction HW		group
+initial debugging			group
+
+upcoming work
+-------------
+task						responsible
+====						===========
+testing and debugging		Evan
+assembler maintenance		group
+microcode suite maintenance	Sol
+emulator maintenance		Evan
+readme file					Evan
+document addendums			Sol
