@@ -111,16 +111,19 @@ msb & trailing bits & significance \\
 
 \includegraphics[width=\textwidth]{controlpath}
 
+\vspace{-24pt}
 \section{Register transfer language}
 Here is the sequence of hardware actions performed by each phase of instruction processing:
 
 % BEGIN RTL
+\vspace{-12pt}
 \subsection{Fetch phase}
 \begin{verbatimtab}
 IR <- Mem[PC] # the instruction word
 PC <- PC + 1
 \end{verbatimtab}
 
+\vspace{-22pt}
 \subsection{Decode phase}
 \begin{verbatimtab}
 i <- 00
@@ -211,6 +214,7 @@ loop
 until i = 11 repeat
 \end{verbatimtab}
 
+\vspace{-22pt}
 \subsection{Memory Load}
 \begin{verbatimtab}
 if cntl[1](4) = 1 AND cntl[1](2) = 1 then
@@ -223,11 +227,13 @@ if cntl[2](4) = 1 AND cntl[2](2) = 1 then
 fi
 \end{verbatimtab}
 
+\vspace{-22pt}
 \subsection{Execute}
 \begin{verbatimtab}
 # call function at uJumpTab label IR(opc)
 \end{verbatimtab}
 
+\vspace{-22pt}
 \subsection{Writeback}
 \begin{verbatimtab}
 if cntl[0](4) = 0 then
@@ -238,6 +244,7 @@ fi
 # jump to the very beginning
 \end{verbatimtab}
 
+\vspace{-22pt}
 \subsection{Supporting Functions}
 \begin{verbatimtab}
 halt:
