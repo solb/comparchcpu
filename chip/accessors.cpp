@@ -156,7 +156,7 @@ bool neg_res() {
 }
 
 unsigned emergency_halt(const char *function, const char *excuse) {
-	cerr << "FATAL: " << function << excuse << endl;
+	cerr << "FATAL: " << function << ' ' << excuse << endl;
 	exit(3);
 	return -1;
 }

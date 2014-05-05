@@ -153,10 +153,10 @@ We support the following instructions, all of which are encoded with a standard 
 & 00011100 & BLE & Branches if one object is less than or equal to the other\\
 & 00011101 & BGE & Branches if one object is greater than or equal to the other\\
 \hline
-\multirow{2}{*}{3} & 00011110 & &\\
-& 00011111 & &\\
+3 & 00011110 & &\\
 \hline
-\multirow{4}{*}{4} & 00100000 & SIZ & Compares if the object is zero\\
+\multirow{4}{*}{4} & 00011111 & LNOT & Performs a logical not\\
+& 00100000 & SIZ & Compares if the object is zero\\
 & 00100001 & SNZ & Compares if the object is not zero\\
 & 00100010 & NOT & Performs a bitwise not\\
 & 00100011 & NEG & Performs a arithmetic negation\\

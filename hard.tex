@@ -356,13 +356,20 @@ sub:
 # compbranch goes here
 # compbranch goes here
 # validator_three goes here
-# validator_three goes here
+lnot:
+	# call validator_four
+	if op1 = 0 then
+		MDR <- 1
+	else
+		MDR <- 0
+	fi
+	# return
 siz:
 	# call validator_four
 	if op1 = 0 then
-	   MDR <- 1
+		MDR <- 1
 	else
-	   MDR <- 0
+		MDR <- 0
 	fi
 	# return
 snz:

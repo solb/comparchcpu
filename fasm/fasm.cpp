@@ -70,6 +70,7 @@ const unordered_map<string, unsigned> OPC = {make_pair("halt",	0x00),
 											 make_pair("ble",	0x1c),
 											 make_pair("bge",	0x1d),
 
+											 make_pair("lnot",	0x1f),
 											 make_pair("siz",	0x20),
 											 make_pair("snz",	0x21),
 											 make_pair("not",	0x22),
