@@ -21,8 +21,8 @@ const unsigned CTRL_JADR_WIDTH = 7;
 const unsigned CTRL_RADR_WIDTH = 4; // Must be large enough to address NUM_GPRS
 const unsigned CTRL_CNTL_WIDTH = 5;
 const unsigned CTRL_OPDI_WIDTH = 2; // Must be big enough to address NUM_OPNDS
-const size_t CTRL_STACK_HEIGHT = 3;
-const unsigned CTRL_SPTR_WIDTH = 2; // Must be be able to address STACK_HEIGHT
+const size_t CTRL_STACK_HEIGHT = 4;
+const unsigned CTRL_SPTR_WIDTH = 3; // Must be be able to address STACK_HEIGHT+1
 
 // Construct buses
 Bus uabus("uABUS", CTRL_ADDR_WIDTH);
