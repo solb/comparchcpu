@@ -2,7 +2,16 @@
 
 # An array of 10 words, each initialized to 0.
 arr:
-.word 0 10
+.word 1
+.word 2
+.word 3
+.word 4
+.word 5
+.word 6
+.word 7
+.word 8
+.word 9
+.word 10
 
 # The main label. Execution begins from here.
 main:
@@ -15,9 +24,10 @@ loop:
 	mov		$a0, $s0		# Tell fun which array index to use.
 	jal		%fun
 	add		$s1, $v			# Total the results.
-	biz		$s0, %loop
-	halt
+	bnz		%loop, $s0
+    add     $s1, 0	
+    halt
 
 fun:
 	mov		$v, %arr($a0)
-	jmp		$ra
+	jmp		$ra%

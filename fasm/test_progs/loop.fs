@@ -6,9 +6,10 @@ loop:
 	jal		%fun
 	add		$s1, $v
 	decr	$s0
-	biz		$s0, %loop
-	halt
+	bnz		%loop, $s0
+    add     $s1, 0	
+    halt
 
 fun:
 	mov		$v, $a0
-	jmp		$ra
+	jmp		$ra%
