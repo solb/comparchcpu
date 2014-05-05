@@ -207,7 +207,7 @@ loop
 	if IR(ami) = 10 then # PC-relative
 		Addr[i] <- Addr[i] + PC
 	fi
-    i <- i + 1
+	i <- i + 1
 until i = 11 repeat
 \end{verbatimtab}
 
@@ -488,7 +488,14 @@ validator_three:
 
 validator_four:
 	# Check for 1-2 ops, set cntl[1] if it was empty
-
+	if cntl[0] = 10000 then
+		# bail out loudly
+	fi
+	if cntl[1] = 10000 then
+		cntl[1] <- cntl[0]
+	fi
+	# return
+		
 validator_five:
 	# Check for 2 ops, op0 is not a register
 	if cntl[0] = 10000 then
