@@ -4,9 +4,14 @@ comments
 --------
 # remark
 
+directives
+----------
+.word value [reps]
+
 labels
 ------
 name:
+if a 'main:' label exists, the program will start there
 
 address modes
 -------------
@@ -21,3 +26,7 @@ autoincrement:	$nam+
 autodecrement:	$nam-
 scaled disp.:	%addr($ad0[,sf0])
 2x scale disp.:	%addr($ad0[,sf0])($ad1[,sf1])
+
+format
+------
+cmnd    op1, op2, op3
