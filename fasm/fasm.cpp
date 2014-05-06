@@ -411,7 +411,7 @@ bool proc_line(unsigned num, const string &line) {
 						imms[cur_imm] = stoi(piece);
 					}
 					catch(exception &ex) {
-						return error(num, "Non-integral immdiate");
+						return error(num, "Non-integral immediate");
 					}
 
 					// We used one immediate word
@@ -443,9 +443,8 @@ bool scaled_ams(unsigned num, list<string> &terms, unsigned reg_offst, unsigned 
 	if(terms.size() > 2)
 		return error(num, "Scaled address modes accept at most 2 offsets");
 
-	r_imm |= (terms.size() == 2 ? 02 : 03) << SADM_SHIFT;
-
-	for(list<string>::size_type index = 0; index < terms.size(); ++index) {
+	r_imm |= (terms.size() == 2 ? 03 : 02) << SADM_SHIFT;
+	for(list<string>::size_type index = 0; index <= terms.size(); ++index) {
 		list<string> coeffs;
 		string cur_term = fruit_pop(terms);
 		split(coeffs, cur_term, [] (char symb) -> bool {return symb == ',' || isspace(symb);}, token_compress_on);
