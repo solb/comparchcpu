@@ -295,7 +295,7 @@ bool proc_line(unsigned num, const string &line) {
 						split(terms, piece, isparen, token_compress_on);
 						terms.remove("");
 						string base = fruit_pop(terms).substr(1);
-                        list<string>::iterator i;
+
 						// It's a literal offset
 						if(isdigit(base[0])) {
 							try {
