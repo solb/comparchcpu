@@ -152,7 +152,7 @@ static void execute_rtl(unsigned control_points) {
 
 		case 0x02:
             alu.OP1().pullFrom(*addr[curr_opnd()]);
-            alu.OP2().pullFrom(*reg[imm_r_reg(*addr[curr_opnd()], 0)]);
+            alu.OP2().pullFrom(*reg[imm_r_reg(*val[curr_opnd()], 0)]);
             alu.perform(BusALU::op_add);
             addr[curr_opnd()] -> latchFrom(alu.OUT());
             Clock::tick();
@@ -209,7 +209,7 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x09:
-            alu.OP1().pullFrom(*reg[imm_r_reg(*val[curr_opnd()], 0)]);
+            alu.OP1().pullFrom(*reg[imm_r_reg(*val[curr_opnd()], 1)]);
             alu.OP2().pullFrom(mdr);
             alu.perform(BusALU::op_lshift);
             addr[curr_opnd()] -> latchFrom( alu.OUT() );
