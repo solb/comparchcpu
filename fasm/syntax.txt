@@ -11,7 +11,12 @@ directives
 labels
 ------
 name:
+
 if a 'main:' label exists, the program will start there
+if you want to use a label within the fasm compiler after
+declaring it, put a % in front, as it is an immediate address
+.word cannot take a label
+labels are not supported as full immediates
 
 address modes
 -------------
@@ -26,6 +31,12 @@ autoincrement:	$nam+
 autodecrement:	$nam-
 scaled disp.:	%addr($ad0[,sf0])
 2x scale disp.:	%addr($ad0[,sf0])($ad1[,sf1])
+
+for doubly scaled, the first parenthesis is the displacement from
+the operation, the second is displacement from the first
+$ad0 is the first displacement
+$ad1 is the second displacement
+sf is the shift factor
 
 format
 ------
