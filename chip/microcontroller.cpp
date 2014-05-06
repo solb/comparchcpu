@@ -419,7 +419,7 @@ static void execute_rtl(unsigned control_points) {
 
 		case 0x23:
             printf("\tResult: %04lx\n", mdr.value());
-			abus.IN().pullFrom(*addr[cntl_regid(0)]);
+			abus.IN().pullFrom(*addr[cntl_valoraddr(0)]);
 			mem.MAR().latchFrom(abus.OUT());
 			Clock::tick();
 			mem.WRITE().pullFrom(mdr);
