@@ -16,9 +16,9 @@ box3:
 	.word   0
 
 arrayOfBox:
-	.word   0
-	.word   3
-	.word	6
+	.word   box1
+	.word   box2
+	.word	box3
 	.word   -1
 
 main:
