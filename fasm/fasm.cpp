@@ -166,22 +166,37 @@ int main(int argc, char *argv[]) {
 				vector<string> directive;
 				split(directive, line, isspace, token_compress_on);
 
-				vector<unsigned> argu(directive.size() - 1);
+				if(directive.size() == 0 || directive.size() > 3)
+					noerrors = error(linenum, "Invalid number of directive arguments");
 
-				for(vector<string>::size_type index = 1; index < directive.size(); ++index) {
+				bool label = false;
+				unsigned value = 0;
+				unsigned iterations = 1;
+				if(noerrors) {
 					try {
-						argu[index - 1] = stoi(directive[index]);
+						value = stoi(directive[1]);
 					}
 					catch(exception &ex) {
-						noerrors = error(linenum, "Non-integral directive argument");
-						break;
+						label = true;
+					}
+
+					if(directive.size() > 2) {
+						try {
+							iterations = stoi(directive[2]);
+						}
+						catch(exception &ex) {
+							noerrors = error(linenum, "Non-integral directive repetitions specifier");
+						}
 					}
 				}
 
 				if(noerrors) {
 					if(directive[0] == ".word")
-						for(size_t index = 0; index < (directive.size() > 2 ? argu[1] : 1); ++index)
-							cs.push_back(argu[0]);
+						for(unsigned it = 0; it < iterations; ++it) {
+							if(label)
+								rel_tab[directive[1]].push_back(cs.size());
+							cs.push_back(value);
+						}
 					else
 						noerrors = error(linenum, "Unknown assembler directive");
 				}
