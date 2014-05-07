@@ -154,7 +154,7 @@ loop
 			PC <- PC + 1
 			MDR <- MDR >> 8
 			Addr[i] <- Reg[Val[i](reg1)] << MDR
-			Addr[i] <- Addr[i] + Reg[Val[i](reg0)]
+			Addr[i] <- Reg[Val[i](reg0)] + Addr[i]
 		elif MDR(sam) = 011 then # doubly scaled
 			Val[i] <- MDR
 			MDR <- Mem[PC]
