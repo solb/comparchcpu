@@ -511,30 +511,21 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x2e:
-			abus.IN().pullFrom(*addr[1]);
-			mem.MAR().latchFrom(abus.OUT());
-			Clock::tick();
-			val[1]->latchFrom(mem.READ());
-			mem.read();
-			Clock::tick();
-			break;
-
-		case 0x2f:
-			abus.IN().pullFrom(*addr[2]);
-			mem.MAR().latchFrom(abus.OUT());
-			Clock::tick();
-			val[2]->latchFrom(mem.READ());
-			mem.read();
-			Clock::tick();
-			break;
-
-		case 0x30:
 			dbus.IN().pullFrom(mdr);
 			val[curr_opnd()]->latchFrom(dbus.OUT());
 			Clock::tick();
 			break;
 
-		case 0x31:
+		case 0x2f:
+			abus.IN().pullFrom(*addr[curr_opnd()]);
+			mem.MAR().latchFrom(abus.OUT());
+			Clock::tick();
+			val[curr_opnd()]->latchFrom(mem.READ());
+			mem.read();
+			Clock::tick();
+			break;
+
+		case 0x30:
 			abus.IN().pullFrom(pc);
 			mem.MAR().latchFrom(abus.OUT());
 			Clock::tick();
@@ -544,7 +535,7 @@ static void execute_rtl(unsigned control_points) {
             printf("\tImmediate: %04lx\n", val[curr_opnd()] -> value());
 			break;
 
-		case 0x32:
+		case 0x31:
 			cntl[0]->clear();
 			Clock::tick();
 			cntl[0]->flipBit(3);
@@ -557,7 +548,7 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x33:
+		case 0x32:
 			cntl[0]->clear();
 			Clock::tick();
 			cntl[0]->flipBit(CNTL_ISNTGPR_BIT);
@@ -568,7 +559,7 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x34:
+		case 0x33:
 			cntl[1]->clear();
 			Clock::tick();
 			cntl[1]->flipBit(CNTL_ISNTGPR_BIT);
@@ -577,7 +568,7 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x35:
+		case 0x34:
 			cntl[1]->clear();
 			Clock::tick();
 			cntl[1]->flipBit(CNTL_ISNTGPR_BIT);
@@ -588,31 +579,31 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x36:
+		case 0x35:
 			pdbus.IN().pullFrom(*cntl[0]);
 			cntl[1]->latchFrom(pdbus.OUT());
 			Clock::tick();
 			break;
 
-		case 0x37:
+		case 0x36:
 			pdbus.IN().pullFrom(utmp);
 			cntl[1]->latchFrom(pdbus.OUT());
 			Clock::tick();
 			break;
 
-		case 0x38:
+		case 0x37:
 			cntl[1]->flipBit(CNTL_ISADDR_BIT);
 			Clock::tick();
 			break;
 
-		case 0x39:
+		case 0x38:
 			cntl[2]->clear();
 			Clock::tick();
 			cntl[2]->flipBit(CNTL_ISNTGPR_BIT);
 			Clock::tick();
 			break;
 
-		case 0x3a:
+		case 0x39:
 			cntl[2]->clear();
 			Clock::tick();
 			cntl[2]->flipBit(CNTL_ISNTGPR_BIT);
@@ -623,18 +614,13 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x3b:
+		case 0x3a:
 			pdbus.IN().pullFrom(*cntl[1]);
 			cntl[2]->latchFrom(pdbus.OUT());
 			Clock::tick();
 			break;
 
-		case 0x3c:
-			cntl[2]->flipBit(CNTL_ISADDR_BIT);
-			Clock::tick();
-			break;
-
-		case 0x3d:
+		case 0x3b:
 			cntl[curr_opnd()]->clear();
 			Clock::tick();
 			pbus.IN().pullFrom(regshift);
@@ -642,14 +628,14 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x3e:
+		case 0x3c:
 			cntl[curr_opnd()]->clear();
 			Clock::tick();
 			cntl[curr_opnd()]->flipBit(CNTL_ISNTGPR_BIT);
 			Clock::tick();
 			break;
 
-		case 0x3f:
+		case 0x3d:
 			pdbus.IN().pullFrom(i);
 			cntl[curr_opnd()]->latchFrom(pdbus.OUT());
 			Clock::tick();
@@ -657,7 +643,7 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x40:
+		case 0x3e:
 			pdbus.IN().pullFrom(i);
 			cntl[curr_opnd()]->latchFrom(pdbus.OUT());
 			Clock::tick();
@@ -667,30 +653,35 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x41:
+		case 0x3f:
+			cntl[curr_opnd()]->flipBit(CNTL_ISADDR_BIT);
+			Clock::tick();
+			break;
+
+		case 0x40:
 			i.clear();
 			Clock::tick();
 			break;
 
-		case 0x42:
+		case 0x41:
 			i.incr();
 			Clock::tick();
 			break;
 
-		case 0x43:
+		case 0x42:
 			dbus.IN().pullFrom(mdr);
 			regshift.latchFrom(dbus.OUT());
 			Clock::tick();
 			break;
 
-		case 0x44:
+		case 0x43:
 			for(int count = 0; count < 8; ++count) {
 				regshift.rightShift();
 				Clock::tick();
 			}
 			break;
 
-		case 0x45:
+		case 0x44:
 			pdbus.IN().pullFrom(*cntl[2]);
 			utmp.latchFrom(pdbus.OUT());
 			Clock::tick();
@@ -788,15 +779,18 @@ bool decide_conditional() {
 			return (*cntl[2])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
 
 		case 0x15:
-			return cntl_isntgpr(2) && cntl_isaddr(2);
+			return cntl_isntgpr(curr_opnd()) && cntl_isaddr(curr_opnd());
 
 		case 0x16:
-			return curr_opnd() != 0 && inst_immi();
+			return curr_opnd() != 0;
 
 		case 0x17:
-			return curr_opnd() == 3;
+			return curr_opnd() != 0 && inst_immi();
 
 		case 0x18:
+			return curr_opnd() == 3;
+
+		case 0x19:
 			return operand_n(1)(WORD_SIZE - 1, 0) == 0;
 
 		default:

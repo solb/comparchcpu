@@ -217,14 +217,16 @@ until i = 11 repeat
 \vspace{-22pt}
 \subsection{Memory Load}
 \begin{verbatimtab}
-if cntl[1](4) = 1 AND cntl[1](2) = 1 then
-	Val[1] <- Mem[Addr[1]]
-	cntl[1](2) <- 0
-fi
-if cntl[2](4) = 1 AND cntl[2](2) = 1 then
-	Val[2] <- Mem[Addr[2]]
-	cntl[2](2) <- 0
-fi
+i <- 00
+loop
+	if cntl[i](4) = 1 AND cntl[i](2) = 1 then
+		Val[i] <- Mem[Addr[i]]
+		if i != 00 then
+			cntl[i](2) <- 0
+		fi
+	fi
+	i <- i + 1
+until i = 11 repeat
 \end{verbatimtab}
 
 \vspace{-22pt}
@@ -477,6 +479,9 @@ validator_one:
 	if cntl[2] = 10000 then
 		cntl[2] <- cntl[1]
 		cntl[1] <- cntl[0]
+		if cntl[1](4) = 1 AND cntl[1](2) = 1 then
+			cntl[1](2) <- 0
+		fi
 	fi
 	# return
 
@@ -507,6 +512,9 @@ validator_four:
 	fi
 	if cntl[1] = 10000 then
 		cntl[1] <- cntl[0]
+		if cntl[1](4) = 1 AND cntl[1](2) = 1 then
+			cntl[1](2) <- 0
+		fi
 	fi
 	# return
 
