@@ -72,6 +72,11 @@ void interpret_microprogram() {
 				// Reset the uPC to point at the start of the program
 				upc.clear();
 				Clock::tick();
+				#ifdef DEBUG_DUMPGPRS
+				for(size_t rid = 0; rid < NUM_GPRS; ++rid)
+					fprintf(stderr, "DUMP: Reg%02lu=0x%lx\n", rid,
+							(*reg[rid])(WORD_SIZE - 1, 0));
+				#endif
 				break;
 
 			case 0xc: // Call? <- uJumpTab
@@ -487,11 +492,6 @@ static void execute_rtl(unsigned control_points) {
 			dbus.IN().pullFrom(mdr);
 			reg[cntl_regid(0)]->latchFrom(dbus.OUT());
 			Clock::tick();
-			#ifdef DEBUG_DUMPGPRS
-			for(size_t rid = 0; rid < NUM_GPRS; ++rid)
-				fprintf(stderr, "DUMP: Reg%02lu=0x%lx\n", rid,
-						(*reg[rid])(WORD_SIZE - 1, 0));
-			#endif
 			break;
 
 		case 0x2a:
