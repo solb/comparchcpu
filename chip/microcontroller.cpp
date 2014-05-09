@@ -80,6 +80,11 @@ void interpret_microprogram() {
 			case 0x3: // Call <- uJumpTab
 				// Save the current uPC to the uStack, then clobber it from jump
 				uprocedure_call(uir);
+				#ifdef DEBUG_DUMPCNTL
+				for(size_t cid = 0; cid < NUM_OPNDS; ++cid)
+					fprintf(stderr, "DUMP: cntl%lu=0x%lx\n", cid,
+							(*cntl[cid])(CTRL_CNTL_WIDTH - 1, 0));
+				#endif
 				break;
 
 			case 0xd: // Call? <- IR(opc)
@@ -97,6 +102,11 @@ void interpret_microprogram() {
 
 				// Save the current uPC to the uStack, then clobber it from jump
 				uprocedure_call(regshift);
+				#ifdef DEBUG_DUMPCNTL
+				for(size_t cid = 0; cid < NUM_OPNDS; ++cid)
+					fprintf(stderr, "DUMP: cntl%lu=0x%lx\n", cid,
+							(*cntl[cid])(CTRL_CNTL_WIDTH - 1, 0));
+				#endif
 				break;
 
 			case 0xe: // Return?
@@ -500,6 +510,11 @@ static void execute_rtl(unsigned control_points) {
 			dbus.IN().pullFrom(mdr);
 			reg[cntl_regid(0)]->latchFrom(dbus.OUT());
 			Clock::tick();
+			#ifdef DEBUG_DUMPGPRS
+			for(size_t rid = 0; rid < NUM_GPRS; ++rid)
+				fprintf(stderr, "DUMP: Reg%02lu=0x%lx\n", rid,
+						(*reg[rid])(WORD_SIZE - 1, 0));
+			#endif
 			break;
 
 		case 0x2c:
