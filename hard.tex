@@ -395,11 +395,11 @@ neg:
 # simpbranch goes here
 incr:
 	# call validator_six
-	MDR <- op0 + 1
+	# call add
 	# return
 decr:
 	# call validator_six
-	MDR <- op0 - 1
+	# call sub
 	# return
 jmp:
 	# call validator_seven
@@ -465,7 +465,7 @@ simpbranch: # handles biz, bnz
 	# return
 
 validator_one:
-	# Check for 2-3 ops
+	# Check for 2-3 ops, and detect/handle shorthand form
 	if cntl[0] = 10000 then
 		# bail out loudly
 	fi
@@ -536,10 +536,12 @@ validator_five:
 	# return
 
 validator_six:
-	# Check for 1 op
+	# Check for 1 op, and prepare for binary operation with 1
 	if cntl[0] = 10000 then
 		# bail out loudly
 	fi
+	MDR <- 1
+	cntl[1] <- 10011
 	# return
 
 validator_seven:
