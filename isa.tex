@@ -3,6 +3,7 @@
 \usepackage[margin=1in,top=0.5in]{geometry}
 \usepackage{multirow}
 \thispagestyle{empty}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \begin{document}
 \setlength{\parindent}{0pt}
 
@@ -153,7 +154,7 @@ We support the following instructions, all of which are encoded with a standard 
 & 00011100 & BLE & Branches if one object is less than or equal to the other\\
 & 00011101 & BGE & Branches if one object is greater than or equal to the other\\
 \hline
-3 & 00011110 & &\\
+3 & 00011110 & PRNT & Prints the value at the specified location \\
 \hline
 \multirow{4}{*}{4} & 00011111 & LNOT & Performs a logical not\\
 & 00100000 & SIZ & Compares if the object is zero\\
@@ -188,7 +189,7 @@ Each numbered grouping in the instruction set table is validated as follows:
     \item 3 ops
     \item op0 is not a register
     \end{itemize}
-\item \begin {itemize} \item Fails validation \end{itemize}
+\item \begin {itemize} \item 1 op\footnotemark \end{itemize}
 \item \begin {itemize} \item 1-2 ops \end{itemize}
 \item \begin {itemize}
      \item 2 ops
@@ -202,6 +203,8 @@ Each numbered grouping in the instruction set table is validated as follows:
 \item \begin {itemize} \item 0 ops \end{itemize}
 \item \begin {itemize} \item 2 ops \end{itemize}
 \end{enumerate}
+
+\footnotetext{Although the operand is passed in position 0, it must be treated as a source operand}
 
 \section{Memory specifications}
 The memory space is split into 16 bit-words, arranged big-endian.

@@ -50,6 +50,8 @@ def main():
 			result += '{0:x}\n'.format(0x6 << TYPE_OFFSET)
 		elif line == 'bail out':
 			result += '{0:x}\n'.format(0x7 << TYPE_OFFSET)
+		elif line == 'print out':
+			result += '{0:x}\n'.format(0x8 << TYPE_OFFSET)
 		elif line == 'jump to the very':
 			result += '{0:x}\n'.format(0x2 << TYPE_OFFSET)
 		elif line == 'call function at uJumpTab label':

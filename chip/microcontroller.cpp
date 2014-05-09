@@ -120,6 +120,10 @@ void interpret_microprogram() {
 				proceed = false;
 				break;
 
+			case 0x8: // Print op1
+				cout << "output: " << operand_n(1)(WORD_SIZE - 1, 0) << endl;
+				break;
+
 			default: // Invalid
 				cerr << "HALTING: Invalid microinstruction type: " <<
 						uinst_type() << endl;
