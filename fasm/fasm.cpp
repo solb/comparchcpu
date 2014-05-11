@@ -423,13 +423,18 @@ bool proc_line(unsigned num, const string &line) {
 					// Set flag to override the relevant address mode specifier
 					inst |= 1 << IMM_SHIFT[cur_opnd - 1];
 
-					// Actually create the immediate
-					try {
-						imms[cur_imm] = stoi(piece);
+					// It's literally a literal literal
+					if(isdigit(piece[0])) {
+						try {
+							imms[cur_imm] = stoi(piece);
+						}
+						catch(exception &ex) {
+							return error(num, "Non-integral immediate");
+						}
 					}
-					catch(exception &ex) {
-						return error(num, "Non-integral immediate");
-					}
+					// It's a label
+					else
+						rel_tab[piece].push_back(cs.size() + 1 + cur_imm);
 
 					// We used one immediate word
 					++cur_imm;
