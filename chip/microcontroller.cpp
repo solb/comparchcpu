@@ -121,7 +121,7 @@ void interpret_microprogram() {
 				// Restore the uPC from just under the micro--stack pointer
 				usp.decr();
 				Clock::tick();
-				if(curr_ura() >= CTRL_STACK_HEIGHT)
+				if(curr_ura() == CTRL_STACK_HEIGHT)
 					emergency_halt("interpret_microprogram()",
 							"underflowed the microstack");
 				uabus.IN().pullFrom(*ustack[curr_ura()]);
@@ -699,7 +699,7 @@ static void execute_rtl(unsigned control_points) {
 void uprocedure_call(StorageObject &jt_index) {
 	// Save the current uPC to the uStack, then clobber it from jump table entry
 	uabus.IN().pullFrom(upc);
-	if(curr_ura() >= CTRL_STACK_HEIGHT)
+	if(curr_ura() == CTRL_STACK_HEIGHT)
 		emergency_halt("uprocedure_call()",
 				"overflowed the microstack");
 	ustack[curr_ura()]->latchFrom(uabus.OUT());
