@@ -4,22 +4,13 @@
 # a0 := i (lower bound)
 # a1 := n (upper bound)
 # a2 := f ("lambda" function: int(int))
+# This is a recursive function that must be 'call'ed
 series_sum:
 	sub	$sp, 4
 	mov	%3($sp), $a0
 	mov	%2($sp), $a1
 	mov	%1($sp), $a2
 	mov	%0($sp), $s0
-
-	# begin test
-	prnt	$sp
-	prnt	%0($sp)
-	prnt	%1($sp)
-	prnt	%2($sp)
-	prnt	%3($sp)
-	prnt	%4($sp)
-	prnt	$ra
-	# end test
 
 	mov	$s0, 0
 	bne	%series_sum_basecase, $a0, $a1
@@ -53,4 +44,4 @@ main:
 	mov	$a1, 2
 	mov	$a2, double
 	call	%series_sum
-	prnt	$v
+	prnt	$v	# Should be 6
