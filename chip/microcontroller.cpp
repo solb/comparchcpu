@@ -154,6 +154,14 @@ static void execute_rtl(unsigned control_points) {
 	#endif
 	switch(control_points) {
 		case 0x00:
+			abus.IN().pullFrom(*reg[14]);
+			mem.MAR().latchFrom(abus.OUT());
+			Clock::tick();
+			mem.read();
+			addr[0] -> latchFrom(mem.READ());
+			break;
+
+		case 0x01:
             alu.OP1().pullFrom(*addr[curr_opnd()]);
             alu.OP2().pullFrom(mdr);
             alu.perform(BusALU::op_add);
@@ -161,7 +169,7 @@ static void execute_rtl(unsigned control_points) {
             Clock::tick();
 			break;
 
-		case 0x01:
+		case 0x02:
             alu.OP1().pullFrom(*addr[curr_opnd()]);
             alu.OP2().pullFrom(pc);
             alu.perform(BusALU::op_add);
@@ -169,14 +177,14 @@ static void execute_rtl(unsigned control_points) {
             Clock::tick();
 			break;
 
-		case 0x02:
+		case 0x03:
             alu.OP1().pullFrom(mdr);
             alu.perform(BusALU::op_rop1);
             addr[curr_opnd()] -> latchFrom(alu.OUT());
             Clock::tick();
 			break;
 
-		case 0x03:
+		case 0x04:
             abus.IN().pullFrom(pc);
             mem.MAR().latchFrom(abus.OUT());
             Clock::tick();
@@ -186,14 +194,14 @@ static void execute_rtl(unsigned control_points) {
             printf("\tImmediate: %04lx\n", addr[curr_opnd()] -> value());
 			break;
 
-		case 0x04:
+		case 0x05:
             alu.OP1().pullFrom(*reg[imm_r_reg(mdr, 0)]);
             alu.perform(BusALU::op_rop1);
             addr[curr_opnd()] -> latchFrom(alu.OUT());
             Clock::tick();
 			break;
 
-		case 0x05:
+		case 0x06:
             alu.OP1().pullFrom(*reg[imm_r_reg(
                     *val[curr_opnd()], 0)]);
             alu.perform(BusALU::op_rop1);
@@ -201,7 +209,7 @@ static void execute_rtl(unsigned control_points) {
             Clock::tick();
 			break;
 
-		case 0x06:
+		case 0x07:
             alu.OP2().pullFrom(*reg[imm_r_reg(
                     *val[curr_opnd()], 0)]);
             alu.OP1().pullFrom(*addr[curr_opnd()]);
@@ -210,7 +218,7 @@ static void execute_rtl(unsigned control_points) {
             Clock::tick();
 			break;
 
-		case 0x07:
+		case 0x08:
             alu.OP1().pullFrom(*reg[imm_r_reg(
                     *val[curr_opnd()], 0)]);
             alu.OP2().pullFrom(mdr);
@@ -219,7 +227,7 @@ static void execute_rtl(unsigned control_points) {
             Clock::tick();
 			break;
 
-		case 0x08:
+		case 0x09:
             alu.OP1().pullFrom(*reg[imm_r_reg(*val[curr_opnd()], 1)]);
             alu.OP2().pullFrom(mdr);
             alu.perform(BusALU::op_lshift);
@@ -227,7 +235,7 @@ static void execute_rtl(unsigned control_points) {
             Clock::tick();
 			break;
 
-		case 0x09:
+		case 0x0a:
             abus.IN().pullFrom(pc);
             mem.MAR().latchFrom(abus.OUT());
             Clock::tick();
@@ -239,23 +247,23 @@ static void execute_rtl(unsigned control_points) {
                     ir(1,0), pc.value());
 			break;
 
-		case 0x0a:
+		case 0x0b:
             ir.flipBit(OPC_BRANCH_SIMP_BIT);
             Clock::tick();
 			break;
 
-		case 0x0b:
+		case 0x0c:
             ir.flipBit(OPC_BRANCH_COMP_BIT);
             Clock::tick();
 			break;
 
-		case 0x0c:
+		case 0x0d:
             mdr.latchFrom(alu.OUT());
             alu.perform(BusALU::op_zero);
             Clock::tick();
 			break;
 
-		case 0x0d:
+		case 0x0e:
             mdr.latchFrom(alu.OUT());
             alu.perform(BusALU::op_zero);
             Clock::tick();
@@ -265,20 +273,20 @@ static void execute_rtl(unsigned control_points) {
             Clock::tick();
 			break;
 
-		case 0x0e:
+		case 0x0f:
             mdr.latchFrom(alu.OUT());
             alu.perform(BusALU::op_one);
             Clock::tick();
 			break;
 
-		case 0x0f:
+		case 0x10:
             for(int count = 0; count < 8; ++count) {
 			    mdr.rightShift();
 				Clock::tick();
 			}
 			break;
 
-		case 0x10:
+		case 0x11:
             abus.IN().pullFrom(*addr[curr_opnd()]);
             mem.MAR().latchFrom(abus.OUT());
             Clock::tick();
@@ -287,7 +295,7 @@ static void execute_rtl(unsigned control_points) {
             Clock::tick();
 			break;
 
-		case 0x11:
+		case 0x12:
             abus.IN().pullFrom(pc);
             mem.MAR().latchFrom(abus.OUT());
             Clock::tick();
@@ -297,7 +305,7 @@ static void execute_rtl(unsigned control_points) {
             printf("\tImmediate: %04lx\n", mdr.value());
 			break;
 
-		case 0x12:
+		case 0x13:
             alu.OP1().pullFrom(*reg[imm_r_reg(*val[curr_opnd()], 1)]);
             alu.OP2().pullFrom(mdr);
             alu.perform(BusALU::op_lshift);
@@ -305,7 +313,7 @@ static void execute_rtl(unsigned control_points) {
             Clock::tick();			
             break;
 
-		case 0x13:
+		case 0x14:
             alu.OP1().pullFrom(*reg[imm_r_reg(*val[curr_opnd()], 2)]);
             alu.OP2().pullFrom(mdr);
             alu.perform(BusALU::op_lshift);
@@ -313,7 +321,7 @@ static void execute_rtl(unsigned control_points) {
             Clock::tick();
 			break;
 
-		case 0x14:
+		case 0x15:
             alu.OP1().pullFrom(tmp);
             alu.OP2().pullFrom(BUS_LOW_BYTE_MASK);
             alu.perform(BusALU::op_and);
@@ -321,18 +329,10 @@ static void execute_rtl(unsigned control_points) {
             Clock::tick();
 			break;
 
-		case 0x15:
-            mdr.latchFrom(alu.OUT());
-            alu.OP1().pullFrom(operand_n(1));
-            alu.perform(BusALU::op_rop1);
-            Clock::tick();
-			break;
-
 		case 0x16:
             mdr.latchFrom(alu.OUT());
             alu.OP1().pullFrom(operand_n(1));
-            alu.OP2().pullFrom(operand_n(2));
-            alu.perform(BusALU::op_and);
+            alu.perform(BusALU::op_rop1);
             Clock::tick();
 			break;
 
@@ -340,7 +340,7 @@ static void execute_rtl(unsigned control_points) {
             mdr.latchFrom(alu.OUT());
             alu.OP1().pullFrom(operand_n(1));
             alu.OP2().pullFrom(operand_n(2));
-            alu.perform(BusALU::op_add);
+            alu.perform(BusALU::op_and);
             Clock::tick();
 			break;
 
@@ -348,7 +348,7 @@ static void execute_rtl(unsigned control_points) {
             mdr.latchFrom(alu.OUT());
             alu.OP1().pullFrom(operand_n(1));
             alu.OP2().pullFrom(operand_n(2));
-            alu.perform(BusALU::op_sub);
+            alu.perform(BusALU::op_add);
             Clock::tick();
 			break;
 
@@ -356,7 +356,7 @@ static void execute_rtl(unsigned control_points) {
             mdr.latchFrom(alu.OUT());
             alu.OP1().pullFrom(operand_n(1));
             alu.OP2().pullFrom(operand_n(2));
-            alu.perform(BusALU::op_lshift);
+            alu.perform(BusALU::op_sub);
             Clock::tick();
 			break;
 
@@ -364,7 +364,7 @@ static void execute_rtl(unsigned control_points) {
             mdr.latchFrom(alu.OUT());
             alu.OP1().pullFrom(operand_n(1));
             alu.OP2().pullFrom(operand_n(2));
-            alu.perform(BusALU::op_rshift);
+            alu.perform(BusALU::op_lshift);
             Clock::tick();
 			break;
 
@@ -372,7 +372,7 @@ static void execute_rtl(unsigned control_points) {
             mdr.latchFrom(alu.OUT());
             alu.OP1().pullFrom(operand_n(1));
             alu.OP2().pullFrom(operand_n(2));
-            alu.perform(BusALU::op_rashift);
+            alu.perform(BusALU::op_rshift);
             Clock::tick();
 			break;
 
@@ -380,7 +380,7 @@ static void execute_rtl(unsigned control_points) {
             mdr.latchFrom(alu.OUT());
             alu.OP1().pullFrom(operand_n(1));
             alu.OP2().pullFrom(operand_n(2));
-            alu.perform(BusALU::op_xor);
+            alu.perform(BusALU::op_rashift);
             Clock::tick();
 			break;
 
@@ -388,24 +388,32 @@ static void execute_rtl(unsigned control_points) {
             mdr.latchFrom(alu.OUT());
             alu.OP1().pullFrom(operand_n(1));
             alu.OP2().pullFrom(operand_n(2));
-            alu.perform(BusALU::op_or);
+            alu.perform(BusALU::op_xor);
+            Clock::tick();
 			break;
 
 		case 0x1e:
+            mdr.latchFrom(alu.OUT());
+            alu.OP1().pullFrom(operand_n(1));
+            alu.OP2().pullFrom(operand_n(2));
+            alu.perform(BusALU::op_or);
+			break;
+
+		case 0x1f:
             mdr.latchFrom(alu.OUT());
             alu.OP1().pullFrom(operand_n(2));
             alu.OP2().pullFrom(operand_n(1));
             alu.perform(BusALU::op_sub);
 			break;
 
-		case 0x1f:
+		case 0x20:
             mdr.latchFrom(alu.OUT());
             alu.OP1().pullFrom(operand_n(1));
             alu.perform(BusALU::op_not);
             Clock::tick();
 			break;
 
-		case 0x20:
+		case 0x21:
             printf("\tResult: %04lx\n", mdr.value());
 			abus.IN().pullFrom(*addr[cntl_valoraddr(0)]);
 			mem.MAR().latchFrom(abus.OUT());
@@ -415,7 +423,7 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x21:
+		case 0x22:
 			abus.IN().pullFrom(*reg[14]);
 			mem.MAR().latchFrom(abus.OUT());
 			Clock::tick();
@@ -424,25 +432,14 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x22:
+		case 0x23:
 			pc.incr();
 			Clock::tick();
 			break;
 
-		case 0x23:
+		case 0x24:
 			abus.IN().pullFrom(operand_n(0));
 			pc.latchFrom(abus.OUT());
-			Clock::tick();
-			break;
-
-		case 0x24:
-			alu.perform(BusALU::op_one);
-			mdr.latchFrom(alu.OUT());
-			Clock::tick();
-			alu.OP1().pullFrom(*reg[14]);
-			alu.OP2().pullFrom(mdr);
-			reg[14]->latchFrom(alu.OUT());
-			alu.perform(BusALU::op_add);
 			Clock::tick();
 			break;
 
@@ -453,18 +450,29 @@ static void execute_rtl(unsigned control_points) {
 			alu.OP1().pullFrom(*reg[14]);
 			alu.OP2().pullFrom(mdr);
 			reg[14]->latchFrom(alu.OUT());
-			alu.perform(BusALU::op_sub);
+			alu.perform(BusALU::op_add);
 			Clock::tick();
 			break;
 
 		case 0x26:
+			alu.perform(BusALU::op_one);
+			mdr.latchFrom(alu.OUT());
+			Clock::tick();
+			alu.OP1().pullFrom(*reg[14]);
+			alu.OP2().pullFrom(mdr);
+			reg[14]->latchFrom(alu.OUT());
+			alu.perform(BusALU::op_sub);
+			Clock::tick();
+			break;
+
+		case 0x27:
 			alu.OP2().pullFrom(pc);
 			reg[15]->latchFrom(alu.OUT());
 			alu.perform(BusALU::op_rop2);
 			Clock::tick();
 			break;
 
-		case 0x27:
+		case 0x28:
 			alu.perform(BusALU::op_one);
 			mdr.latchFrom(alu.OUT());
 			Clock::tick();
@@ -475,7 +483,7 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x28:
+		case 0x29:
 			// TODO Is it okay that we're clobbering MDR here?
 			alu.perform(BusALU::op_one);
 			mdr.latchFrom(alu.OUT());
@@ -487,32 +495,32 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x29:
+		case 0x2a:
             printf("\tResult: %04lx\n", mdr.value());
 			dbus.IN().pullFrom(mdr);
 			reg[cntl_regid(0)]->latchFrom(dbus.OUT());
 			Clock::tick();
 			break;
 
-		case 0x2a:
+		case 0x2b:
 			dbus.IN().pullFrom(mdr);
 			tmp.latchFrom(dbus.OUT());
 			Clock::tick();
 			break;
 
-		case 0x2b:
+		case 0x2c:
 			dbus.IN().pullFrom(mdr);
 			val[1]->latchFrom(dbus.OUT());
 			Clock::tick();
 			break;
 
-		case 0x2c:
+		case 0x2d:
 			dbus.IN().pullFrom(mdr);
 			val[curr_opnd()]->latchFrom(dbus.OUT());
 			Clock::tick();
 			break;
 
-		case 0x2d:
+		case 0x2e:
 			abus.IN().pullFrom(*addr[curr_opnd()]);
 			mem.MAR().latchFrom(abus.OUT());
 			Clock::tick();
@@ -521,7 +529,7 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x2e:
+		case 0x2f:
 			abus.IN().pullFrom(pc);
 			mem.MAR().latchFrom(abus.OUT());
 			Clock::tick();
@@ -529,19 +537,6 @@ static void execute_rtl(unsigned control_points) {
 			mem.read();
 			Clock::tick();
             printf("\tImmediate: %04lx\n", val[curr_opnd()] -> value());
-			break;
-
-		case 0x2f:
-			cntl[0]->clear();
-			Clock::tick();
-			cntl[0]->flipBit(3);
-			Clock::tick();
-			cntl[0]->flipBit(2);
-			Clock::tick();
-			cntl[0]->flipBit(1);
-			Clock::tick();
-			cntl[0]->flipBit(0);
-			Clock::tick();
 			break;
 
 		case 0x30:
@@ -556,6 +551,15 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x31:
+			cntl[0]->clear();
+			Clock::tick();
+			cntl[0]->flipBit(CNTL_ISNTGPR_BIT);
+			Clock::tick();
+			cntl[0]->flipBit(2);
+			Clock::tick();
+			break;
+
+		case 0x32:
 			cntl[1]->clear();
 			Clock::tick();
 			cntl[1]->flipBit(CNTL_ISNTGPR_BIT);
@@ -564,7 +568,7 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x32:
+		case 0x33:
 			cntl[1]->clear();
 			Clock::tick();
 			cntl[1]->flipBit(CNTL_ISNTGPR_BIT);
@@ -575,31 +579,31 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x33:
+		case 0x34:
 			pdbus.IN().pullFrom(*cntl[0]);
 			cntl[1]->latchFrom(pdbus.OUT());
 			Clock::tick();
 			break;
 
-		case 0x34:
+		case 0x35:
 			pdbus.IN().pullFrom(utmp);
 			cntl[1]->latchFrom(pdbus.OUT());
 			Clock::tick();
 			break;
 
-		case 0x35:
+		case 0x36:
 			cntl[1]->flipBit(CNTL_ISADDR_BIT);
 			Clock::tick();
 			break;
 
-		case 0x36:
+		case 0x37:
 			cntl[2]->clear();
 			Clock::tick();
 			cntl[2]->flipBit(CNTL_ISNTGPR_BIT);
 			Clock::tick();
 			break;
 
-		case 0x37:
+		case 0x38:
 			cntl[2]->clear();
 			Clock::tick();
 			cntl[2]->flipBit(CNTL_ISNTGPR_BIT);
@@ -610,13 +614,13 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x38:
+		case 0x39:
 			pdbus.IN().pullFrom(*cntl[1]);
 			cntl[2]->latchFrom(pdbus.OUT());
 			Clock::tick();
 			break;
 
-		case 0x39:
+		case 0x3a:
 			cntl[curr_opnd()]->clear();
 			Clock::tick();
 			pbus.IN().pullFrom(regshift);
@@ -624,16 +628,8 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			break;
 
-		case 0x3a:
-			cntl[curr_opnd()]->clear();
-			Clock::tick();
-			cntl[curr_opnd()]->flipBit(CNTL_ISNTGPR_BIT);
-			Clock::tick();
-			break;
-
 		case 0x3b:
-			pdbus.IN().pullFrom(i);
-			cntl[curr_opnd()]->latchFrom(pdbus.OUT());
+			cntl[curr_opnd()]->clear();
 			Clock::tick();
 			cntl[curr_opnd()]->flipBit(CNTL_ISNTGPR_BIT);
 			Clock::tick();
@@ -645,39 +641,47 @@ static void execute_rtl(unsigned control_points) {
 			Clock::tick();
 			cntl[curr_opnd()]->flipBit(CNTL_ISNTGPR_BIT);
 			Clock::tick();
-			cntl[curr_opnd()]->flipBit(CNTL_ISADDR_BIT);
-			Clock::tick();
 			break;
 
 		case 0x3d:
+			pdbus.IN().pullFrom(i);
+			cntl[curr_opnd()]->latchFrom(pdbus.OUT());
+			Clock::tick();
+			cntl[curr_opnd()]->flipBit(CNTL_ISNTGPR_BIT);
+			Clock::tick();
 			cntl[curr_opnd()]->flipBit(CNTL_ISADDR_BIT);
 			Clock::tick();
 			break;
 
 		case 0x3e:
-			i.clear();
+			cntl[curr_opnd()]->flipBit(CNTL_ISADDR_BIT);
 			Clock::tick();
 			break;
 
 		case 0x3f:
-			i.incr();
+			i.clear();
 			Clock::tick();
 			break;
 
 		case 0x40:
+			i.incr();
+			Clock::tick();
+			break;
+
+		case 0x41:
 			dbus.IN().pullFrom(mdr);
 			regshift.latchFrom(dbus.OUT());
 			Clock::tick();
 			break;
 
-		case 0x41:
+		case 0x42:
 			for(int count = 0; count < 8; ++count) {
 				regshift.rightShift();
 				Clock::tick();
 			}
 			break;
 
-		case 0x42:
+		case 0x43:
 			pdbus.IN().pullFrom(*cntl[2]);
 			utmp.latchFrom(pdbus.OUT());
 			Clock::tick();

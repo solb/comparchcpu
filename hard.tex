@@ -420,7 +420,8 @@ call:
 	# return
 ret:
 	# call validator_eight
-	cntl[0] <- 01111
+	Addr[0] <- Mem[Reg[14]]
+	cntl[0] <- 10100
 	# call jmp
 	Reg[14] <- Reg[14] + 1
 	# return
@@ -440,7 +441,7 @@ logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	# call siz
 	cntl[1] <- 10001
 	cntl[2] <- 10011
-	IR(opc)(2) <- 0 # IR(opc) - 4
+	IR(opc)(3) <- 0 # IR(opc) - 4
 	# call function at uJumpTab label IR(opc)
 	# return
 
