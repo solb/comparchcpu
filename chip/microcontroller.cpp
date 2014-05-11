@@ -256,7 +256,7 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x0c:
-            ir.flipBit(OPC_BRANCH_COMP_BIT);
+            ir.flipBit(OPC_BRANCH_COMP_LOGICAL_BIT);
             Clock::tick();
 			break;
 

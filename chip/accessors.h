@@ -17,10 +17,11 @@ extern const unsigned CNTL_ISNTGPR_BIT;
 // Determines whether an operand is an address rather than a value
 extern const unsigned CNTL_ISADDR_BIT;
 
-// Differentiates three operand branches from corresponding set
-extern const unsigned OPC_BRANCH_COMP_BIT;
+// Differentiates three-operand branches from corresponding sets
+// Also differentiates three-operand logicals from corresponding bitwises
+extern const unsigned OPC_BRANCH_COMP_LOGICAL_BIT;
 
-// Differentiates two operand branches from coresponding set
+// Differentiates two-operand branches from coresponding sets
 extern const unsigned OPC_BRANCH_SIMP_BIT;
 
 // Current microinstruction's type field
