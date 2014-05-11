@@ -272,6 +272,7 @@ static void execute_rtl(unsigned control_points) {
             Clock::tick();
             alu.OP1().pullFrom(mdr);
             alu.OP2().pullFrom(operand_n(1));
+			alu.perform(BusALU::op_sub);
             mdr.latchFrom(alu.OUT());
             Clock::tick();
 			break;
