@@ -127,6 +127,9 @@ void interpret_microprogram() {
 				uabus.IN().pullFrom(*ustack[curr_ura()]);
 				upc.latchFrom(uabus.OUT());
 				Clock::tick();
+				#ifdef DEBUG_DUMPMDR
+				fprintf(stderr, "DUMP: MDR=0x%lx\n", mdr(WORD_SIZE - 1, 0));
+				#endif
 				break;
 
 			case 0x7: // Halt abnormally
