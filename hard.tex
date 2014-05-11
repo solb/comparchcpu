@@ -434,11 +434,11 @@ logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	# call validator_one
 	tmp <- cntl[2]
 	cntl[2] <- 10000
-	# call siz
+	# call snz
 	Val[1] <- MDR
 	cntl[1] <- tmp
 	cntl[2] <- 10000
-	# call siz
+	# call snz
 	cntl[1] <- 10001
 	cntl[2] <- 10011
 	IR(opc)(3) <- 0 # IR(opc) - 4
