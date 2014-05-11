@@ -73,9 +73,13 @@ size_t cntl_regid(size_t operandId);
 // Precondition: nth operand is not a GPR
 size_t cntl_valoraddr(size_t operandId);
 
-// Verdict of the last logical ALU instruction
+// Whether the verdict of the last logical ALU instruction was positive
 // Precondition: MDR must still contain the value computed by this operation!
 bool logic_res();
+
+// Whether the verdict of the last logical ALU instruction was negative
+// Precondition: MDR must still contain the value computed by this operation!
+bool logic_nres();
 
 // Whether the last arithmetic ALU instruction yielded a negative value
 // Precondition: MDR must still containt the value computed by that operation!

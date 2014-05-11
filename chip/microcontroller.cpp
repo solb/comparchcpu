@@ -731,7 +731,7 @@ bool decide_conditional() {
 			return inst_ami() == 3;
 
 		case 0x04:
-			return !logic_res();
+			return logic_nres();
 
 		case 0x05:
 			return logic_res();

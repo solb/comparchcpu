@@ -151,6 +151,10 @@ bool logic_res() {
 	return mdr(WORD_SIZE - 1, 0) == 1;
 }
 
+bool logic_nres() {
+	return mdr(WORD_SIZE - 1, 0) == 0;
+}
+
 bool neg_res() {
 	return mdr(WORD_SIZE - 1);
 }
