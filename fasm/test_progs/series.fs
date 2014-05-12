@@ -13,19 +13,19 @@ series_sum:
 	mov	%0($sp), $s0
 
 	mov	$s0, 0
-	bne	%series_sum_basecase, $a0, $a1
+	beq	%series_sum_basecase, $a0, $a1
 	incr	$a0
 	call	%series_sum
 	add	$s0, $v
+	mov	$a0, %3($sp)
 series_sum_basecase:
-	mov	$a0, 3($sp)
 	jal	$a2%
-	add	$s0, $v
+	add	$v, $s0
 
-	mov	$a0, 3($sp)
-	mov	$a1, 2($sp)
-	mov	$a2, 1($sp)
-	mov	$s0, 0($sp)
+	mov	$a0, %3($sp)
+	mov	$a1, %2($sp)
+	mov	$a2, %1($sp)
+	mov	$s0, %0($sp)
 	add	$sp, 4
 	ret
 
