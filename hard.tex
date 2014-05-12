@@ -292,9 +292,9 @@ rasft:
 	# call validator_one
 	MDR <- op1 >>> op2
 	# return
-# logical goes here
-# logical goes here
-# logical goes here
+# illogical goes here
+# illogical goes here
+# illogical goes here
 slt:
 	# call validator_one
 	# call sub
@@ -430,8 +430,7 @@ move:
 	MDR <- op1
 	# return
 
-logical: # handles land, lor, lxor, lnand, lnor, lxnor
-	# call validator_one
+logical: # handles land, lor, lxor
 	tmp <- cntl[2]
 	cntl[2] <- 10000
 	# call snz
@@ -443,6 +442,14 @@ logical: # handles land, lor, lxor, lnand, lnor, lxnor
 	cntl[2] <- 10011
 	IR(opc)(3) <- 0 # IR(opc) - 8
 	# call function at uJumpTab label IR(opc)
+	# return
+
+illogical: #handles lnand, lnor, lxnor
+	IR(opc)(2) <- 0 # IR(opc) - 4
+	# call logical
+	cntl[1] <- 10011
+	cntl[2] <- 10000
+	# call lnot
 	# return
 
 compbranch: # handles blt, bgt, beq, bne, ble, bge
