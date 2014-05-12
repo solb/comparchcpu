@@ -29,6 +29,37 @@ series_sum_basecase:
 	add	$sp, 4
 	ret
 
+# Compute the sum from k=i to n of f(k) tail recursively
+# a0 := i (lower bound)
+# a1 := n (upper bound)
+# a2 := f ("lambda function: int(int))
+# s0 := 0 (and thereafter, the running sum)
+# This is a normal function that should be 'jal'ed
+# Precondition: The stack pointer doesn't point to the value -1 upon invocation!
+series_sum_tail:
+	beq	%series_sum_tail_subsequentruns, %0(%sp), 65535
+	sub	$sp, 4
+	mov	%3($sp), $ra
+	mov	%2($sp), $s0
+	mov	%1($sp), $s1
+	mov	%0($sp), 65535
+series_sum_tail_subsequentruns:
+	beq	%series_sum_tail_basecaseonly, $a0, $a1
+	mov	$s1, $a0
+	jal	$a2%
+	add	$a0, $s1, 1
+	add	$s0, $v
+	jmp	%series_sum_tail
+series_sum_tail_basecaseonly:
+	jal	$a2%
+	add	$v, $s0, $v
+
+	mov	$ra, %3($sp)
+	mov	$s0, %2($sp)
+	mov	$s1, %1($sp)
+	add	$sp, 4
+	jmp	$ra%
+
 # Compute 2x given x
 # a0 := x (number to double)
 double:
@@ -45,3 +76,14 @@ main:
 	mov	$a2, double
 	call	%series_sum
 	prnt	$v	# Should be 6
+
+	# Same thing
+	mov	$a0, 1
+	mov	$a1, 2
+	mov	$a2, double
+	mov	$s0, 0
+	jal	%series_sum_tail
+	prnt	$v	# Should be the same
+
+	# Now let's check the sp, which shouldn't have changed
+	prnt	$sp	# Should still be 0xffff
