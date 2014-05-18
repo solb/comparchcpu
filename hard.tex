@@ -327,21 +327,21 @@ sne:
 	# call seq
 	cntl[1] <- 10011
 	cntl[2] <- 10000
-	# call lnot
+	# call siz
 	# return
 sle:
 	# call validator_one
 	# call sgt
 	cntl[1] <- 10011
 	cntl[2] <- 10000
-	# call lnot
+	# call siz
 	# return
 sge:
 	# call validator_one
 	# call slt
 	cntl[1] <- 10011
 	cntl[2] <- 10000
-	# call lnot
+	# call siz
 	# return
 add:
 	# call validator_one
@@ -361,15 +361,8 @@ prnt:
 	# call validator_three
 	# print out op1
 	# return
-lnot:
-	# call validator_four
-	if op1 = 0 then
-		MDR <- 1
-	else
-		MDR <- 0
-	fi
-	# return
-siz:
+# siz goes here
+siz: # handles lnot and siz
 	# call validator_four
 	if op1 = 0 then
 		MDR <- 1
@@ -381,7 +374,7 @@ snz:
 	# call validator_four
 	# call siz
 	cntl[1] <- 10011
-	# call lnot
+	# call siz
 	# return
 not:
 	# call validator_four
@@ -444,12 +437,12 @@ logical: # handles land, lor, lxor
 	# call function at uJumpTab label IR(opc)
 	# return
 
-illogical: #handles lnand, lnor, lxnor
+illogical: # handles lnand, lnor, lxnor
 	IR(opc)(2) <- 0 # IR(opc) - 4
 	# call logical
 	cntl[1] <- 10011
 	cntl[2] <- 10000
-	# call lnot
+	# call siz
 	# return
 
 compbranch: # handles blt, bgt, beq, bne, ble, bge
