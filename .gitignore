@@ -1,6 +1,7 @@
 /documents
 /chip/CPU
 /fasm/fasm
+/fasm/test_progs/objects
 /ucode/micromemories
 ctrlwords.tex
 ifclauses.tex
