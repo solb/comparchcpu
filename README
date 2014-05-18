@@ -92,6 +92,7 @@ fasm
 	to code for the Computational Machine to run. Style for FASM is
 	documented below
 ->  test_progs
+	->	Makefile - Runs fasm on all of the .fs files in this folder
 	->	All of the .fs files for the object files described above 
 		will be included in here. In order to get the object files,
 		run FASM as described below
