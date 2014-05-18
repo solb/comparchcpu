@@ -116,6 +116,26 @@ isa.pdf - Documentation of the ISA for the Computational Machine
 hard.pdf - Documentation of the hardware for the Computational
 	Machine
 
+Debugging Switches
+==================
+By default, the simulator prints a rudimentary breakdown of each
+instruction word and its following immediate words, as well as its
+result, or the value it computes into MDR, if any.  (This is in
+addition to revealing the outline of PRNT instructions and ERROR
+and FATAL diagnostics whenever the system does an emergency halt.)
+However, additional debugging information can be achieved by adding
+the following preprocessor defines to the CPPFLAGS:
+
+-DPRINT_UINSTRUCTS - Also prints a (very basic) breakdown of
+	microinstructions as they are executed
+-DDEBUG_SWITCHES - Prints cases taken in the ctrl (control point)
+	and cond (conditional clause) switches in microcontroller.cpp
+-DDEBUG_DUMPGPRS - Dumps all GPRs each time an instruction executes
+-DDEBUG_DUMPCNTL - Dumps the control registers every time a
+	microprocedure call is performed
+-DDEBUG_DUMPMDR - Dumps the MDR on every microprocedure return
+-DDEBUG_ARCH - Enables the Arch package's cycle-by-cycle debugging
+
 Command Line Arguments
 ======================
 CPU <ucode> <jmptab> <code to run>
