@@ -36,6 +36,8 @@ jmptab.fl - A file which contains the jump table for correct run time
 
 Object files
 ------------
+addrmodeTest.fo - Tests reading and writing to all address modes. Also checks
+	the shorter versions of some instructions
 bequality.fo - Tests the BEQ and BNE commands
 bitwiseTest.fo - Tests all of the bitwise commands, such as AND and
 	OR. Also tests NOT and NEG.
