@@ -139,7 +139,7 @@ void interpret_microprogram() {
 				break;
 
 			case 0x8: // Print op1
-				cout << "output: " << operand_n(1).value() << endl;
+				printf( "output: %ld\n", operand_n(1).value());
 				break;
 
 			default: // Invalid
