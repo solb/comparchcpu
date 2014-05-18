@@ -1,9 +1,9 @@
-+------------------------------------------+
-|THE FABULOUS COMPUTATIONAL ENGINE         |
-|Presented by Solomon Boucher and Evan Klei|
-+------------------------------------------+
++-------------------------------------------+
+| THE FABULOUS COMPUTATIONAL MACHINE        |
+| Presented by Solomon Boucher and Evan Klei|
++-------------------------------------------+
 
-The FABULOUS COMPUTATIONAL ENGINE is a arch library simulation of a
+The FABULOUS COMPUTATIONAL MACHINE is a arch library simulation of a
 chip that uses a microcontroller.
 
 Files Submitted
@@ -13,13 +13,13 @@ In addition to the Object Files as listed below
 Files nessessary for run time
 -----------------------------
 CPU.cpp - The file that runs all of the code to construct and run the
-	Engine on input provided
+	Machine on input provided
 FlipRegister.cpp - Contains the implementation of a register that
 	allows single bit flipping.
 FlipRegister.h - The header file for the implementation of the flip
 	register
 accessors.cpp - A file full of helpful functions and constants to
-	assist in running the engine
+	assist in running the Machine
 accessors.h - The header file that defines all of the functions in
 	accessors.cpp
 control_path.cpp - Defines the microcontroller and all of its
@@ -31,9 +31,9 @@ microcontroller.cpp - Contains the code to decode and operate based
 	on micro-instructions
 microcontroller.h - The associated header file for microcontroller.cpp
 ucode.fu - A file which contains all micro instructions formatted for
-	correct run time functionality of the Computational Engine
+	correct run time functionality of the Computational Machine
 jmptab.fl - A file which contains the jump table for correct run time
-	functionality of the Computational Engine
+	functionality of the Computational Machine
 
 Object Files
 ------------
@@ -88,7 +88,7 @@ fasm
 ->	Makefile - The file to make fasm
 ->	fasm.cpp - This file contains the code for the Fabulous Assembler
 	or FASM. This program takes human readable code and converts it 
-	to code for the Computational Engine to run. Style for FASM is
+	to code for the Computational Machine to run. Style for FASM is
 	documented below
 ->  test_progs
 	->	All of the .fs files for the object files described above 
@@ -126,4 +126,63 @@ CPU <ucode> <jmptab> <code to run>
 		code was generated using FASM, the code will be stored in
 		a .fo file
 
++----------------------------------------+
+| Fabulous Assembler                     |
+| An assembler written by Solomon Boucher|
+| with help from Evan Klei               |
++----------------------------------------+
+Fabulous Assembler (FASM) is the assembler for the FABULOUS
+COMPUTATIONAL MACHINE. It takes assembly style commands and converts
+them into machine code that the Computational Machine can understand.
 
+Format Requirements
+===================
+
+Comments
+--------
+# Comment
+
+Storing data
+------------
+.word value [reps]
+
+Labels
+------
+name:
+
+If a label is called main, FASM will set that to be the first
+position accessed in the file. If there is no main, the program will
+start at program counter 0;
+
+Instruction Format
+------------------
+opcode operand 1, operand 2, operand 3
+
+For a list of opcodes, see ISA.pdf
+The number of required operands is based on opcode. For a list how
+many operands are required for each opcode, see ISA.pdf
+
+Operand Format
+--------------
+Immediate Value - value
+Immediate Address - %address
+PC Relative - %offset@
+Register - $name
+Register Indirect - $name%
+Scaled - $name($displacement[,scaleFactor])
+Doubly Scaled - 
+	$name($displacement[,scaleFactor])($displacement[,scaleFactor])
+Auto-Increment - $name+
+Auto-Decriment - $name-
+Scaled Displacement - %address($displacement[,scaleFactor])
+Doubly Scaled Displacement -
+  %address($displacement[,scaleFactor])($displacement[,scaleFactor])
+
+Doubly formats consider the first displacement, go to memory, then
+consider the second displacement
+
+Command Line Arguments
+======================
+fasm <code to assemble>
+	<code to assmeble> - The code that you want to comp. Usually
+		stored in .fs files
