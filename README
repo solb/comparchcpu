@@ -83,8 +83,8 @@ fabcomp_support.tar - Contains the files listed below. Files are
 	additional to what is provided, none are necessary for running
 	the program, but they are part of this project.
 
-Archive files
--------------
+fabcomp_support.tar files
+-------------------------
 fasm 
 ->	Makefile - The file to make fasm
 ->	fasm.cpp - This file contains the code for the Fabulous Assembler
