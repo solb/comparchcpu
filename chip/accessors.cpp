@@ -102,9 +102,9 @@ unsigned imm_r_reg(const StorageObject &srcReg, size_t operand) {
 }
 
 StorageObject &operand_n(size_t operandId) {
-    if(operandId > 3) { // TODO Are we allowed to do this
+    if(operandId != 0 && operandId != 1 && operandId != 2)
         emergency_halt("operand_n()", "invalid operand given");
-    }
+
     if(!cntl_isntgpr(operandId)) {
         return *reg[cntl_regid(operandId)];
     } else if(!cntl_isaddr(operandId)) {
