@@ -1,0 +1,42 @@
+Sol Boucher and Evan Klei
+CSCI-453-01 Computer Architecture
+FabComp: specificatoin addendums
+
+Overview
+--------
+Both of the specifications for our architecture have been modified sufficiently
+to warrant resubmission, so they have been submitted in hard copy form.
+However, this document serves to highlight the most important differences
+between the documents as originally submitted and as they appear now.
+
+ISA document
+------------
+The only change to the ISA document is the addition of a new PRNT instruction
+for printing the contents of registers and memory locations.  This new operation
+is identified by the opcode 0x20, and takes a single argument.
+
+Hardware specification
+----------------------
+The platform's hardware specification has changed more dramatically to correct
+the following problems with its initial content:
+
+Section 1.1
+===========
+ - Datapath diagram: Added in missing wires between components
+
+Section 1.2
+===========
+ - Control path components: Corrected mistakes in the word sizes of the
+   micro-jump table and the microJBUS
+ - Control path diagram: Rerouted some register connections through different
+   buses to fix problems with the word sizes
+
+Section 2
+=========
+ - RTL: Practically rewrote the RTL to address numerous microcode bugs
+
+Section 3.2
+===========
+ - J-type microinstruction type field: Added missing codes for halting the
+   processor normally, halting it due to an error, and printing the contents of
+   the first operand, encoding them as 0x6, 0x7, and 0x8, respectively.
