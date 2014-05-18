@@ -1,0 +1,129 @@
++------------------------------------------+
+|THE FABULOUS COMPUTATIONAL ENGINE         |
+|Presented by Solomon Boucher and Evan Klei|
++------------------------------------------+
+
+The FABULOUS COMPUTATIONAL ENGINE is a arch library simulation of a
+chip that uses a microcontroller.
+
+Files Submitted
+===============
+In addition to the Object Files as listed below
+
+Files nessessary for run time
+-----------------------------
+CPU.cpp - The file that runs all of the code to construct and run the
+	Engine on input provided
+FlipRegister.cpp - Contains the implementation of a register that
+	allows single bit flipping.
+FlipRegister.h - The header file for the implementation of the flip
+	register
+accessors.cpp - A file full of helpful functions and constants to
+	assist in running the engine
+accessors.h - The header file that defines all of the functions in
+	accessors.cpp
+control_path.cpp - Defines the microcontroller and all of its
+	components
+control_path.h - The associated header file for control_path.cpp
+data_path.cpp - Defines the data path and all of its components
+data_path.h - The associated header file for data_path.cpp
+microcontroller.cpp - Contains the code to decode and operate based 
+	on micro-instructions
+microcontroller.h - The associated header file for microcontroller.cpp
+ucode.fu - A file which contains all micro instructions formatted for
+	correct run time functionality of the Computational Engine
+jmptab.fl - A file which contains the jump table for correct run time
+	functionality of the Computational Engine
+
+Object Files
+------------
+bequality.fo - Tests the BEQ and BNE commands
+bitwiseTest.fo - Tests all of the bitwise commands, such as AND and
+	OR. Also tests NOT and NEG.
+branchTest.fo - Tests all of the branching commands, should result in 
+	0 if fully functional
+halt.fo - Tests that the program can compile, run microinstruction
+	fetching and decoding, then halt
+imm.fo - Tests that the program can handle immediate values
+immaddr.fo - Tests that the program can handle immediate values
+logicTest.fo - Tests all of the logical commands
+loop.fo - Tests jumping and JAL
+loopy.fo - Sums up all of the values in an array
+mathTest.fo - Tests all of the mathematic commands
+memadd.fo - Tests adding between memory addresses, and storing to
+	memory addresses
+memnz.fo - Tests snz, and using set instructions with 1 operand
+opt.fo - Tests basic addition, as well as microprogram flow
+perimeter.fo - Calculates the perimeter of a bunch of rectangles.
+	Tests doubly scaled displacement and double displacement
+print.fo - Tests the PRNT function
+regind.fo - Tests register indirect address mode
+rel.fo - Tests program counter relative address mode
+reladd.fo - Tests adding to memory from memory, then accessing using
+	pc relative address mode
+sequality.fo - Tests set equality function
+series.fo - Computes the sum of a finite series
+setTest.fo - Tests all of the set functions
+subtract.fo - Tests the subtract function
+test.fo - Check a multitude of functions, should result in $t0 being
+	zero
+word.fo - Test that FASM can properly store words
+
+The assembly files will be provided in the Archive
+
+Additional Files
+----------------
+FlipTest.cpp - This file contains code to test the FlipRegister
+	implementation
+ADDENDUM - Contains corrections made to the ISA and Hardware
+	documents
+README - This file
+fabcomp_support.tar - Contains the files listed below. Files are
+	additional to what is provided, none are necessary for running
+	the program, but they are part of this project.
+
+Archive Files
+-------------
+fasm 
+->	Makefile - The file to make fasm
+->	fasm.cpp - This file contains the code for the Fabulous Assembler
+	or FASM. This program takes human readable code and converts it 
+	to code for the Computational Engine to run. Style for FASM is
+	documented below
+->  test_progs
+	->	All of the .fs files for the object files described above 
+		will be included in here. In order to get the object files,
+		run FASM as described below
+
+ucode 
+->	Makefile - Makes all of the calls to construct the jmptab and
+		ucode files
+->	rtlparser.sh - Reads the RTL from hard.tex, parses and assign
+		numbers to unique commands
+->	ucodegenerator.py - Creates the ucode based on output from
+		rtlparser
+->	jtabgenerator.py - Creates the jump table based on output from
+		rtlparser
+
+Makefile - Allows the construction of hard.pdf
+isa.tex - Contains the raw LaTeX code for isa.pdf
+hard.tex - Contains the raw LaTeX code for hard.pdf
+controlpath.svg - Contains the image of the control path. Openable
+	with an internet browser, but do not update
+datapath.svg - Contains the image of the data path. Openable with an
+	internet browser, but do not update
+isa.pdf - Documentation of the ISA for the Computational Machine
+hard.pdf - Documentation of the hardware for the Computational
+	Machine
+
+Command Line Arguments
+======================
+CPU <ucode> <jmptab> <code to run>
+	<ucode> - The microcode for the chip. Use ucode.fu provided
+	<jmptab> - The micro jump table for the chip, used for jumping
+		between micro instructions. Use jmptab.fl provided
+	<code to run> - The actual code that the system will run. If the
+		code was generated using FASM, the code will be stored in
+		a .fo file
+
+
