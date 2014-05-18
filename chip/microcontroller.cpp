@@ -111,7 +111,7 @@ void interpret_microprogram() {
 				#ifdef DEBUG_DUMPCNTL
 				for(size_t cid = 0; cid < NUM_OPNDS; ++cid)
 					fprintf(stderr, "DUMP: cntl%lu=0x%lx\n", cid,
-							cntl[cid]->value();
+							cntl[cid]->value());
 				#endif
 				break;
 
@@ -134,17 +134,17 @@ void interpret_microprogram() {
 				break;
 
 			case 0x7: // Halt abnormally
-				cerr << "HALTING: Invalid operand combination" << endl;
+				cerr << endl << "HALTING: Invalid operand combination" << endl;
 			case 0x6: // Halt normally
 				proceed = false;
 				break;
 
 			case 0x8: // Print op1
-				printf( "output: %ld\n", operand_n(1).value());
+				printf( "\noutput: %d", (short)operand_n(1).value());
 				break;
 
 			default: // Invalid
-				cerr << "HALTING: Invalid microinstruction type: " <<
+				cerr << endl << "HALTING: Invalid microinstruction type: " <<
 						uinst_type() << endl;
 				proceed = false;
 		}
@@ -154,7 +154,7 @@ void interpret_microprogram() {
 static void execute_rtl(unsigned control_points) {
 	// See hardware specification, section 3.1 table
 	#ifdef DEBUG_SWITCHES
-	cerr << "DEBUG: ctrl 0x" << control_points << endl;
+	cerr << endl << "DEBUG: ctrl 0x" << control_points;
 	#endif
 	switch(control_points) {
 		case 0x00:
@@ -195,7 +195,8 @@ static void execute_rtl(unsigned control_points) {
             mem.read();
             addr[curr_opnd()] -> latchFrom(mem.READ());
             Clock::tick();
-            printf("\tImmediate: %04lx\n", addr[curr_opnd()] -> value());
+			// Print immediate word
+            printf(" %04lx", addr[curr_opnd()] -> value());
 			break;
 
 		case 0x05:
@@ -246,7 +247,8 @@ static void execute_rtl(unsigned control_points) {
             mem.read();
             ir.latchFrom(mem.READ());
             Clock::tick();
-            printf("Instruction: (%5s) %02lx %1lx %1lx %01lx %01lx %01lx\tPC=%04lx\n",
+            printf("\nInstruction: (%5s) %02lx %1lx %1lx %01lx %01lx %01lx\t"
+					"PC=%04lx\n\tImmediates:",
                     (unsigned)ir(15,8) < NUM_OPCS ? OPC_MNEMS[ir(15,8)] : "???",
 					ir(15,8), ir(7), ir(6), ir(5,4), ir(3,2), ir(1,0),
 					pc.value());
@@ -308,7 +310,8 @@ static void execute_rtl(unsigned control_points) {
             mem.read();
             mdr.latchFrom(mem.READ());
             Clock::tick();
-            printf("\tImmediate: %04lx\n", mdr.value());
+			// Print immediate word
+            printf(" %04lx", mdr.value());
 			break;
 
 		case 0x13:
@@ -420,7 +423,7 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x21:
-            printf("\tResult: %04lx\n", mdr.value());
+            printf("\n\tResult: %04lx", mdr.value());
 			abus.IN().pullFrom(*addr[cntl_valoraddr(0)]);
 			mem.MAR().latchFrom(abus.OUT());
 			Clock::tick();
@@ -502,7 +505,7 @@ static void execute_rtl(unsigned control_points) {
 			break;
 
 		case 0x2a:
-            printf("\tResult: %04lx\n", mdr.value());
+            printf("\n\tResult: %04lx", mdr.value());
 			dbus.IN().pullFrom(mdr);
 			reg[cntl_regid(0)]->latchFrom(dbus.OUT());
 			Clock::tick();
@@ -542,7 +545,8 @@ static void execute_rtl(unsigned control_points) {
 			val[curr_opnd()]->latchFrom(mem.READ());
 			mem.read();
 			Clock::tick();
-            printf("\tImmediate: %04lx\n", val[curr_opnd()] -> value());
+			// Print immediate word
+            printf(" %04lx", val[curr_opnd()] -> value());
 			break;
 
 		case 0x30:
@@ -718,7 +722,7 @@ void uprocedure_call(StorageObject &jt_index) {
 bool decide_conditional() {
 	// See hardware specification, section 3.2, second table
 	#ifdef DEBUG_SWITCHES
-	cerr << "DEBUG: cond 0x" << uinst_j_cond() << endl;
+	cerr << endl << "DEBUG: cond 0x" << uinst_j_cond();
 	#endif
 	switch(uinst_j_cond()) {
 		case 0x00:
