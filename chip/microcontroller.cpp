@@ -9,6 +9,7 @@
 #include "control_path.h"
 #include "data_path.h"
 #include "FlipRegister.h"
+#include "opcodes.h"
 #include <Bus.h>
 #include <BusALU.h>
 #include <Clock.h>
@@ -245,9 +246,10 @@ static void execute_rtl(unsigned control_points) {
             mem.read();
             ir.latchFrom(mem.READ());
             Clock::tick();
-            printf("Instruction: %02lx %1lx %1lx %01lx %01lx %01lx PC = %04lx\n"
-                    ,ir(15,8), ir(7), ir(6), ir(5,4), ir(3,2),
-                    ir(1,0), pc.value());
+            printf("Instruction: (%5s) %02lx %1lx %1lx %01lx %01lx %01lx\tPC=%04lx\n",
+                    (unsigned)ir(15,8) < NUM_OPCS ? OPC_MNEMS[ir(15,8)] : "???",
+					ir(15,8), ir(7), ir(6), ir(5,4), ir(3,2), ir(1,0),
+					pc.value());
 			break;
 
 		case 0x0b:
