@@ -147,7 +147,7 @@ CPU <ucode> <jmptab> <code to run>
 
 Additional Notes
 ================
-When address modes modify any value used in thier calculations, the
+When address modes modify any value used in their calculations, the
 modes are considered from left to right, or from destination to
 source, and the components change accordingly
 
