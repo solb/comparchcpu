@@ -38,6 +38,9 @@ void interpret_microprogram() {
 	bool proceed = true;
 	while(proceed) {
 		// Fetch the next microinstruction
+		#ifdef PRINT_UINSTRUCTS
+		unsigned uip = upc.value();
+		#endif
 		uabus.IN().pullFrom(upc);
 		umem.MAR().latchFrom(uabus.OUT());
 		Clock::tick();
@@ -45,6 +48,14 @@ void interpret_microprogram() {
 		umem.read();
 		upc.incr();
 		Clock::tick();
+		#ifdef PRINT_UINSTRUCTS
+		printf("\nuInstruction: %01lx", uir(15,12));
+		if(uinst_type())
+			printf(" %02lx %02lx", uir(11, 7), uir(6,0));
+		else
+			printf("   %03lx", uir(11,0));
+		printf("\tuPC=%03x", uip);
+		#endif
 
 		// See hardware specification, section 3.2, first table
 		switch(uinst_type()) {
