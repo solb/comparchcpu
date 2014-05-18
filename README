@@ -145,6 +145,12 @@ CPU <ucode> <jmptab> <code to run>
 		code was generated using FASM, the code will be stored in
 		a .fo file
 
+Additional Notes
+================
+When address modes modify any value used in thier calculations, the
+modes are considered from left to right, or from destination to
+source, and the components change accordingly
+
 +-------------------------------------+
 | Fabulous Assembler                  |
 | An assembler written by Sol Boucher |
