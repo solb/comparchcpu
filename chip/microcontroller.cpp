@@ -75,7 +75,7 @@ void interpret_microprogram() {
 				#ifdef DEBUG_DUMPGPRS
 				for(size_t rid = 0; rid < NUM_GPRS; ++rid)
 					fprintf(stderr, "DUMP: Reg%02lu=0x%lx\n", rid,
-							(*reg[rid])(WORD_SIZE - 1, 0));
+							reg[rid]->value());
 				#endif
 				break;
 
@@ -88,7 +88,7 @@ void interpret_microprogram() {
 				#ifdef DEBUG_DUMPCNTL
 				for(size_t cid = 0; cid < NUM_OPNDS; ++cid)
 					fprintf(stderr, "DUMP: cntl%lu=0x%lx\n", cid,
-							(*cntl[cid])(CTRL_CNTL_WIDTH - 1, 0));
+							cntl[cid]->value());
 				#endif
 				break;
 
@@ -110,7 +110,7 @@ void interpret_microprogram() {
 				#ifdef DEBUG_DUMPCNTL
 				for(size_t cid = 0; cid < NUM_OPNDS; ++cid)
 					fprintf(stderr, "DUMP: cntl%lu=0x%lx\n", cid,
-							(*cntl[cid])(CTRL_CNTL_WIDTH - 1, 0));
+							cntl[cid]->value();
 				#endif
 				break;
 
@@ -128,7 +128,7 @@ void interpret_microprogram() {
 				upc.latchFrom(uabus.OUT());
 				Clock::tick();
 				#ifdef DEBUG_DUMPMDR
-				fprintf(stderr, "DUMP: MDR=0x%lx\n", mdr(WORD_SIZE - 1, 0));
+				fprintf(stderr, "DUMP: MDR=0x%lx\n", mdr.value());
 				#endif
 				break;
 
@@ -139,7 +139,7 @@ void interpret_microprogram() {
 				break;
 
 			case 0x8: // Print op1
-				cout << "output: " << operand_n(1)(WORD_SIZE - 1, 0) << endl;
+				cout << "output: " << operand_n(1).value() << endl;
 				break;
 
 			default: // Invalid
@@ -765,7 +765,7 @@ bool decide_conditional() {
 			return inst_sam() == 07;
 
 		case 0x0f:
-			return (*cntl[0])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
+			return cntl[0]->value() == 0x10;
 
 		case 0x10:
 			return cntl_isaddr(0);
@@ -774,13 +774,13 @@ bool decide_conditional() {
 			return !cntl_isntgpr(0);
 
 		case 0x12:
-			return (*cntl[1])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
+			return cntl[1]->value() == 0x10;
 
 		case 0x13:
 			return cntl_isntgpr(1) && cntl_isaddr(1);
 
 		case 0x14:
-			return (*cntl[2])(CTRL_CNTL_WIDTH - 1, 0) == 0x10;
+			return cntl[2]->value() == 0x10;
 
 		case 0x15:
 			return cntl_isntgpr(curr_opnd()) && cntl_isaddr(curr_opnd());
@@ -795,7 +795,7 @@ bool decide_conditional() {
 			return curr_opnd() == 3;
 
 		case 0x19:
-			return operand_n(1)(WORD_SIZE - 1, 0) == 0;
+			return operand_n(1).value() == 0;
 
 		default:
 			return emergency_halt("decide_conditional()",

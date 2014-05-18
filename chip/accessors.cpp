@@ -39,11 +39,11 @@ unsigned uinst_j_jump() {
 }
 
 unsigned curr_ura() {
-	return usp(CTRL_SPTR_WIDTH - 1, 0);
+	return usp.value();
 }
 
 unsigned curr_opnd() {
-	return i(CTRL_OPDI_WIDTH - 1, 0);
+	return i.value();
 }
 
 bool inst_immi() {
@@ -148,11 +148,11 @@ size_t cntl_valoraddr(size_t operandId) {
 }
 
 bool logic_res() {
-	return mdr(WORD_SIZE - 1, 0) == 1;
+	return mdr.value() == 1;
 }
 
 bool logic_nres() {
-	return mdr(WORD_SIZE - 1, 0) == 0;
+	return mdr.value() == 0;
 }
 
 bool neg_res() {
