@@ -1,8 +1,7 @@
-+-------------------------------------------+
-| THE FABULOUS COMPUTATIONAL MACHINE        |
-| Presented by Solomon Boucher and Evan Klei|
-+-------------------------------------------+
-
++----------------------------------------+
+| THE FABULOUS COMPUTATIONAL MACHINE     |
+| Presented by Sol Boucher and Evan Klei |
++----------------------------------------+
 The FABULOUS COMPUTATIONAL MACHINE is a arch library simulation of a
 chip that uses a microcontroller.
 
@@ -30,12 +29,12 @@ data_path.h - The associated header file for data_path.cpp
 microcontroller.cpp - Contains the code to decode and operate based 
 	on micro-instructions
 microcontroller.h - The associated header file for microcontroller.cpp
-ucode.fu - A file which contains all micro instructions formatted for
-	correct run time functionality of the Computational Machine
+opcodes.cpp - Used for converting between opcodes and mnemonics
+opcodes.h - The associated header file for opcodes.cpp
 jmptab.fl - A file which contains the jump table for correct run time
 	functionality of the Computational Machine
 
-Object Files
+Object files
 ------------
 bequality.fo - Tests the BEQ and BNE commands
 bitwiseTest.fo - Tests all of the bitwise commands, such as AND and
@@ -69,9 +68,9 @@ test.fo - Check a multitude of functions, should result in $t0 being
 	zero
 word.fo - Test that FASM can properly store words
 
-The assembly files will be provided in the Archive
+The assembly files are be provided in the archive
 
-Additional Files
+Additional files
 ----------------
 FlipTest.cpp - This file contains code to test the FlipRegister
 	implementation
@@ -82,7 +81,7 @@ fabcomp_support.tar - Contains the files listed below. Files are
 	additional to what is provided, none are necessary for running
 	the program, but they are part of this project.
 
-Archive Files
+Archive files
 -------------
 fasm 
 ->	Makefile - The file to make fasm
@@ -105,7 +104,7 @@ ucode
 ->	jtabgenerator.py - Creates the jump table based on output from
 		rtlparser
 
-Makefile - Allows the construction of hard.pdf
+Makefile - Allows the construction of isa.pdf and hard.pdf
 isa.tex - Contains the raw LaTeX code for isa.pdf
 hard.tex - Contains the raw LaTeX code for hard.pdf
 controlpath.svg - Contains the image of the control path. Openable
@@ -146,11 +145,11 @@ CPU <ucode> <jmptab> <code to run>
 		code was generated using FASM, the code will be stored in
 		a .fo file
 
-+----------------------------------------+
-| Fabulous Assembler                     |
-| An assembler written by Solomon Boucher|
-| with help from Evan Klei               |
-+----------------------------------------+
++-------------------------------------+
+| Fabulous Assembler                  |
+| An assembler written by Sol Boucher |
+| with help from Evan Klei            |
++-------------------------------------+
 Fabulous Assembler (FASM) is the assembler for the FABULOUS
 COMPUTATIONAL MACHINE. It takes assembly style commands and converts
 them into machine code that the Computational Machine can understand.
@@ -174,7 +173,7 @@ If a label is called main, FASM will set that to be the first
 position accessed in the file. If there is no main, the program will
 start at program counter 0;
 
-Instruction Format
+Instruction format
 ------------------
 opcode operand 1, operand 2, operand 3
 
@@ -182,7 +181,7 @@ For a list of opcodes, see ISA.pdf
 The number of required operands is based on opcode. For a list how
 many operands are required for each opcode, see ISA.pdf
 
-Operand Format
+Operand format
 --------------
 Immediate Value - value
 Immediate Address - %address
