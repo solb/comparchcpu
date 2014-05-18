@@ -201,6 +201,15 @@ Doubly Scaled Displacement -
 Doubly formats consider the first displacement, go to memory, then
 consider the second displacement
 
+Bugs and Limitations
+====================
+There is no support for negative literals; instead, input them as
+two's complement 16-bit integers.
+Do *not* use address mode syntax such as 0($s0): even though fasm
+will sometimes allow this (depending on which argument it appears
+as), it will be treated as a plain immediate, 0 in this case.  The
+notation you're looking for is actually %0($s0).
+
 Command Line Arguments
 ======================
 fasm <code to assemble>
