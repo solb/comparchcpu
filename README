@@ -31,8 +31,8 @@ microcontroller.cpp - Contains the code to decode and operate based
 microcontroller.h - The associated header file for microcontroller.cpp
 opcodes.cpp - Used for converting between opcodes and mnemonics
 opcodes.h - The associated header file for opcodes.cpp
-jmptab.fl - A file which contains the jump table for correct run time
-	functionality of the Computational Machine
+ucode.fu - The CPU microcode, corresponding to our RTL
+jmptab.fl - The control unit's jump table, containing microcode addresses
 
 Object files
 ------------
@@ -43,7 +43,7 @@ bitwiseTest.fo - Tests all of the bitwise commands, such as AND and
 	OR. Also tests NOT and NEG.
 branchTest.fo - Tests all of the branching commands, should result in 
 	0 if fully functional
-halt.fo - Tests that the program can compile, run microinstruction
+halt.fo - Tests that the program can assemble, run microinstruction
 	fetching and decoding, then halt
 imm.fo - Tests that the program can handle immediate values
 immaddr.fo - Tests that the program can handle immediate values
